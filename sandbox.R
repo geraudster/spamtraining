@@ -55,10 +55,18 @@ spambase.train.idx <- sample.int(nrow(spambase), nrow(spambase) * 0.8)
 spambase.train <- spambase[spambase.train.idx,]
 spambase.test <- spambase[-spambase.train.idx,]
 
-model1 <- glm(spam ~ ., data = spambase.train, family = "binomial")
+model1 <- glm(spam ~ word_freq_order + capital_run_length_total, data = spambase.train, family = "binomial")
 
+# predictions1 <- predict(model1, newdata = spambase.test, type = 'term')
 predictions1 <- predict(model1, newdata = spambase.test, type = "response")
-predictions1 <- sapply(predictions1, function (x) { if (x>0.2) 1 else 0})
+predictions1 <- sapply(predictions1, function (x) { if (x>0.5) 1 else 0})
+
+table(predict = predictions1, actual = spambase.test$spam)
 
 mean(predictions1 == spambase.test$spam)
+
+# install.packages('ggplot2')
+library(ggplot2)
+qplot(log(spambase.test$word_freq_order + 1), predictions1)
+plot(log(spambase.test$word_freq_order + 1), predictions1, col = spambase$spam)
 
