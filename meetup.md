@@ -29,4 +29,4 @@ Géraud
 * Interprétation du modèle
 * Évaluation du modèle (score, matrice de confusion)
 
-Pour aller plus loin, introduction au package [caret](http://topepo.github.io/caret/index.html) et tests avec différents algorithmes de machine learning (arbres de décision, random forest, gbm...)
+Pour aller plus loin, introduction au package [caret](http://topepo.github.io/caret/index.html) et tests avec différents algorithmes de machine learning (arbres de décision, random forest, gbm, *Naive Bayes*...)
