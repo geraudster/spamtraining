@@ -11,11 +11,114 @@ output:
 * R c'est quoi? les origines...
 * Présentation RStudio
 
+### R c'est quoi?
+
+**R** est un dialecte de **S**.
+
+S c'est quoi? C'est un environnement pour l'analyse statistique développé en Fortran 
+par les laboratoires Bell dès 1976.
+Il a été réécrit en C en 1988. 
+En 1991, début de l'implémentation de R par l'université d'Aukland, pour pallier au fait que la version de S-PLUS
+était propriétaire.
+
+Jusqu'en 2008 S-PLUS devient la propriété de TIBCO.
+
+2015: R en version 3.2
+
+La philosophie de S / R: fournir un environnement interactif pour l'analyse statistique.
+
+### RStudio
+
+[Rstudio](http://www.rstudio.com/) est une société qui publie l'éditeur Rstudio (et d'autres services comme ShinyApps, Rpubs...)
+
+Plusieurs versions sont disponibles dont une version *Open Source*.
+
 ## Les bases du langage
 
-* Opérateurs, valeurs, listes, dataframes
+R est une grosse calculatrice qui fournit une interface REPL (Read-Eval-Print-Loop).
+
+```{r}
+1 + 2
+log(5)
+sqrt(25)
+```
+
+À tout moment, il est possible d'accéder à l'aide en ligne:
+
+```{r}
+?log
+?sqrt
+?`+`
+```
+
+### Opérateurs, valeurs, listes, dataframes
+
+Utiliser des scalaires:
+```{r}
+1 + 2
+log(5)
+sqrt(25)
+```
+
+Affecter un résultat à une variable:
+```{r}
+result <- 1 + 2
+result
+```
+
+
+Manipuler des vecteurs:
+
+```{r}
+c(1,2,3,4,5,6,7,8,9)
+c(1:9)
+c('a', 'b', 'c')
+letters[1:3]
+```
+
+Les vecteurs ne contiennent que des données du même type:
+```{r}
+c(1,2,'toto')
+```
+
+
+Opérations entre scalaires et vecteurs:
+```{r}
+c(1:9) + 2
+c(1:9) * 3
+```
+
+Opérations entre vecteurs:
+```{r}
+c(1:9)*c(1:9)
+c(1:9)*c(2:4)
+```
+
+Les listes peuvent contenir des types différents:
+```{r}
+list(1,2,'toto')
+maListe <- list(1,2,'toto')
+maListe[2]
+maListe[[2]]
+```
+
+Les Data Frames permettent de stocker des tableaux de données:
+```{r}
+prenoms <- c('Alice', 'Bob', 'Carole')
+emails <- c('alice@example.com', 'bob@example.com', 'carole@example.com')
+ages <- c(24, 30, 23)
+monDataFrame <- data.frame(prenoms, emails, ages)
+monDataFrame
+
+monDataFrame[2, 'prenoms']
+monDataFrame$prenoms
+```
+
+Aide-mémoire pour les indices des data.frames: [ROW, COL] -> ROW is COol
+
+
 * Structure de contrôle (if, loop..)
-* L'aide en ligne
+
 
 ## Cas d'utilisation spam filter
 
@@ -24,6 +127,78 @@ output:
 * Récupération du jeu de données (https://archive.ics.uci.edu/ml/datasets/Spambase)
 * Un peu de stats descriptives, quelques plots
 * *Réduction de dimensions ?*
+
+Récupérer les données depuis l'url distante:
+```{r, cache=TRUE}
+url <- 'https://archive.ics.uci.edu/ml/machine-learning-databases/spambase/spambase.zip'
+dest <- './data'
+dir.create(dest)
+download.file(url,
+              paste(dest, 'spambase.zip', sep='/'), method = 'curl')
+```
+
+Ensuite on décompresse l'archive:
+```{r, cache=TRUE}
+unzip(paste(dest, 'spambase.zip', sep='/'), exdir=dest)
+```
+
+Regardons les fichiers créés:
+```{r}
+list.files(dest)
+```
+
+Chargement des données:
+```{r}
+spambase <- read.csv('data/spambase.data')
+
+dim(spambase)
+colnames(spambase)
+head(spambase, 5)
+#View(spambase) # ou clic sur spambase dans l'onglet Environment
+
+table(spambase[,58])
+```
+
+Chargement des entêtes:
+```{r}
+spambase.names <- readLines('data/spambase.names')
+spambase.names <- sub(':.*$', '', spambase.names[34:length(spambase.names)])
+spambase.names [length(spambase.names) + 1] <- 'spam'
+
+spambase.names
+```
+
+Renommage des colonnes du data.frame:
+```{r}
+colnames(spambase) <- spambase.names
+
+str(spambase)
+class(spambase$spam)
+```
+
+Gestion du label de spam:
+```{r}
+spambase$spam <- factor(spambase$spam, c(0,1), labels = c('nospam', 'spam'))
+str(spambase$spam)
+table(spambase$spam)
+```
+
+### Exploration
+
+Quelques histogrammes:
+```{r}
+hist(spambase$word_freq_people)
+hist(spambase$`char_freq_(`)
+```
+
+Un histogramme plus avancé:
+```{r}
+hist(spambase$word_freq_order[spambase$spam == 'nospam'], col = 'blue', breaks = 20)
+hist(spambase$word_freq_order[spambase$spam == 'spam'], col = 'red', add = T, breaks = 20)
+```
+
+On voit qu'il y a beaucoup de valeurs à 0 ou proche de 0 (**à voir si on normalise**).
+
 
 ### Modélisation
 
@@ -35,3 +210,10 @@ output:
 * Évaluation du modèle (score, matrice de confusion)
 
 Pour aller plus loin, introduction au package [caret](http://topepo.github.io/caret/index.html) et tests avec différents algorithmes de machine learning (arbres de décision, random forest, gbm, *Naive Bayes*...)
+
+## Bibliographie
+
+* http://www.cs.cmu.edu/~eugene/research/full/detect-scam.pdf
+* http://cran.r-project.org/web/views/MachineLearning.html
+* http://kooperberg.fhcrc.org/logic/documents/ingophd-logic.pdf
+* Lichman, M. (2013). UCI Machine Learning Repository [http://archive.ics.uci.edu/ml]. Irvine, CA: University of California, School of Information and Computer Science. 
