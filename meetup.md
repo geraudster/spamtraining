@@ -555,11 +555,352 @@ On voit qu'il y a beaucoup de valeurs à 0 ou proche de 0 (**à voir si on norma
 ### Modélisation
 
 * Bref rappel des principes de machine learning
+
+*dessin ?*
+
 * Préparation train set / test set
+
+
+```r
+set.seed(123)
+spambase.train.idx <- sample.int(nrow(spambase), nrow(spambase) * 0.8)
+spambase.train <- spambase[spambase.train.idx,]
+spambase.test <- spambase[-spambase.train.idx,]
+
+dim(spambase.train)
+```
+
+```
+## [1] 3680   58
+```
+
+```r
+dim(spambase.test)
+```
+
+```
+## [1] 920  58
+```
+
+```r
+prop.table(table(spambase.train$spam))
+```
+
+```
+## 
+##   nospam     spam 
+## 0.605163 0.394837
+```
+
+```r
+prop.table(table(spambase.test$spam))
+```
+
+```
+## 
+##    nospam      spam 
+## 0.6097826 0.3902174
+```
+
 * Problématique de la classification / présentation de la régression logistique
 * Application de l'algo
+
+
+```r
+# model1 <- glm(spam ~ word_freq_free + word_freq_internet, data = spambase.train, family = "binomial")
+# summary(model1)
+model1 <- glm(spam ~ ., data = spambase.train, family = "binomial")
+```
+
+```
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+```
+
+```r
+summary(model1)
+```
+
+```
+## 
+## Call:
+## glm(formula = spam ~ ., family = "binomial", data = spambase.train)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -4.3804  -0.1984   0.0000   0.0972   5.5182  
+## 
+## Coefficients:
+##                              Estimate Std. Error z value Pr(>|z|)    
+## (Intercept)                -1.705e+00  1.625e-01 -10.497  < 2e-16 ***
+## word_freq_make             -3.928e-01  2.631e-01  -1.493 0.135464    
+## word_freq_address          -1.365e-01  7.666e-02  -1.780 0.075037 .  
+## word_freq_all               1.369e-01  1.289e-01   1.062 0.288217    
+## word_freq_3d                1.752e+00  1.662e+00   1.054 0.291818    
+## word_freq_our               6.085e-01  1.194e-01   5.097 3.46e-07 ***
+## word_freq_over              1.057e+00  3.051e-01   3.465 0.000530 ***
+## word_freq_remove            2.748e+00  4.517e-01   6.084 1.17e-09 ***
+## word_freq_internet          5.945e-01  1.799e-01   3.305 0.000949 ***
+## word_freq_order             1.052e+00  3.315e-01   3.173 0.001509 ** 
+## word_freq_mail              8.261e-02  7.344e-02   1.125 0.260651    
+## word_freq_receive          -2.321e-01  3.348e-01  -0.693 0.488084    
+## word_freq_will             -1.287e-01  8.453e-02  -1.523 0.127750    
+## word_freq_people           -3.778e-01  2.888e-01  -1.308 0.190815    
+## word_freq_report            2.053e-01  1.411e-01   1.456 0.145514    
+## word_freq_addresses         1.510e+00  9.221e-01   1.637 0.101613    
+## word_freq_free              8.767e-01  1.467e-01   5.976 2.28e-09 ***
+## word_freq_business          9.721e-01  2.549e-01   3.813 0.000137 ***
+## word_freq_email             1.160e-01  1.277e-01   0.909 0.363366    
+## word_freq_you               8.452e-02  4.174e-02   2.025 0.042867 *  
+## word_freq_credit            1.350e+00  6.373e-01   2.118 0.034209 *  
+## word_freq_your              2.546e-01  6.257e-02   4.069 4.72e-05 ***
+## word_freq_font              1.616e-01  1.895e-01   0.853 0.393658    
+## word_freq_000               2.219e+00  5.051e-01   4.394 1.11e-05 ***
+## word_freq_money             1.793e+00  4.337e-01   4.134 3.56e-05 ***
+## word_freq_hp               -1.995e+00  3.681e-01  -5.419 6.01e-08 ***
+## word_freq_hpl              -8.557e-01  4.943e-01  -1.731 0.083433 .  
+## word_freq_george           -1.275e+01  2.546e+00  -5.007 5.53e-07 ***
+## word_freq_650               4.360e-01  1.959e-01   2.226 0.026044 *  
+## word_freq_lab              -2.119e+00  1.557e+00  -1.361 0.173534    
+## word_freq_labs             -1.567e-01  2.961e-01  -0.529 0.596575    
+## word_freq_telnet           -9.631e-02  3.425e-01  -0.281 0.778556    
+## word_freq_857               1.639e+00  3.827e+00   0.428 0.668492    
+## word_freq_data             -8.732e-01  4.067e-01  -2.147 0.031810 *  
+## word_freq_415              -1.334e+01  3.989e+00  -3.345 0.000823 ***
+## word_freq_85               -1.640e+00  8.575e-01  -1.913 0.055781 .  
+## word_freq_technology        9.718e-01  3.320e-01   2.928 0.003417 ** 
+## word_freq_1999              1.198e-01  1.737e-01   0.690 0.490287    
+## word_freq_parts             6.201e-01  1.569e+00   0.395 0.692728    
+## word_freq_pm               -9.469e-01  4.447e-01  -2.129 0.033244 *  
+## word_freq_direct           -3.439e-01  3.831e-01  -0.898 0.369373    
+## word_freq_cs               -4.423e+01  3.177e+01  -1.392 0.163881    
+## word_freq_meeting          -3.219e+00  1.176e+00  -2.738 0.006182 ** 
+## word_freq_original         -1.260e+00  8.505e-01  -1.482 0.138466    
+## word_freq_project          -1.583e+00  5.727e-01  -2.764 0.005706 ** 
+## word_freq_re               -8.567e-01  1.878e-01  -4.561 5.08e-06 ***
+## word_freq_edu              -1.291e+00  2.787e-01  -4.630 3.66e-06 ***
+## word_freq_table            -2.473e+00  2.256e+00  -1.096 0.272926    
+## word_freq_conference       -4.139e+00  1.814e+00  -2.281 0.022556 *  
+## `char_freq_;`              -1.102e+00  4.578e-01  -2.408 0.016056 *  
+## `char_freq_(`              -1.404e-01  2.524e-01  -0.556 0.577904    
+## `char_freq_[`              -4.708e-01  7.690e-01  -0.612 0.540378    
+## `char_freq_!`               5.044e-01  1.158e-01   4.357 1.32e-05 ***
+## `char_freq_$`               4.376e+00  7.139e-01   6.130 8.81e-10 ***
+## `char_freq_#`               2.508e+00  1.216e+00   2.062 0.039227 *  
+## capital_run_length_average  1.726e-02  2.149e-02   0.803 0.421961    
+## capital_run_length_longest  9.052e-03  2.874e-03   3.150 0.001632 ** 
+## capital_run_length_total    8.126e-04  2.493e-04   3.260 0.001116 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 4937.5  on 3679  degrees of freedom
+## Residual deviance: 1393.6  on 3622  degrees of freedom
+## AIC: 1509.6
+## 
+## Number of Fisher Scoring iterations: 13
+```
+
 * Interprétation du modèle
+
+*TODO?*
+
 * Évaluation du modèle (score, matrice de confusion)
+
+
+```r
+predictions1 <- predict(model1, newdata = spambase.test, type = "response")
+
+# x <- seq(0,10,0.01)
+# y <- predict(model1, newdata = x, type = "response")
+# lines(spambase.test$word_freq_our, predictions1)
+
+predictions1 <- sapply(predictions1, function (x) { if (x>0.5) 'spam' else 'nospam'})
+
+table(spambase.test$spam, predictions1)
+```
+
+```
+##         predictions1
+##          nospam spam
+##   nospam    532   29
+##   spam       40  319
+```
+
+```r
+prop.table(table(spambase.test$spam, predictions1),1)
+```
+
+```
+##         predictions1
+##             nospam      spam
+##   nospam 0.9483066 0.0516934
+##   spam   0.1114206 0.8885794
+```
+
+```r
+mean(predictions1 == spambase.test$spam)
+```
+
+```
+## [1] 0.925
+```
+
+### Utilisation de caret
+
+
+```
+## Loading required package: lattice
+## Loading required package: ggplot2
+```
+
+
+```r
+model2 <- train(spam ~ ., data = spambase.train, method = 'glm')
+```
+
+```
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+```
+
+```
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+```
+
+```
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+```
+
+```
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+```
+
+```
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+```
+
+```
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+```
+
+```
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+```
+
+```
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+```
+
+```
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+```
+
+```
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+```
+
+```
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+```
+
+```
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+```
+
+```
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+```
+
+```
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+```
+
+```
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+```
+
+```
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+```
+
+```
+## Warning: glm.fit: algorithm did not converge
+```
+
+```
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+```
+
+```
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+```
+
+```
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+```
+
+```
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+```
+
+```
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+```
+
+```
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+```
+
+```
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+```
+
+```
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+```
+
+```
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+```
+
+```
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+```
+
+```r
+predictions2 <- predict(model2, newdata = spambase.test)
+confusionMatrix(predictions2, spambase.test$spam)
+```
+
+```
+## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction nospam spam
+##     nospam    532   40
+##     spam       29  319
+##                                          
+##                Accuracy : 0.925          
+##                  95% CI : (0.906, 0.9412)
+##     No Information Rate : 0.6098         
+##     P-Value [Acc > NIR] : <2e-16         
+##                                          
+##                   Kappa : 0.8415         
+##  Mcnemar's Test P-Value : 0.2286         
+##                                          
+##             Sensitivity : 0.9483         
+##             Specificity : 0.8886         
+##          Pos Pred Value : 0.9301         
+##          Neg Pred Value : 0.9167         
+##              Prevalence : 0.6098         
+##          Detection Rate : 0.5783         
+##    Detection Prevalence : 0.6217         
+##       Balanced Accuracy : 0.9184         
+##                                          
+##        'Positive' Class : nospam         
+## 
+```
+
 
 Pour aller plus loin, introduction au package [caret](http://topepo.github.io/caret/index.html) et tests avec différents algorithmes de machine learning (arbres de décision, random forest, gbm, *Naive Bayes*...)
 

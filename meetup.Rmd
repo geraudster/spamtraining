@@ -171,7 +171,7 @@ spambase.names
 Renommage des colonnes du data.frame:
 ```{r}
 colnames(spambase) <- spambase.names
-
+spambase <- data.frame(spambase)
 str(spambase)
 class(spambase$spam)
 ```
@@ -203,11 +203,86 @@ On voit qu'il y a beaucoup de valeurs à 0 ou proche de 0 (**à voir si on norma
 ### Modélisation
 
 * Bref rappel des principes de machine learning
+
+*dessin ?*
+
 * Préparation train set / test set
+
+```{r}
+set.seed(123)
+spambase.train.idx <- sample.int(nrow(spambase), nrow(spambase) * 0.8)
+spambase.train <- spambase[spambase.train.idx,]
+spambase.test <- spambase[-spambase.train.idx,]
+
+dim(spambase.train)
+dim(spambase.test)
+
+prop.table(table(spambase.train$spam))
+prop.table(table(spambase.test$spam))
+```
+
 * Problématique de la classification / présentation de la régression logistique
 * Application de l'algo
+
+```{r}
+# model1 <- glm(spam ~ word_freq_free + word_freq_internet, data = spambase.train, family = "binomial")
+# summary(model1)
+model1 <- glm(spam ~ ., data = spambase.train, family = "binomial")
+summary(model1)
+```
+
 * Interprétation du modèle
+
+*TODO?*
+
 * Évaluation du modèle (score, matrice de confusion)
+
+```{r}
+predictions1 <- predict(model1, newdata = spambase.test, type = "response")
+
+# x <- seq(0,10,0.01)
+# y <- predict(model1, newdata = x, type = "response")
+# lines(spambase.test$word_freq_our, predictions1)
+
+predictions1 <- sapply(predictions1, function (x) { if (x>0.5) 'spam' else 'nospam'})
+
+table(spambase.test$spam, predictions1)
+prop.table(table(spambase.test$spam, predictions1),1)
+mean(predictions1 == spambase.test$spam)
+```
+
+### Utilisation de caret
+
+```{r, echo=FALSE, cache=TRUE}
+# install.packages(c('caret', 'e1071'))
+library(caret)
+```
+
+```{r}
+model2 <- train(spam ~ ., data = spambase.train, method = 'glm')
+predictions2 <- predict(model2, newdata = spambase.test)
+confusionMatrix(predictions2, spambase.test$spam)
+```
+
+Avec un arbre de décision:
+```{r}
+model3 <- train(spam ~ ., data = spambase.train, method = 'rpart')
+predictions3 <- predict(model3, newdata = spambase.test)
+confusionMatrix(predictions3, spambase.test$spam)
+
+plot(model3$finalModel)
+```
+
+Une random forest:
+```{r}
+model4 <- train(spam ~ ., data = spambase.train, method = 'rf')
+predictions4 <- predict(model4, newdata = spambase.test)
+confusionMatrix(predictions4, spambase.test$spam)
+
+```
+
+
+
 
 Pour aller plus loin, introduction au package [caret](http://topepo.github.io/caret/index.html) et tests avec différents algorithmes de machine learning (arbres de décision, random forest, gbm, *Naive Bayes*...)
 
