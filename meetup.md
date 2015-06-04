@@ -118,7 +118,7 @@ c(1,2,3,4,5,6,7,8,9)
 ```
 
 ```r
-c(1:9)
+1:9
 ```
 
 ```
@@ -155,7 +155,7 @@ c(1,2,'toto')
 Opérations entre scalaires et vecteurs:
 
 ```r
-c(1:9) + 2
+1:9 + 2
 ```
 
 ```
@@ -163,7 +163,7 @@ c(1:9) + 2
 ```
 
 ```r
-c(1:9) * 3
+1:9 * 3
 ```
 
 ```
@@ -173,7 +173,7 @@ c(1:9) * 3
 Opérations entre vecteurs:
 
 ```r
-c(1:9)*c(1:9)
+1:9 * 1:9
 ```
 
 ```
@@ -181,7 +181,7 @@ c(1:9)*c(1:9)
 ```
 
 ```r
-c(1:9)*c(2:4)
+1:9 * 2:4
 ```
 
 ```
@@ -429,7 +429,7 @@ Renommage des colonnes du data.frame:
 
 ```r
 colnames(spambase) <- spambase.names
-
+spambase <- data.frame(spambase)
 str(spambase)
 ```
 
@@ -483,12 +483,12 @@ str(spambase)
 ##  $ word_freq_edu             : num  0 0.06 0 0 0 0 0 0 0 0 ...
 ##  $ word_freq_table           : num  0 0 0 0 0 0 0 0 0 0 ...
 ##  $ word_freq_conference      : num  0 0 0 0 0 0 0 0 0 0 ...
-##  $ char_freq_;               : num  0 0.01 0 0 0 0 0 0 0.04 0 ...
-##  $ char_freq_(               : num  0.132 0.143 0.137 0.135 0.223 0.054 0.206 0.271 0.03 0 ...
-##  $ char_freq_[               : num  0 0 0 0 0 0 0 0 0 0 ...
-##  $ char_freq_!               : num  0.372 0.276 0.137 0.135 0 0.164 0 0.181 0.244 0.462 ...
-##  $ char_freq_$               : num  0.18 0.184 0 0 0 0.054 0 0.203 0.081 0 ...
-##  $ char_freq_#               : num  0.048 0.01 0 0 0 0 0 0.022 0 0 ...
+##  $ char_freq_.               : num  0 0.01 0 0 0 0 0 0 0.04 0 ...
+##  $ char_freq_..1             : num  0.132 0.143 0.137 0.135 0.223 0.054 0.206 0.271 0.03 0 ...
+##  $ char_freq_..2             : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ char_freq_..3             : num  0.372 0.276 0.137 0.135 0 0.164 0 0.181 0.244 0.462 ...
+##  $ char_freq_..4             : num  0.18 0.184 0 0 0 0.054 0 0.203 0.081 0 ...
+##  $ char_freq_..5             : num  0.048 0.01 0 0 0 0 0 0.022 0 0 ...
 ##  $ capital_run_length_average: num  5.11 9.82 3.54 3.54 3 ...
 ##  $ capital_run_length_longest: int  101 485 40 40 15 4 11 445 43 6 ...
 ##  $ capital_run_length_total  : int  1028 2259 191 191 54 112 49 1257 749 21 ...
@@ -506,7 +506,7 @@ class(spambase$spam)
 Gestion du label de spam:
 
 ```r
-spambase$spam <- factor(spambase$spam, c(0,1), labels = c('nospam', 'spam'))
+spambase$spam <- factor(spambase$spam, levels = c(0,1), labels = c('nospam', 'spam'))
 str(spambase$spam)
 ```
 
@@ -534,12 +534,6 @@ hist(spambase$word_freq_people)
 
 ![](meetup_files/figure-html/unnamed-chunk-18-1.png) 
 
-```r
-hist(spambase$`char_freq_(`)
-```
-
-![](meetup_files/figure-html/unnamed-chunk-18-2.png) 
-
 Un histogramme plus avancé:
 
 ```r
@@ -548,6 +542,32 @@ hist(spambase$word_freq_order[spambase$spam == 'spam'], col = 'red', add = T, br
 ```
 
 ![](meetup_files/figure-html/unnamed-chunk-19-1.png) 
+
+Une boxplot:
+
+```r
+boxplot(spambase$word_freq_make ~ spambase$spam)
+```
+
+![](meetup_files/figure-html/unnamed-chunk-20-1.png) 
+
+```r
+boxplot(spambase$word_freq_our ~ spambase$spam)
+```
+
+![](meetup_files/figure-html/unnamed-chunk-20-2.png) 
+
+```r
+boxplot(spambase$word_freq_address ~ spambase$spam)
+```
+
+![](meetup_files/figure-html/unnamed-chunk-20-3.png) 
+
+```r
+boxplot(spambase$word_freq_money ~ spambase$spam)
+```
+
+![](meetup_files/figure-html/unnamed-chunk-20-4.png) 
 
 On voit qu'il y a beaucoup de valeurs à 0 ou proche de 0 (**à voir si on normalise**).
 
@@ -563,7 +583,7 @@ On voit qu'il y a beaucoup de valeurs à 0 ou proche de 0 (**à voir si on norma
 
 ```r
 set.seed(123)
-spambase.train.idx <- sample.int(nrow(spambase), nrow(spambase) * 0.8)
+spambase.train.idx <- sample.int(nrow(spambase), nrow(spambase) * 0.7)
 spambase.train <- spambase[spambase.train.idx,]
 spambase.test <- spambase[-spambase.train.idx,]
 
@@ -571,7 +591,7 @@ dim(spambase.train)
 ```
 
 ```
-## [1] 3680   58
+## [1] 3220   58
 ```
 
 ```r
@@ -579,7 +599,7 @@ dim(spambase.test)
 ```
 
 ```
-## [1] 920  58
+## [1] 1380   58
 ```
 
 ```r
@@ -588,8 +608,8 @@ prop.table(table(spambase.train$spam))
 
 ```
 ## 
-##   nospam     spam 
-## 0.605163 0.394837
+##    nospam      spam 
+## 0.6099379 0.3900621
 ```
 
 ```r
@@ -599,7 +619,7 @@ prop.table(table(spambase.test$spam))
 ```
 ## 
 ##    nospam      spam 
-## 0.6097826 0.3902174
+## 0.5971014 0.4028986
 ```
 
 * Problématique de la classification / présentation de la régression logistique
@@ -627,78 +647,78 @@ summary(model1)
 ## 
 ## Deviance Residuals: 
 ##     Min       1Q   Median       3Q      Max  
-## -4.3804  -0.1984   0.0000   0.0972   5.5182  
+## -4.0792  -0.1884   0.0000   0.0966   4.9236  
 ## 
 ## Coefficients:
 ##                              Estimate Std. Error z value Pr(>|z|)    
-## (Intercept)                -1.705e+00  1.625e-01 -10.497  < 2e-16 ***
-## word_freq_make             -3.928e-01  2.631e-01  -1.493 0.135464    
-## word_freq_address          -1.365e-01  7.666e-02  -1.780 0.075037 .  
-## word_freq_all               1.369e-01  1.289e-01   1.062 0.288217    
-## word_freq_3d                1.752e+00  1.662e+00   1.054 0.291818    
-## word_freq_our               6.085e-01  1.194e-01   5.097 3.46e-07 ***
-## word_freq_over              1.057e+00  3.051e-01   3.465 0.000530 ***
-## word_freq_remove            2.748e+00  4.517e-01   6.084 1.17e-09 ***
-## word_freq_internet          5.945e-01  1.799e-01   3.305 0.000949 ***
-## word_freq_order             1.052e+00  3.315e-01   3.173 0.001509 ** 
-## word_freq_mail              8.261e-02  7.344e-02   1.125 0.260651    
-## word_freq_receive          -2.321e-01  3.348e-01  -0.693 0.488084    
-## word_freq_will             -1.287e-01  8.453e-02  -1.523 0.127750    
-## word_freq_people           -3.778e-01  2.888e-01  -1.308 0.190815    
-## word_freq_report            2.053e-01  1.411e-01   1.456 0.145514    
-## word_freq_addresses         1.510e+00  9.221e-01   1.637 0.101613    
-## word_freq_free              8.767e-01  1.467e-01   5.976 2.28e-09 ***
-## word_freq_business          9.721e-01  2.549e-01   3.813 0.000137 ***
-## word_freq_email             1.160e-01  1.277e-01   0.909 0.363366    
-## word_freq_you               8.452e-02  4.174e-02   2.025 0.042867 *  
-## word_freq_credit            1.350e+00  6.373e-01   2.118 0.034209 *  
-## word_freq_your              2.546e-01  6.257e-02   4.069 4.72e-05 ***
-## word_freq_font              1.616e-01  1.895e-01   0.853 0.393658    
-## word_freq_000               2.219e+00  5.051e-01   4.394 1.11e-05 ***
-## word_freq_money             1.793e+00  4.337e-01   4.134 3.56e-05 ***
-## word_freq_hp               -1.995e+00  3.681e-01  -5.419 6.01e-08 ***
-## word_freq_hpl              -8.557e-01  4.943e-01  -1.731 0.083433 .  
-## word_freq_george           -1.275e+01  2.546e+00  -5.007 5.53e-07 ***
-## word_freq_650               4.360e-01  1.959e-01   2.226 0.026044 *  
-## word_freq_lab              -2.119e+00  1.557e+00  -1.361 0.173534    
-## word_freq_labs             -1.567e-01  2.961e-01  -0.529 0.596575    
-## word_freq_telnet           -9.631e-02  3.425e-01  -0.281 0.778556    
-## word_freq_857               1.639e+00  3.827e+00   0.428 0.668492    
-## word_freq_data             -8.732e-01  4.067e-01  -2.147 0.031810 *  
-## word_freq_415              -1.334e+01  3.989e+00  -3.345 0.000823 ***
-## word_freq_85               -1.640e+00  8.575e-01  -1.913 0.055781 .  
-## word_freq_technology        9.718e-01  3.320e-01   2.928 0.003417 ** 
-## word_freq_1999              1.198e-01  1.737e-01   0.690 0.490287    
-## word_freq_parts             6.201e-01  1.569e+00   0.395 0.692728    
-## word_freq_pm               -9.469e-01  4.447e-01  -2.129 0.033244 *  
-## word_freq_direct           -3.439e-01  3.831e-01  -0.898 0.369373    
-## word_freq_cs               -4.423e+01  3.177e+01  -1.392 0.163881    
-## word_freq_meeting          -3.219e+00  1.176e+00  -2.738 0.006182 ** 
-## word_freq_original         -1.260e+00  8.505e-01  -1.482 0.138466    
-## word_freq_project          -1.583e+00  5.727e-01  -2.764 0.005706 ** 
-## word_freq_re               -8.567e-01  1.878e-01  -4.561 5.08e-06 ***
-## word_freq_edu              -1.291e+00  2.787e-01  -4.630 3.66e-06 ***
-## word_freq_table            -2.473e+00  2.256e+00  -1.096 0.272926    
-## word_freq_conference       -4.139e+00  1.814e+00  -2.281 0.022556 *  
-## `char_freq_;`              -1.102e+00  4.578e-01  -2.408 0.016056 *  
-## `char_freq_(`              -1.404e-01  2.524e-01  -0.556 0.577904    
-## `char_freq_[`              -4.708e-01  7.690e-01  -0.612 0.540378    
-## `char_freq_!`               5.044e-01  1.158e-01   4.357 1.32e-05 ***
-## `char_freq_$`               4.376e+00  7.139e-01   6.130 8.81e-10 ***
-## `char_freq_#`               2.508e+00  1.216e+00   2.062 0.039227 *  
-## capital_run_length_average  1.726e-02  2.149e-02   0.803 0.421961    
-## capital_run_length_longest  9.052e-03  2.874e-03   3.150 0.001632 ** 
-## capital_run_length_total    8.126e-04  2.493e-04   3.260 0.001116 ** 
+## (Intercept)                -1.679e+00  1.729e-01  -9.707  < 2e-16 ***
+## word_freq_make             -4.493e-01  2.857e-01  -1.573 0.115824    
+## word_freq_address          -1.619e-01  1.007e-01  -1.607 0.108002    
+## word_freq_all               1.627e-01  1.344e-01   1.210 0.226139    
+## word_freq_3d                1.854e+00  1.719e+00   1.078 0.280834    
+## word_freq_our               5.416e-01  1.207e-01   4.487 7.21e-06 ***
+## word_freq_over              1.044e+00  3.100e-01   3.368 0.000757 ***
+## word_freq_remove            2.643e+00  4.718e-01   5.603 2.11e-08 ***
+## word_freq_internet          5.720e-01  1.814e-01   3.153 0.001619 ** 
+## word_freq_order             1.006e+00  3.457e-01   2.908 0.003635 ** 
+## word_freq_mail              6.434e-02  7.577e-02   0.849 0.395810    
+## word_freq_receive          -4.206e-01  3.604e-01  -1.167 0.243241    
+## word_freq_will             -7.750e-02  8.641e-02  -0.897 0.369777    
+## word_freq_people           -4.705e-01  3.167e-01  -1.485 0.137421    
+## word_freq_report            2.328e-01  1.523e-01   1.529 0.126363    
+## word_freq_addresses         1.402e+00  9.075e-01   1.545 0.122324    
+## word_freq_free              1.066e+00  1.697e-01   6.285 3.29e-10 ***
+## word_freq_business          9.888e-01  2.746e-01   3.601 0.000317 ***
+## word_freq_email             1.324e-01  1.492e-01   0.888 0.374697    
+## word_freq_you               9.230e-02  4.401e-02   2.097 0.035977 *  
+## word_freq_credit            1.239e+00  6.367e-01   1.946 0.051598 .  
+## word_freq_your              2.472e-01  6.595e-02   3.747 0.000179 ***
+## word_freq_font              2.032e-01  2.111e-01   0.963 0.335709    
+## word_freq_000               2.237e+00  4.931e-01   4.536 5.73e-06 ***
+## word_freq_money             1.541e+00  4.441e-01   3.469 0.000523 ***
+## word_freq_hp               -2.058e+00  4.636e-01  -4.440 9.00e-06 ***
+## word_freq_hpl              -1.273e+00  6.138e-01  -2.074 0.038125 *  
+## word_freq_george           -1.022e+01  2.503e+00  -4.085 4.41e-05 ***
+## word_freq_650               4.417e-01  1.998e-01   2.211 0.027047 *  
+## word_freq_lab              -1.906e+00  1.452e+00  -1.313 0.189306    
+## word_freq_labs             -1.310e-01  3.026e-01  -0.433 0.665136    
+## word_freq_telnet           -8.963e+01  3.808e+03  -0.024 0.981223    
+## word_freq_857               7.376e-01  4.169e+00   0.177 0.859589    
+## word_freq_data             -7.575e-01  3.903e-01  -1.941 0.052258 .  
+## word_freq_415              -1.329e+01  4.062e+00  -3.272 0.001066 ** 
+## word_freq_85               -1.833e+00  9.316e-01  -1.967 0.049177 *  
+## word_freq_technology        9.546e-01  3.783e-01   2.524 0.011617 *  
+## word_freq_1999              5.820e-02  1.863e-01   0.312 0.754723    
+## word_freq_parts             8.029e-01  1.627e+00   0.494 0.621610    
+## word_freq_pm               -9.565e-01  4.496e-01  -2.127 0.033385 *  
+## word_freq_direct           -3.653e-01  3.973e-01  -0.919 0.357911    
+## word_freq_cs               -4.195e+01  3.207e+01  -1.308 0.190766    
+## word_freq_meeting          -2.969e+00  1.147e+00  -2.588 0.009648 ** 
+## word_freq_original         -1.141e+00  8.868e-01  -1.287 0.198167    
+## word_freq_project          -1.453e+00  5.683e-01  -2.556 0.010584 *  
+## word_freq_re               -8.585e-01  1.974e-01  -4.348 1.37e-05 ***
+## word_freq_edu              -1.206e+00  2.771e-01  -4.352 1.35e-05 ***
+## word_freq_table            -3.025e+00  2.634e+00  -1.149 0.250761    
+## word_freq_conference       -3.851e+00  1.712e+00  -2.249 0.024524 *  
+## char_freq_.                -1.228e+00  5.132e-01  -2.393 0.016722 *  
+## char_freq_..1              -1.741e-01  2.661e-01  -0.654 0.513048    
+## char_freq_..2              -6.924e-01  9.716e-01  -0.713 0.476070    
+## char_freq_..3               4.532e-01  1.209e-01   3.749 0.000177 ***
+## char_freq_..4               4.049e+00  7.317e-01   5.533 3.15e-08 ***
+## char_freq_..5               2.603e+00  1.216e+00   2.140 0.032386 *  
+## capital_run_length_average -4.769e-03  2.176e-02  -0.219 0.826554    
+## capital_run_length_longest  1.043e-02  3.058e-03   3.411 0.000648 ***
+## capital_run_length_total    6.950e-04  2.505e-04   2.774 0.005533 ** 
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## (Dispersion parameter for binomial family taken to be 1)
 ## 
-##     Null deviance: 4937.5  on 3679  degrees of freedom
-## Residual deviance: 1393.6  on 3622  degrees of freedom
-## AIC: 1509.6
+##     Null deviance: 4306.9  on 3219  degrees of freedom
+## Residual deviance: 1210.4  on 3162  degrees of freedom
+## AIC: 1326.4
 ## 
-## Number of Fisher Scoring iterations: 13
+## Number of Fisher Scoring iterations: 21
 ```
 
 * Interprétation du modèle
@@ -723,8 +743,8 @@ table(spambase.test$spam, predictions1)
 ```
 ##         predictions1
 ##          nospam spam
-##   nospam    532   29
-##   spam       40  319
+##   nospam    785   39
+##   spam       62  494
 ```
 
 ```r
@@ -734,8 +754,8 @@ prop.table(table(spambase.test$spam, predictions1),1)
 ```
 ##         predictions1
 ##             nospam      spam
-##   nospam 0.9483066 0.0516934
-##   spam   0.1114206 0.8885794
+##   nospam 0.9526699 0.0473301
+##   spam   0.1115108 0.8884892
 ```
 
 ```r
@@ -743,7 +763,7 @@ mean(predictions1 == spambase.test$spam)
 ```
 
 ```
-## [1] 0.925
+## [1] 0.9268116
 ```
 
 ### Utilisation de caret
@@ -824,10 +844,6 @@ model2 <- train(spam ~ ., data = spambase.train, method = 'glm')
 ```
 
 ```
-## Warning: glm.fit: algorithm did not converge
-```
-
-```
 ## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
 ```
 
@@ -877,29 +893,134 @@ confusionMatrix(predictions2, spambase.test$spam)
 ## 
 ##           Reference
 ## Prediction nospam spam
-##     nospam    532   40
-##     spam       29  319
+##     nospam    785   62
+##     spam       39  494
+##                                         
+##                Accuracy : 0.9268        
+##                  95% CI : (0.9118, 0.94)
+##     No Information Rate : 0.5971        
+##     P-Value [Acc > NIR] : < 2e-16       
+##                                         
+##                   Kappa : 0.8469        
+##  Mcnemar's Test P-Value : 0.02859       
+##                                         
+##             Sensitivity : 0.9527        
+##             Specificity : 0.8885        
+##          Pos Pred Value : 0.9268        
+##          Neg Pred Value : 0.9268        
+##              Prevalence : 0.5971        
+##          Detection Rate : 0.5688        
+##    Detection Prevalence : 0.6138        
+##       Balanced Accuracy : 0.9206        
+##                                         
+##        'Positive' Class : nospam        
+## 
+```
+
+Avec un arbre de décision:
+
+```r
+model3 <- train(spam ~ ., data = spambase.train, method = 'rpart')
+```
+
+```
+## Loading required package: rpart
+```
+
+```r
+predictions3 <- predict(model3, newdata = spambase.test)
+confusionMatrix(predictions3, spambase.test$spam)
+```
+
+```
+## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction nospam spam
+##     nospam    785  202
+##     spam       39  354
 ##                                          
-##                Accuracy : 0.925          
-##                  95% CI : (0.906, 0.9412)
-##     No Information Rate : 0.6098         
-##     P-Value [Acc > NIR] : <2e-16         
+##                Accuracy : 0.8254         
+##                  95% CI : (0.8043, 0.845)
+##     No Information Rate : 0.5971         
+##     P-Value [Acc > NIR] : < 2.2e-16      
 ##                                          
-##                   Kappa : 0.8415         
-##  Mcnemar's Test P-Value : 0.2286         
+##                   Kappa : 0.6189         
+##  Mcnemar's Test P-Value : < 2.2e-16      
 ##                                          
-##             Sensitivity : 0.9483         
-##             Specificity : 0.8886         
-##          Pos Pred Value : 0.9301         
-##          Neg Pred Value : 0.9167         
-##              Prevalence : 0.6098         
-##          Detection Rate : 0.5783         
-##    Detection Prevalence : 0.6217         
-##       Balanced Accuracy : 0.9184         
+##             Sensitivity : 0.9527         
+##             Specificity : 0.6367         
+##          Pos Pred Value : 0.7953         
+##          Neg Pred Value : 0.9008         
+##              Prevalence : 0.5971         
+##          Detection Rate : 0.5688         
+##    Detection Prevalence : 0.7152         
+##       Balanced Accuracy : 0.7947         
 ##                                          
 ##        'Positive' Class : nospam         
 ## 
 ```
+
+```r
+plot(model3$finalModel)
+```
+
+![](meetup_files/figure-html/unnamed-chunk-26-1.png) 
+
+Une random forest:
+
+```r
+model4 <- train(spam ~ ., data = spambase.train, method = 'rf')
+```
+
+```
+## Loading required package: randomForest
+## randomForest 4.6-10
+## Type rfNews() to see new features/changes/bug fixes.
+```
+
+```r
+predictions4 <- predict(model4, newdata = spambase.test)
+confusionMatrix(predictions4, spambase.test$spam)
+```
+
+```
+## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction nospam spam
+##     nospam    805   58
+##     spam       19  498
+##                                           
+##                Accuracy : 0.9442          
+##                  95% CI : (0.9308, 0.9557)
+##     No Information Rate : 0.5971          
+##     P-Value [Acc > NIR] : < 2.2e-16       
+##                                           
+##                   Kappa : 0.8827          
+##  Mcnemar's Test P-Value : 1.488e-05       
+##                                           
+##             Sensitivity : 0.9769          
+##             Specificity : 0.8957          
+##          Pos Pred Value : 0.9328          
+##          Neg Pred Value : 0.9632          
+##              Prevalence : 0.5971          
+##          Detection Rate : 0.5833          
+##    Detection Prevalence : 0.6254          
+##       Balanced Accuracy : 0.9363          
+##                                           
+##        'Positive' Class : nospam          
+## 
+```
+
+Naive Bayes:
+
+```r
+# model5 <- train(spam ~ ., data = spambase.train, method = 'nb')
+# predictions5 <- predict(model5, newdata = spambase.test)
+# confusionMatrix(predictions5, spambase.test$spam)
+```
+
 
 
 Pour aller plus loin, introduction au package [caret](http://topepo.github.io/caret/index.html) et tests avec différents algorithmes de machine learning (arbres de décision, random forest, gbm, *Naive Bayes*...)
@@ -910,3 +1031,5 @@ Pour aller plus loin, introduction au package [caret](http://topepo.github.io/ca
 * http://cran.r-project.org/web/views/MachineLearning.html
 * http://kooperberg.fhcrc.org/logic/documents/ingophd-logic.pdf
 * Lichman, M. (2013). UCI Machine Learning Repository [http://archive.ics.uci.edu/ml]. Irvine, CA: University of California, School of Information and Computer Science. 
+* Liste des modèles supportés par le package *caret*: http://topepo.github.io/caret/modelList.html
+
