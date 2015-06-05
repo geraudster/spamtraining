@@ -85,3 +85,17 @@ table(predict = predictions2, actual = spambase.test$spam)
 mean(predictions2 == spambase.test$spam)
 
 # install.packages('caret')
+
+
+# tips:
+# matrice de confusion
+table(spambase.test$spam, predictions2[,'spam'] >= 0.5)
+
+# calcul accuracy
+sum(diag(table(spambase.test$spam, predictions2[,'spam'] >= 0.5))) / nrow(spambase.test)
+
+# rpart
+library(rpart.plot)
+model2 <- rpart(spam ~ ., data = spambase.train)
+prp(model2)
+
