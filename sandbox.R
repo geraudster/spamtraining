@@ -99,3 +99,39 @@ library(rpart.plot)
 model2 <- rpart(spam ~ ., data = spambase.train)
 prp(model2)
 
+# Test dataset Enron
+pairs(emailsTopTerms[c(1:5,31)])
+pairs(emailsTopTerms[c(6:10,31)])
+pairs(emailsTopTerms[c(11:15,31)])
+pairs(emailsTopTerms[c(16:20,31)])
+pairs(emailsTopTerms[c(21:25,31)])
+pairs(emailsTopTerms[c(26:30,31)])
+
+# Test de ml
+# library(caTools)
+# split <- sample.split(emailsTopTerms$spam, 0.7)
+trainSet$spam <- factor(trainSet$spam, levels = c(0,1), labels = c('ham', 'spam'))
+testSet$spam <- factor(testSet$spam, levels = c(0,1), labels = c('ham', 'spam'))
+
+model.logit <- glm(spam ~ ., trainSet, family = 'binomial')
+train.predictions <- predict(model.logit, newdata = trainSet, type = 'response')
+train.confusionMat <- table(trainSet$spam, train.predictions >= 0.5)
+sum(diag(train.confusionMat) / nrow(trainSet))
+
+test.predictions <- predict(model.logit, newdata = testSet, type = 'response')
+test.confusionMat <- table(testSet$spam, test.predictions >= 0.5)
+sum(diag(test.confusionMat) / nrow(testSet))
+
+library(rpart)
+model.rpart <- rpart(spam ~ ., trainSet)
+train.predictions2 <- predict(model.rpart, newdata = trainSet)
+train.confusionMat2 <- table(trainSet$spam, train.predictions2['spam'] >= 0.5)
+sum(diag(train.confusionMat2) / nrow(trainSet))
+
+test.predictions2 <- predict(model.rpart, newdata = testSet)
+test.confusionMat2 <- table(testSet$spam, test.predictions2[,'spam'] >= 0.5)
+sum(diag(test.confusionMat2) / nrow(testSet))
+
+#install.packages('rpart.plot')
+library(rpart.plot)
+prp(model.rpart)

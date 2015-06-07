@@ -1,0 +1,78 @@
+## Préparation des datasets
+
+### Chargement du fichier
+
+```{r}
+emails <- read.csv('spams_and_hams/emails.csv', stringsAsFactors = FALSE)
+nrow(emails)
+table(emails$spam)
+```
+
+### Création du corpus
+
+```{r, warning=FALSE}
+#install.packages('tm')
+#install.packages('SnowballC')
+library(tm)
+library(SnowballC)
+```
+
+```{r, cache=TRUE}
+emailCorpus <- Corpus(VectorSource(emails$text), readerControl = list(language = 'en'))
+```
+
+```{r}
+emailCorpus <- tm_map(emailCorpus, tolower)
+emailCorpus <- tm_map(emailCorpus, stripWhitespace)
+emailCorpus <- tm_map(emailCorpus, PlainTextDocument)
+emailCorpus <- tm_map(emailCorpus, removePunctuation)
+emailCorpus <- tm_map(emailCorpus, removeWords, stopwords("english"))
+emailCorpus <- tm_map(emailCorpus, stemDocument)
+```
+
+```{r}
+dtm <- DocumentTermMatrix(emailCorpus)
+dtm
+```
+
+```{r}
+dtmWithoutSparseTerms <- removeSparseTerms(dtm, 0.95)
+dtmWithoutSparseTerms
+```
+
+### Création du data.frame
+
+```{r}
+emailsDf <- as.data.frame(as.matrix(dtmWithoutSparseTerms))
+colnames(emailsDf) <- make.names(colnames(emailsDf))
+```
+
+Récupération des termes les plus fréquents:
+```{r}
+v <- sort(colSums(emailsDf), decreasing=TRUE)
+head(names(v), 30)
+```
+
+```{r}
+emailsTopTerms <- emailsDf[, head(names(v),30)]
+```
+
+```{r}
+emailsTopTerms$spam <- emails$spam
+```
+
+### Création train/test datasets
+
+```{r}
+#install.packages('caTools')
+library(caTools)
+```
+
+```{r}
+split <- sample.split(emailsTopTerms$spam, 0.7)
+trainSet <- emailsTopTerms[split,]
+testSet <- emailsTopTerms[-split,]
+```
+
+
+
