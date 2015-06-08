@@ -84,12 +84,12 @@ Création des jeux de données (70% pour le train, 30% pour le test):
 set.seed(1234)
 split <- sample.split(emailsTopTerms$spam, 0.7)
 trainSet <- emailsTopTerms[split,]
-testSet <- emailsTopTerms[-split,]
+testSet <- emailsTopTerms[!split,]
 ```
 
 ### Écriture des fichiers
 
 ```{r}
-write.table(trainSet, file = 'emails_train.csv', row.names = FALSE, sep = ',', quote = FALSE)
-write.table(testSet, file = 'emails_test.csv', row.names = FALSE, sep = ',', quote = FALSE)
+write.table(trainSet, file = 'emails_train.csv', row.names = FALSE, sep = ',', quote = FALSE, append = FALSE)
+write.table(testSet, file = 'emails_test.csv', row.names = FALSE, sep = ',', quote = FALSE, append = FALSE)
 ```
