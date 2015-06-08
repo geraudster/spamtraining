@@ -128,83 +128,55 @@ Aide-mémoire pour les indices des data.frames: [ROW, COL] -> ROW is COol
 * Un peu de stats descriptives, quelques plots
 * *Réduction de dimensions ?*
 
-Récupérer les données depuis l'url distante:
-```{r, cache=TRUE}
-url <- 'https://archive.ics.uci.edu/ml/machine-learning-databases/spambase/spambase.zip'
-dest <- './data'
-dir.create(dest)
-download.file(url,
-              paste(dest, 'spambase.zip', sep='/'), method = 'curl')
-```
+Récupérer les 2 jeux de données depuis les urls suivantes:
 
-Ensuite on décompresse l'archive:
-```{r, cache=TRUE}
-unzip(paste(dest, 'spambase.zip', sep='/'), exdir=dest)
-```
+* [Données d'entraînement](https://raw.githubusercontent.com/geraudster/spamdata/master/emails_train.csv)
+* [Données de test](https://raw.githubusercontent.com/geraudster/spamdata/master/emails_test.csv)
 
-Regardons les fichiers créés:
+Chargement des données (par l'IHM) ou directement en R:
 ```{r}
-list.files(dest)
-```
+trainSet <- read.csv('emails_train.csv')
+testSet <- read.csv('emails_test.csv')
 
-Chargement des données:
-```{r}
-spambase <- read.csv('data/spambase.data')
-
-dim(spambase)
-colnames(spambase)
-head(spambase, 5)
+dim(trainSet)
+colnames(trainSet)
+str(trainSet)
 #View(spambase) # ou clic sur spambase dans l'onglet Environment
 
-table(spambase[,58])
-```
-
-Chargement des entêtes:
-```{r}
-spambase.names <- readLines('data/spambase.names')
-spambase.names <- sub(':.*$', '', spambase.names[34:length(spambase.names)])
-spambase.names [length(spambase.names) + 1] <- 'spam'
-
-spambase.names
-```
-
-Renommage des colonnes du data.frame:
-```{r}
-colnames(spambase) <- spambase.names
-spambase <- data.frame(spambase)
-str(spambase)
-class(spambase$spam)
+table(trainSet$spam)
+table(testSet$spam)
 ```
 
 Gestion du label de spam:
 ```{r}
-spambase$spam <- factor(spambase$spam, levels = c(0,1), labels = c('nospam', 'spam'))
-str(spambase$spam)
-table(spambase$spam)
+trainSet$spam <- factor(trainSet$spam, levels = c(0,1), labels = c('ham', 'spam'))
+str(trainSet$spam)
+table(trainSet$spam)
+```
+
+On fait pareil pour le jeu de test:
+```{r}
+testSet$spam <- factor(testSet$spam, levels = c(0,1), labels = c('ham', 'spam'))
 ```
 
 ### Exploration
 
 Quelques histogrammes:
 ```{r}
-hist(spambase$word_freq_people)
+hist(trainSet$enron)
+hist(trainSet$like)
+hist(trainSet$busi)
 ```
 
-Un histogramme plus avancé:
-```{r}
-hist(spambase$word_freq_order[spambase$spam == 'nospam'], col = 'blue', breaks = 20)
-hist(spambase$word_freq_order[spambase$spam == 'spam'], col = 'red', add = T, breaks = 20)
-```
 
 Une boxplot:
 ```{r}
-boxplot(spambase$word_freq_make ~ spambase$spam)
-boxplot(spambase$word_freq_our ~ spambase$spam)
-boxplot(spambase$word_freq_address ~ spambase$spam)
-boxplot(spambase$word_freq_money ~ spambase$spam)
+boxplot(trainSet$enron ~ trainSet$spam)
+boxplot(trainSet$like ~ trainSet$spam)
+boxplot(trainSet$busi ~ trainSet$spam)
+boxplot(trainSet$pleas ~ trainSet$spam)
+boxplot(trainSet$com ~ trainSet$spam)
 ```
-
-On voit qu'il y a beaucoup de valeurs à 0 ou proche de 0 (**à voir si on normalise**).
 
 
 ### Modélisation
@@ -213,92 +185,74 @@ On voit qu'il y a beaucoup de valeurs à 0 ou proche de 0 (**à voir si on norma
 
 *dessin ?*
 
-* Préparation train set / test set
-
-```{r}
-set.seed(123)
-spambase.train.idx <- sample.int(nrow(spambase), nrow(spambase) * 0.7)
-spambase.train <- spambase[spambase.train.idx,]
-spambase.test <- spambase[-spambase.train.idx,]
-
-dim(spambase.train)
-dim(spambase.test)
-
-prop.table(table(spambase.train$spam))
-prop.table(table(spambase.test$spam))
-```
-
 * Problématique de la classification / présentation de la régression logistique
 * Application de l'algo
 
 ```{r}
-# model1 <- glm(spam ~ word_freq_free + word_freq_internet, data = spambase.train, family = "binomial")
-# summary(model1)
-model1 <- glm(spam ~ ., data = spambase.train, family = "binomial")
-summary(model1)
+model.logit <- glm(spam ~ ., trainSet, family = 'binomial')
 ```
 
 * Interprétation du modèle
 
-*TODO?*
+```{r}
+summary(model.logit)
+```
 
 * Évaluation du modèle (score, matrice de confusion)
 
 ```{r}
-predictions1 <- predict(model1, newdata = spambase.test, type = "response")
+train.predictions <- predict(model.logit, newdata = trainSet, type = 'response')
+train.confusionMat <- table(trainSet$spam, train.predictions >= 0.5)
+train.confusionMat
+sum(diag(train.confusionMat) / nrow(trainSet))
 
-# x <- seq(0,10,0.01)
-# y <- predict(model1, newdata = x, type = "response")
-# lines(spambase.test$word_freq_our, predictions1)
-
-predictions1 <- sapply(predictions1, function (x) { if (x>0.5) 'spam' else 'nospam'})
-
-table(spambase.test$spam, predictions1)
-prop.table(table(spambase.test$spam, predictions1),1)
-mean(predictions1 == spambase.test$spam)
+test.predictions <- predict(model.logit, newdata = testSet, type = 'response')
+test.confusionMat <- table(testSet$spam, test.predictions >= 0.5)
+test.confusionMat
+sum(diag(test.confusionMat) / nrow(testSet))
 ```
 
-### Utilisation de caret
+### Création d'un arbre de décision
 
-```{r, echo=FALSE}
-# install.packages(c('caret', 'e1071'))
-library(caret)
+Installation des packages par RStudio ou directement en R:
+```{r, cache=TRUE, warning=FALSE}
+#install.packages('rpart')
+#install.packages('rpart.plot')
 ```
 
 ```{r}
-model2 <- train(spam ~ ., data = spambase.train, method = 'glm')
-predictions2 <- predict(model2, newdata = spambase.test)
-confusionMatrix(predictions2, spambase.test$spam)
+library(rpart)
+library(rpart.plot)
 ```
 
-Avec un arbre de décision:
+Création du modèle:
 ```{r}
-model3 <- train(spam ~ ., data = spambase.train, method = 'rpart')
-predictions3 <- predict(model3, newdata = spambase.test)
-confusionMatrix(predictions3, spambase.test$spam)
-
-plot(model3$finalModel)
+model.rpart <- rpart(spam ~ ., trainSet)
+summary(model.rpart)
 ```
 
-Une random forest:
-```{r, cache=TRUE}
-model4 <- train(spam ~ ., data = spambase.train, method = 'rf')
-predictions4 <- predict(model4, newdata = spambase.test)
-confusionMatrix(predictions4, spambase.test$spam)
-
+Interprétation:
+```{r}
+prp(model.rpart)
+#prp(model.rpart, extra = 1)
 ```
 
-Naive Bayes:
-```{r, warning=FALSE}
-# model5 <- train(spam ~ ., data = spambase.train, method = 'nb')
-# predictions5 <- predict(model5, newdata = spambase.test)
-# confusionMatrix(predictions5, spambase.test$spam)
-
+Prédiction sur les données du trainSet:
+```{r}
+train.predictions2 <- predict(model.rpart, newdata = trainSet)
+train.confusionMat2 <- table(trainSet$spam, train.predictions2[,'spam'] >= 0.5)
+train.confusionMat2
+sum(diag(train.confusionMat2) / nrow(trainSet))
 ```
 
+Validation du modèle:
+```{r}
+test.predictions2 <- predict(model.rpart, newdata = testSet)
+test.confusionMat2 <- table(testSet$spam, test.predictions2[,'spam'] >= 0.5)
+test.confusionMat2
+sum(diag(test.confusionMat2) / nrow(testSet))
+```
 
-
-Pour aller plus loin, introduction au package [caret](http://topepo.github.io/caret/index.html) et tests avec différents algorithmes de machine learning (arbres de décision, random forest, gbm, *Naive Bayes*...)
 
 ## Bibliographie
 
