@@ -39,11 +39,14 @@ library(tm)
 library(SnowballC)
 ```
 
+Création du corpus:
 
 ```r
 emailCorpus <- Corpus(VectorSource(emails$text), readerControl = list(language = 'en'))
 ```
 
+On applique ensuite une série de transformations pour nettoyer le corpus (passage en minuscule, 
+suppression de la ponctuation...):
 
 ```r
 emailCorpus <- tm_map(emailCorpus, tolower)
@@ -68,6 +71,7 @@ dtm
 ## Weighting          : term frequency (tf)
 ```
 
+On retire ensuite les termes utilisés dans moins de 5% des documents:
 
 ```r
 dtmWithoutSparseTerms <- removeSparseTerms(dtm, 0.95)
@@ -84,6 +88,7 @@ dtmWithoutSparseTerms
 
 ### Création du data.frame
 
+Transformation en objet data.frame et renommage des colonnes:
 
 ```r
 emailsDf <- as.data.frame(as.matrix(dtmWithoutSparseTerms))
@@ -110,6 +115,7 @@ head(names(v), 30)
 emailsTopTerms <- emailsDf[, head(names(v),30)]
 ```
 
+On colle le label:
 
 ```r
 emailsTopTerms$spam <- emails$spam
@@ -123,12 +129,19 @@ emailsTopTerms$spam <- emails$spam
 library(caTools)
 ```
 
+Création des jeux de données (70% pour le train, 30% pour le test):
 
 ```r
+set.seed(1234)
 split <- sample.split(emailsTopTerms$spam, 0.7)
 trainSet <- emailsTopTerms[split,]
 testSet <- emailsTopTerms[-split,]
 ```
 
+### Écriture des fichiers
 
 
+```r
+write.table(trainSet, file = 'emails_train.csv', row.names = FALSE, sep = ',', quote = FALSE)
+write.table(testSet, file = 'emails_test.csv', row.names = FALSE, sep = ',', quote = FALSE)
+```
