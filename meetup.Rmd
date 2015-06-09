@@ -216,6 +216,22 @@ test.confusionMat
 sum(diag(test.confusionMat) / nrow(testSet))
 ```
 
+* Modification du seuil
+
+Avec une valeur de seuil plus pessimiste:
+```{r}
+train.confusionMat <- table(trainSet$spam, train.predictions >= 0.8)
+train.confusionMat
+sum(diag(train.confusionMat) / nrow(trainSet))
+```
+
+Avec une valeur de seuil plus optimiste:
+```{r}
+train.confusionMat <- table(trainSet$spam, train.predictions >= 0.2)
+train.confusionMat
+sum(diag(train.confusionMat) / nrow(trainSet))
+```
+
 ### Création d'un arbre de décision
 
 Installation des packages par RStudio ou directement en R:
@@ -248,6 +264,21 @@ train.confusionMat2 <- table(trainSet$spam, train.predictions2[,'spam'] >= 0.5)
 train.confusionMat2
 sum(diag(train.confusionMat2) / nrow(trainSet))
 ```
+
+Avec une valeur de seuil plus pessimiste:
+```{r}
+train.confusionMat2 <- table(trainSet$spam, train.predictions2[,'spam'] >= 0.8)
+train.confusionMat2
+sum(diag(train.confusionMat2) / nrow(trainSet))
+```
+
+Avec une valeur de seuil plus optimiste:
+```{r}
+train.confusionMat2 <- table(trainSet$spam, train.predictions2[,'spam'] >= 0.2)
+train.confusionMat2
+sum(diag(train.confusionMat2) / nrow(trainSet))
+```
+
 
 Validation du modèle:
 ```{r}

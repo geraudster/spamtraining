@@ -575,6 +575,52 @@ sum(diag(test.confusionMat) / nrow(testSet))
 ## [1] 0.9243306
 ```
 
+* Modification du seuil
+
+Avec une valeur de seuil plus pessimiste:
+
+```r
+train.confusionMat <- table(trainSet$spam, train.predictions >= 0.8)
+train.confusionMat
+```
+
+```
+##       
+##        FALSE TRUE
+##   ham   3013   39
+##   spam   517  441
+```
+
+```r
+sum(diag(train.confusionMat) / nrow(trainSet))
+```
+
+```
+## [1] 0.8613466
+```
+
+Avec une valeur de seuil plus optimiste:
+
+```r
+train.confusionMat <- table(trainSet$spam, train.predictions >= 0.2)
+train.confusionMat
+```
+
+```
+##       
+##        FALSE TRUE
+##   ham   2716  336
+##   spam    17  941
+```
+
+```r
+sum(diag(train.confusionMat) / nrow(trainSet))
+```
+
+```
+## [1] 0.9119701
+```
+
 ### Création d'un arbre de décision
 
 Installation des packages par RStudio ou directement en R:
@@ -605,13 +651,13 @@ summary(model.rpart)
 ##           CP nsplit rel error    xerror       xstd
 ## 1 0.18841336      0 1.0000000 1.0000000 0.02818625
 ## 2 0.10647182      2 0.6231733 0.6231733 0.02352977
-## 3 0.08037578      3 0.5167015 0.5323591 0.02202325
-## 4 0.03549061      4 0.4363257 0.4363257 0.02019848
-## 5 0.03131524      5 0.4008351 0.4123173 0.01969768
-## 6 0.02609603      6 0.3695198 0.3966597 0.01936009
-## 7 0.01565762      7 0.3434238 0.3455115 0.01819036
-## 8 0.01252610      8 0.3277662 0.3361169 0.01796328
-## 9 0.01000000      9 0.3152401 0.3340292 0.01791226
+## 3 0.08037578      3 0.5167015 0.5448852 0.02224261
+## 4 0.03549061      4 0.4363257 0.4540710 0.02055630
+## 5 0.03131524      5 0.4008351 0.4050104 0.01954125
+## 6 0.02609603      6 0.3695198 0.3945720 0.01931440
+## 7 0.01565762      7 0.3434238 0.3528184 0.01836420
+## 8 0.01252610      8 0.3277662 0.3371608 0.01798871
+## 9 0.01000000      9 0.3152401 0.3277662 0.01775796
 ## 
 ## Variable importance
 ##    enron     vinc kaminski      ect      hou  subject    X2000    thank 
@@ -829,7 +875,7 @@ Interprétation:
 prp(model.rpart)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-22-1.png) 
+![](meetup_files/figure-html/unnamed-chunk-24-1.png) 
 
 ```r
 #prp(model.rpart, extra = 1)
@@ -857,6 +903,51 @@ sum(diag(train.confusionMat2) / nrow(trainSet))
 ```
 ## [1] 0.9246883
 ```
+
+Avec une valeur de seuil plus pessimiste:
+
+```r
+train.confusionMat2 <- table(trainSet$spam, train.predictions2[,'spam'] >= 0.8)
+train.confusionMat2
+```
+
+```
+##       
+##        FALSE TRUE
+##   ham   3052    0
+##   spam   943   15
+```
+
+```r
+sum(diag(train.confusionMat2) / nrow(trainSet))
+```
+
+```
+## [1] 0.7648379
+```
+
+Avec une valeur de seuil plus optimiste:
+
+```r
+train.confusionMat2 <- table(trainSet$spam, train.predictions2[,'spam'] >= 0.2)
+train.confusionMat2
+```
+
+```
+##       
+##        FALSE TRUE
+##   ham   2682  370
+##   spam    39  919
+```
+
+```r
+sum(diag(train.confusionMat2) / nrow(trainSet))
+```
+
+```
+## [1] 0.898005
+```
+
 
 Validation du modèle:
 

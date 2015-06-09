@@ -360,6 +360,27 @@ test.confusionMat</code></pre>
 ##   spam    26  384</code></pre>
 <pre class="r"><code>sum(diag(test.confusionMat) / nrow(testSet))</code></pre>
 <pre><code>## [1] 0.9243306</code></pre>
+<ul>
+<li>Modification du seuil</li>
+</ul>
+<p>Avec une valeur de seuil plus pessimiste:</p>
+<pre class="r"><code>train.confusionMat &lt;- table(trainSet$spam, train.predictions &gt;= 0.8)
+train.confusionMat</code></pre>
+<pre><code>##       
+##        FALSE TRUE
+##   ham   3013   39
+##   spam   517  441</code></pre>
+<pre class="r"><code>sum(diag(train.confusionMat) / nrow(trainSet))</code></pre>
+<pre><code>## [1] 0.8613466</code></pre>
+<p>Avec une valeur de seuil plus optimiste:</p>
+<pre class="r"><code>train.confusionMat &lt;- table(trainSet$spam, train.predictions &gt;= 0.2)
+train.confusionMat</code></pre>
+<pre><code>##       
+##        FALSE TRUE
+##   ham   2716  336
+##   spam    17  941</code></pre>
+<pre class="r"><code>sum(diag(train.confusionMat) / nrow(trainSet))</code></pre>
+<pre><code>## [1] 0.9119701</code></pre>
 </div>
 <div id="creation-dun-arbre-de-decision" class="section level3">
 <h3>Création d’un arbre de décision</h3>
@@ -378,13 +399,13 @@ summary(model.rpart)</code></pre>
 ##           CP nsplit rel error    xerror       xstd
 ## 1 0.18841336      0 1.0000000 1.0000000 0.02818625
 ## 2 0.10647182      2 0.6231733 0.6231733 0.02352977
-## 3 0.08037578      3 0.5167015 0.5323591 0.02202325
-## 4 0.03549061      4 0.4363257 0.4363257 0.02019848
-## 5 0.03131524      5 0.4008351 0.4123173 0.01969768
-## 6 0.02609603      6 0.3695198 0.3966597 0.01936009
-## 7 0.01565762      7 0.3434238 0.3455115 0.01819036
-## 8 0.01252610      8 0.3277662 0.3361169 0.01796328
-## 9 0.01000000      9 0.3152401 0.3340292 0.01791226
+## 3 0.08037578      3 0.5167015 0.5448852 0.02224261
+## 4 0.03549061      4 0.4363257 0.4540710 0.02055630
+## 5 0.03131524      5 0.4008351 0.4050104 0.01954125
+## 6 0.02609603      6 0.3695198 0.3945720 0.01931440
+## 7 0.01565762      7 0.3434238 0.3528184 0.01836420
+## 8 0.01252610      8 0.3277662 0.3371608 0.01798871
+## 9 0.01000000      9 0.3152401 0.3277662 0.01775796
 ## 
 ## Variable importance
 ##    enron     vinc kaminski      ect      hou  subject    X2000    thank 
@@ -608,6 +629,24 @@ train.confusionMat2</code></pre>
 ##   spam    76  882</code></pre>
 <pre class="r"><code>sum(diag(train.confusionMat2) / nrow(trainSet))</code></pre>
 <pre><code>## [1] 0.9246883</code></pre>
+<p>Avec une valeur de seuil plus pessimiste:</p>
+<pre class="r"><code>train.confusionMat2 &lt;- table(trainSet$spam, train.predictions2[,'spam'] &gt;= 0.8)
+train.confusionMat2</code></pre>
+<pre><code>##       
+##        FALSE TRUE
+##   ham   3052    0
+##   spam   943   15</code></pre>
+<pre class="r"><code>sum(diag(train.confusionMat2) / nrow(trainSet))</code></pre>
+<pre><code>## [1] 0.7648379</code></pre>
+<p>Avec une valeur de seuil plus optimiste:</p>
+<pre class="r"><code>train.confusionMat2 &lt;- table(trainSet$spam, train.predictions2[,'spam'] &gt;= 0.2)
+train.confusionMat2</code></pre>
+<pre><code>##       
+##        FALSE TRUE
+##   ham   2682  370
+##   spam    39  919</code></pre>
+<pre class="r"><code>sum(diag(train.confusionMat2) / nrow(trainSet))</code></pre>
+<pre><code>## [1] 0.898005</code></pre>
 <p>Validation du modèle:</p>
 <pre class="r"><code>test.predictions2 &lt;- predict(model.rpart, newdata = testSet)
 test.confusionMat2 &lt;- table(testSet$spam, test.predictions2[,'spam'] &gt;= 0.5)
