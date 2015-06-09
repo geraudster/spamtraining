@@ -30,6 +30,8 @@ Plusieurs versions sont disponibles dont une version *Open Source*.
 
 ## Les bases du langage
 
+*A METTRE A JOUR*
+
 R est une grosse calculatrice qui fournit une interface REPL (Read-Eval-Print-Loop).
 
 
@@ -266,11 +268,13 @@ Aide-mémoire pour les indices des data.frames: [ROW, COL] -> ROW is COol
 
 ## Cas d'utilisation spam filter
 
-### Récupération et exploration des données
+À partir d'un jeu de données contenant une liste de e-mails reconnus comme étant soit
+spam soit ham, nous allons entraîné plusieurs modèles afin de pouvoir déterminer automatiquement
+la nature d'un e-mail.
 
-* Récupération du jeu de données (https://archive.ics.uci.edu/ml/datasets/Spambase)
-* Un peu de stats descriptives, quelques plots
-* *Réduction de dimensions ?*
+Dans le jeu de données, les e-mails sont représentés sous forme de vecteurs contenant les termes les plus présents et leurs occurences.
+
+### Récupération et exploration des données
 
 Récupérer les 2 jeux de données depuis les urls suivantes:
 
