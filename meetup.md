@@ -1,6 +1,37 @@
 # Sujet Meetup TDS NoBlaBla
 Géraud  
 
+## Programme
+
+R est un langage de programmation et outil d'analyse statistique dont la popularité ne cesse
+de croître parmi la communauté des data heroes. 
+Au cours de cet atelier, vous allez :
+
+* découvrir les bases du langages R
+* apprendre à charger et manipuler des jeux de données
+* appliquer des algorithmes de Machine Learning pour la détection de spam
+* interpréter et évaluer les modèles générés
+
+Vous devez avoir installé les outils suivants:
+
+* R 3.2:
+    * [Windows](http://cran.rstudio.com/bin/windows/base/)
+    * [MacOS](http://cran.rstudio.com/bin/macosx/)
+    * [Linux](http://cran.rstudio.com/bin/linux/)
+* RStudio Desktop: http://www.rstudio.com/products/rstudio/download/
+
+Les packages suivants doivent être installés (lancer Rstudio puis menu Tools -> Install packages...):
+
+* rpart
+* rpart.plot
+
+![](rstudio-package.png)
+
+Les jeux de données doivent être téléchargés depuis les urls suivantes:
+
+* [Données d'entraînement](https://raw.githubusercontent.com/geraudster/spamdata/master/emails_train.csv)
+* [Données de test](https://raw.githubusercontent.com/geraudster/spamdata/master/emails_test.csv)
+
 ## Intro R
 
 * R c'est quoi? les origines...
@@ -99,8 +130,8 @@ sqrt(25)
 Affecter un résultat à une variable:
 
 ```r
-result <- 1 + 2
-result
+resultat <- 1 + 2
+resultat
 ```
 
 ```
@@ -112,7 +143,16 @@ Manipuler des vecteurs:
 
 
 ```r
-c(1,2,3,4,5,6,7,8,9)
+c(42,123)
+```
+
+```
+## [1]  42 123
+```
+
+```r
+chiffres <- c(1,2,3,4,5,6,7,8,9)
+chiffres
 ```
 
 ```
@@ -120,7 +160,8 @@ c(1,2,3,4,5,6,7,8,9)
 ```
 
 ```r
-1:9
+chiffres <- 1:9
+chiffres
 ```
 
 ```
