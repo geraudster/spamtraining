@@ -12,6 +12,8 @@ Au cours de cet atelier, vous allez :
 * appliquer des algorithmes de Machine Learning pour la détection de spam
 * interpréter et évaluer les modèles générés
 
+### Pré-requis
+
 Vous devez avoir installé les outils suivants:
 
 * R 3.2:
