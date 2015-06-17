@@ -6,6 +6,22 @@ output:
     keep_md: yes
 ---
 
+## Programme
+
+Au cours de cet atelier, vous allez :
+* découvrir les bases du langages R
+* charger des jeux de données 
+* entraîner des modèles pour la détection de spam
+* interpréter et évaluer les modèles
+
+Les pré-requis sont les suivants:
+* R 3.2:
+** [Windows](http://cran.rstudio.com/bin/windows/base/)
+** [MacOS](http://cran.rstudio.com/bin/macosx/)
+** [Linux](http://cran.rstudio.com/bin/linux/)
+* RStudio Desktop: http://www.rstudio.com/products/rstudio/download/
+
+
 ## Intro R
 
 * R c'est quoi? les origines...
