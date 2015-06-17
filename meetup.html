@@ -82,7 +82,7 @@ img {
 </div>
 <div id="rstudio" class="section level3">
 <h3>RStudio</h3>
-<p><a href="http://www.rstudio.com/">Rstudio</a> est une société qui publie l’éditeur Rstudio (et d’autres services comme ShinyApps, Rpubs…)</p>
+<p><a href="http://www.rstudio.com/">Rstudio</a> est une société qui publie l’environnement de développement Rstudio (et d’autres services comme ShinyApps, Rpubs…)</p>
 <p>Plusieurs versions sont disponibles dont une version <em>Open Source</em>.</p>
 </div>
 </div>
@@ -153,14 +153,14 @@ maListe[2]</code></pre>
 <pre><code>## [1] 2</code></pre>
 <p>Les Data Frames permettent de stocker des tableaux de données:</p>
 <pre class="r"><code>prenoms &lt;- c('Alice', 'Bob', 'Carole')
-emails &lt;- c('alice@example.com', 'bob@example.com', 'carole@example.com')
+sexe &lt;- c('F', 'M', 'F')
 ages &lt;- c(24, 30, 23)
-monDataFrame &lt;- data.frame(prenoms, emails, ages)
+monDataFrame &lt;- data.frame(prenoms, sexe, ages)
 monDataFrame</code></pre>
-<pre><code>##   prenoms             emails ages
-## 1   Alice  alice@example.com   24
-## 2     Bob    bob@example.com   30
-## 3  Carole carole@example.com   23</code></pre>
+<pre><code>##   prenoms sexe ages
+## 1   Alice    F   24
+## 2     Bob    M   30
+## 3  Carole    F   23</code></pre>
 <pre class="r"><code>monDataFrame[2, 'prenoms']</code></pre>
 <pre><code>## [1] Bob
 ## Levels: Alice Bob Carole</code></pre>

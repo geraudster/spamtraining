@@ -24,7 +24,7 @@ La philosophie de S / R: fournir un environnement interactif pour l'analyse stat
 
 ### RStudio
 
-[Rstudio](http://www.rstudio.com/) est une société qui publie l'éditeur Rstudio (et d'autres services comme ShinyApps, Rpubs...)
+[Rstudio](http://www.rstudio.com/) est une société qui publie l'environnement de développement Rstudio (et d'autres services comme ShinyApps, Rpubs...)
 
 Plusieurs versions sont disponibles dont une version *Open Source*.
 
@@ -229,17 +229,17 @@ Les Data Frames permettent de stocker des tableaux de données:
 
 ```r
 prenoms <- c('Alice', 'Bob', 'Carole')
-emails <- c('alice@example.com', 'bob@example.com', 'carole@example.com')
+sexe <- c('F', 'M', 'F')
 ages <- c(24, 30, 23)
-monDataFrame <- data.frame(prenoms, emails, ages)
+monDataFrame <- data.frame(prenoms, sexe, ages)
 monDataFrame
 ```
 
 ```
-##   prenoms             emails ages
-## 1   Alice  alice@example.com   24
-## 2     Bob    bob@example.com   30
-## 3  Carole carole@example.com   23
+##   prenoms sexe ages
+## 1   Alice    F   24
+## 2     Bob    M   30
+## 3  Carole    F   23
 ```
 
 ```r
