@@ -1015,6 +1015,55 @@ sum(diag(test.confusionMat2) / nrow(testSet))
 ## [1] 0.9121071
 ```
 
+## Pour aller plus loin - les courbes de ROC
+
+Dessinons la courbe ROC pour le modèle de régression logistique: 
+
+```r
+library(ggplot2)
+library(ROCR)
+```
+
+```
+## Loading required package: gplots
+## 
+## Attaching package: 'gplots'
+## 
+## The following object is masked from 'package:stats':
+## 
+##     lowess
+```
+
+```r
+predictions.logit <- prediction(test.predictions, testSet$spam)
+perf.logit <- performance(predictions.logit, measure = 'tpr', x.measure = 'fpr')
+roc.data <- data.frame(fpr=unlist(perf.logit@x.values),
+                       tpr=unlist(perf.logit@y.values),
+                       model="GLM")
+ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
+    geom_ribbon(alpha=0.2) +
+    geom_line(aes(y=tpr)) +
+    ggtitle('Courbe ROC pour le modèle de régression logistique')
+```
+
+![](meetup_files/figure-html/unnamed-chunk-29-1.png) 
+
+Maintenant pour le modèle de l'arbre de décision:
+
+
+```r
+predictions.rpart <- prediction(test.predictions2[,'spam'], testSet$spam)
+perf.rpart <- performance(predictions.rpart, measure = 'tpr', x.measure = 'fpr')
+roc.data <- data.frame(fpr=unlist(perf.rpart@x.values),
+                       tpr=unlist(perf.rpart@y.values),
+                       model="GLM")
+ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
+    geom_ribbon(alpha=0.2) +
+    geom_line(aes(y=tpr)) +
+    ggtitle('Courbe ROC pour le modèle d\'arbre de décision')
+```
+
+![](meetup_files/figure-html/unnamed-chunk-30-1.png) 
 
 ## Bibliographie
 
