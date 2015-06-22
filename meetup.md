@@ -7,7 +7,8 @@ Géraud
 
 R est un langage de programmation et outil d'analyse statistique dont la popularité ne cesse
 de croître parmi la communauté des data heroes. 
-Au cours de cet atelier, vous allez :
+Au cours de cet atelier, nous allons travailler autour du sujet de la détection de spam
+et ainsi:
 
 * découvrir les bases du langages R
 * apprendre à charger et manipuler des jeux de données
