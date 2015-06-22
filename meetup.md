@@ -3,6 +3,8 @@ Géraud
 
 ## Programme
 
+![R](images/Rlogo.png)
+
 R est un langage de programmation et outil d'analyse statistique dont la popularité ne cesse
 de croître parmi la communauté des data heroes. 
 Au cours de cet atelier, vous allez :
@@ -27,7 +29,7 @@ Les packages suivants doivent être installés (lancer Rstudio puis menu Tools -
 * rpart
 * rpart.plot
 
-![](rstudio-package.png)
+![Installation package](images/rstudio-package.png)
 
 Les jeux de données doivent être téléchargés depuis les urls suivantes:
 
