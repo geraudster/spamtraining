@@ -75,8 +75,33 @@ Plusieurs versions sont disponibles dont une version *Open Source*.
 
 R est une grosse calculatrice qui fournit une interface REPL (Read-Eval-Print-Loop).
 
+### Opérations arithmétiques de base
+
 ```{r}
 1 + 2
+6 * 7
+12 - 30
+5 / 13
+10 * (5 + 3)
+```
+
+Exo:
+
+* Calculer le carré de 5
+* Calculer la somme des entiers de 1 à 10
+```{r}
+# Carré de 5
+5 * 5
+5 ^ 2
+
+# Somme des 10 premiers entiers
+1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10
+10 * (10 -1 ) / 2
+```
+
+### Fonctions
+
+```{r}
 log(5)
 sqrt(25)
 ```
@@ -89,21 +114,30 @@ sqrt(25)
 ?`+`
 ```
 
-### Opérateurs, valeurs, listes, dataframes
+Exo:
 
-Utiliser des scalaires:
+* Calculer la racine carrée de 2
+* Calculer la norme d'un vecteur de coordonnées (3,5):
+$||\vec{u}|| = \sqrt{x^2 + y^2}$
+
 ```{r}
-1 + 2
-log(5)
-sqrt(25)
+# Racine carrée de 2
+sqrt(2)
+
+# Norme du vecteur
+sqrt(3^2 + 5^2)
 ```
+
+### Variables
 
 Affecter un résultat à une variable:
 ```{r}
 resultat <- 1 + 2
 resultat
+resultat * 2
 ```
 
+### Vecteurs
 
 Manipuler des vecteurs:
 
@@ -113,8 +147,43 @@ chiffres <- c(1,2,3,4,5,6,7,8,9)
 chiffres
 chiffres <- 1:9
 chiffres
-c('a', 'b', 'c')
-letters[1:3]
+```
+
+Fonctions arithmétiques:
+```{r, results='hide'}
+length
+mean
+sum
+```
+
+Exo:
+
+* Créer un vecteur contenant les 10 premiers entiers
+* Calculer la somme des 10 premiers entiers
+* Calculer la moyenne des 10 premiers entiers
+
+```{r}
+# Création du vecteur
+entiers <- 1:10
+
+# Calcul de la somme
+sum(entiers)
+
+# Calcul de la moyenne
+mean(entiers)
+```
+
+On peut aussi utiliser des chaînes de caractères:
+```{r}
+prenoms <- c('Alice', 'Bob', 'Carole')
+```
+
+Exo:
+
+* Créer un vecteur contenant les éléments 42 et "Hello"
+
+```{r}
+c(42, 'Hello')
 ```
 
 Les vecteurs ne contiennent que des données du même type:
@@ -122,6 +191,7 @@ Les vecteurs ne contiennent que des données du même type:
 c(1,2,'toto')
 ```
 
+### Vecteurs - la suite
 
 Opérations entre scalaires et vecteurs:
 ```{r}
@@ -365,4 +435,4 @@ ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
 * http://kooperberg.fhcrc.org/logic/documents/ingophd-logic.pdf
 * Lichman, M. (2013). UCI Machine Learning Repository [http://archive.ics.uci.edu/ml]. Irvine, CA: University of California, School of Information and Computer Science. 
 * Liste des modèles supportés par le package *caret*: http://topepo.github.io/caret/modelList.html
-
+* Intro à R: https://github.com/juba/intro-r

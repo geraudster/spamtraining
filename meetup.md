@@ -70,6 +70,8 @@ Plusieurs versions sont disponibles dont une version *Open Source*.
 
 R est une grosse calculatrice qui fournit une interface REPL (Read-Eval-Print-Loop).
 
+### Opérations arithmétiques de base
+
 
 ```r
 1 + 2
@@ -78,6 +80,80 @@ R est une grosse calculatrice qui fournit une interface REPL (Read-Eval-Print-Lo
 ```
 ## [1] 3
 ```
+
+```r
+6 * 7
+```
+
+```
+## [1] 42
+```
+
+```r
+12 - 30
+```
+
+```
+## [1] -18
+```
+
+```r
+5 / 13
+```
+
+```
+## [1] 0.3846154
+```
+
+```r
+10 * (5 + 3)
+```
+
+```
+## [1] 80
+```
+
+Exo:
+
+* Calculer le carré de 5
+* Calculer la somme des entiers de 1 à 10
+
+```r
+# Carré de 5
+5 * 5
+```
+
+```
+## [1] 25
+```
+
+```r
+5 ^ 2
+```
+
+```
+## [1] 25
+```
+
+```r
+# Somme des 10 premiers entiers
+1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10
+```
+
+```
+## [1] 55
+```
+
+```r
+10 * (10 -1 ) / 2
+```
+
+```
+## [1] 45
+```
+
+### Fonctions
+
 
 ```r
 log(5)
@@ -104,33 +180,32 @@ sqrt(25)
 ?`+`
 ```
 
-### Opérateurs, valeurs, listes, dataframes
+Exo:
 
-Utiliser des scalaires:
+* Calculer la racine carrée de 2
+* Calculer la norme d'un vecteur de coordonnées (3,5):
+$||\vec{u}|| = \sqrt{x^2 + y^2}$
 
-```r
-1 + 2
-```
-
-```
-## [1] 3
-```
 
 ```r
-log(5)
+# Racine carrée de 2
+sqrt(2)
 ```
 
 ```
-## [1] 1.609438
+## [1] 1.414214
 ```
 
 ```r
-sqrt(25)
+# Norme du vecteur
+sqrt(3^2 + 5^2)
 ```
 
 ```
-## [1] 5
+## [1] 5.830952
 ```
+
+### Variables
 
 Affecter un résultat à une variable:
 
@@ -143,6 +218,15 @@ resultat
 ## [1] 3
 ```
 
+```r
+resultat * 2
+```
+
+```
+## [1] 6
+```
+
+### Vecteurs
 
 Manipuler des vecteurs:
 
@@ -173,20 +257,59 @@ chiffres
 ## [1] 1 2 3 4 5 6 7 8 9
 ```
 
-```r
-c('a', 'b', 'c')
-```
-
-```
-## [1] "a" "b" "c"
-```
+Fonctions arithmétiques:
 
 ```r
-letters[1:3]
+length
+mean
+sum
+```
+
+Exo:
+
+* Créer un vecteur contenant les 10 premiers entiers
+* Calculer la somme des 10 premiers entiers
+* Calculer la moyenne des 10 premiers entiers
+
+
+```r
+# Création du vecteur
+entiers <- 1:10
+
+# Calcul de la somme
+sum(entiers)
 ```
 
 ```
-## [1] "a" "b" "c"
+## [1] 55
+```
+
+```r
+# Calcul de la moyenne
+mean(entiers)
+```
+
+```
+## [1] 5.5
+```
+
+On peut aussi utiliser des chaînes de caractères:
+
+```r
+prenoms <- c('Alice', 'Bob', 'Carole')
+```
+
+Exo:
+
+* Créer un vecteur contenant les éléments 42 et "Hello"
+
+
+```r
+c(42, 'Hello')
+```
+
+```
+## [1] "42"    "Hello"
 ```
 
 Les vecteurs ne contiennent que des données du même type:
@@ -199,6 +322,7 @@ c(1,2,'toto')
 ## [1] "1"    "2"    "toto"
 ```
 
+### Vecteurs - la suite
 
 Opérations entre scalaires et vecteurs:
 
@@ -449,19 +573,19 @@ Quelques histogrammes:
 hist(trainSet$enron)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-14-1.png) 
+![](meetup_files/figure-html/unnamed-chunk-20-1.png) 
 
 ```r
 hist(trainSet$like)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-14-2.png) 
+![](meetup_files/figure-html/unnamed-chunk-20-2.png) 
 
 ```r
 hist(trainSet$busi)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-14-3.png) 
+![](meetup_files/figure-html/unnamed-chunk-20-3.png) 
 
 
 Une boxplot:
@@ -470,31 +594,31 @@ Une boxplot:
 boxplot(trainSet$enron ~ trainSet$spam)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-15-1.png) 
+![](meetup_files/figure-html/unnamed-chunk-21-1.png) 
 
 ```r
 boxplot(trainSet$like ~ trainSet$spam)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-15-2.png) 
+![](meetup_files/figure-html/unnamed-chunk-21-2.png) 
 
 ```r
 boxplot(trainSet$busi ~ trainSet$spam)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-15-3.png) 
+![](meetup_files/figure-html/unnamed-chunk-21-3.png) 
 
 ```r
 boxplot(trainSet$pleas ~ trainSet$spam)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-15-4.png) 
+![](meetup_files/figure-html/unnamed-chunk-21-4.png) 
 
 ```r
 boxplot(trainSet$com ~ trainSet$spam)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-15-5.png) 
+![](meetup_files/figure-html/unnamed-chunk-21-5.png) 
 
 
 ### Modélisation
@@ -697,13 +821,13 @@ summary(model.rpart)
 ##           CP nsplit rel error    xerror       xstd
 ## 1 0.18841336      0 1.0000000 1.0000000 0.02818625
 ## 2 0.10647182      2 0.6231733 0.6231733 0.02352977
-## 3 0.08037578      3 0.5167015 0.5448852 0.02224261
-## 4 0.03549061      4 0.4363257 0.4540710 0.02055630
-## 5 0.03131524      5 0.4008351 0.4050104 0.01954125
-## 6 0.02609603      6 0.3695198 0.3945720 0.01931440
-## 7 0.01565762      7 0.3434238 0.3528184 0.01836420
-## 8 0.01252610      8 0.3277662 0.3371608 0.01798871
-## 9 0.01000000      9 0.3152401 0.3277662 0.01775796
+## 3 0.08037578      3 0.5167015 0.5323591 0.02202325
+## 4 0.03549061      4 0.4363257 0.4363257 0.02019848
+## 5 0.03131524      5 0.4008351 0.4112735 0.01967545
+## 6 0.02609603      6 0.3695198 0.3914405 0.01924554
+## 7 0.01565762      7 0.3434238 0.3538622 0.01838884
+## 8 0.01252610      8 0.3277662 0.3382046 0.01801410
+## 9 0.01000000      9 0.3152401 0.3246347 0.01768010
 ## 
 ## Variable importance
 ##    enron     vinc kaminski      ect      hou  subject    X2000    thank 
@@ -921,7 +1045,7 @@ Interprétation:
 prp(model.rpart)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-24-1.png) 
+![](meetup_files/figure-html/unnamed-chunk-30-1.png) 
 
 ```r
 #prp(model.rpart, extra = 1)
@@ -1049,7 +1173,7 @@ ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
     ggtitle('Courbe ROC pour le modèle de régression logistique')
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-29-1.png) 
+![](meetup_files/figure-html/unnamed-chunk-35-1.png) 
 
 Maintenant pour le modèle de l'arbre de décision:
 
@@ -1066,7 +1190,7 @@ ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
     ggtitle('Courbe ROC pour le modèle d\'arbre de décision')
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-30-1.png) 
+![](meetup_files/figure-html/unnamed-chunk-36-1.png) 
 
 ## Bibliographie
 
@@ -1075,4 +1199,4 @@ ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
 * http://kooperberg.fhcrc.org/logic/documents/ingophd-logic.pdf
 * Lichman, M. (2013). UCI Machine Learning Repository [http://archive.ics.uci.edu/ml]. Irvine, CA: University of California, School of Information and Computer Science. 
 * Liste des modèles supportés par le package *caret*: http://topepo.github.io/caret/modelList.html
-
+* Intro à R: https://github.com/juba/intro-r
