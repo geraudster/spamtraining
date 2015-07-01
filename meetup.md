@@ -360,6 +360,7 @@ Opérations entre vecteurs:
 ## [1]  2  6 12  8 15 24 14 24 36
 ```
 
+### Listes
 Les listes peuvent contenir des types différents:
 
 ```r
@@ -394,6 +395,8 @@ maListe[[2]]
 ```
 ## [1] 2
 ```
+
+### Data Frames
 
 Les Data Frames permettent de stocker des tableaux de données:
 
@@ -433,7 +436,7 @@ monDataFrame$prenoms
 Aide-mémoire pour les indices des data.frames: [ROW, COL] -> ROW is COol
 
 
-* Structure de contrôle (if, loop..)
+### Structures de contrôle (if, loop..)
 
 
 ## Cas d'utilisation spam filter

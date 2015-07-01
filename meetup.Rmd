@@ -205,6 +205,7 @@ Opérations entre vecteurs:
 1:9 * 2:4
 ```
 
+### Listes
 Les listes peuvent contenir des types différents:
 ```{r}
 list(1,2,'toto')
@@ -212,6 +213,8 @@ maListe <- list(1,2,'toto')
 maListe[2]
 maListe[[2]]
 ```
+
+### Data Frames
 
 Les Data Frames permettent de stocker des tableaux de données:
 ```{r}
@@ -228,7 +231,7 @@ monDataFrame$prenoms
 Aide-mémoire pour les indices des data.frames: [ROW, COL] -> ROW is COol
 
 
-* Structure de contrôle (if, loop..)
+### Structures de contrôle (if, loop..)
 
 
 ## Cas d'utilisation spam filter
