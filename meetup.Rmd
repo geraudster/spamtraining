@@ -71,8 +71,6 @@ Plusieurs versions sont disponibles dont une version *Open Source*.
 
 ## Les bases du langage
 
-*A METTRE A JOUR*
-
 R est une grosse calculatrice qui fournit une interface REPL (Read-Eval-Print-Loop).
 
 ### Opérations arithmétiques de base
@@ -96,7 +94,7 @@ Exo:
 
 # Somme des 10 premiers entiers
 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10
-10 * (10 -1 ) / 2
+10 * (10 + 1 ) / 2
 ```
 
 ### Fonctions
@@ -202,19 +200,32 @@ Opérations entre scalaires et vecteurs:
 Opérations entre vecteurs:
 ```{r}
 1:9 * 1:9
-1:9 * 2:4
 ```
 
-### Listes
-Les listes peuvent contenir des types différents:
+Exo:
+
+* Que se passe-t-il si vous exécutez le code `{r} 1:9 * 1:9` ?
+* Essayez `{r} 1:9 * 2:4`
+
+### Vecteurs - la fin
+
+Pour sélectionner des éléments:
 ```{r}
-list(1,2,'toto')
-maListe <- list(1,2,'toto')
-maListe[2]
-maListe[[2]]
+prenoms[2]
+prenoms[2:3]
+prenoms[c(FALSE, TRUE, TRUE)]
+```
+
+Trouver les éléments répondant à une condition:
+```{r}
+entiers > 5
+entiers[entiers > 5]
+subset(entiers, entiers > 5)
 ```
 
 ### Data Frames
+
+*A METTRE A JOUR*
 
 Les Data Frames permettent de stocker des tableaux de données:
 ```{r}
@@ -226,6 +237,9 @@ monDataFrame
 
 monDataFrame[2, 'prenoms']
 monDataFrame$prenoms
+
+monDataFrame$recu <- c(TRUE, FALSE, TRUE)
+table(monDataFrame$sexe, monDataFrame$recu)
 ```
 
 Aide-mémoire pour les indices des data.frames: [ROW, COL] -> ROW is COol
@@ -279,7 +293,7 @@ testSet$spam <- factor(testSet$spam, levels = c(0,1), labels = c('ham', 'spam'))
 
 Quelques histogrammes:
 ```{r}
-hist(trainSet$enron)
+hist(trainSet$vinc)
 hist(trainSet$like)
 hist(trainSet$busi)
 ```
@@ -287,11 +301,11 @@ hist(trainSet$busi)
 
 Une boxplot:
 ```{r}
-boxplot(trainSet$enron ~ trainSet$spam)
+boxplot(trainSet$vinc ~ trainSet$spam)
 boxplot(trainSet$like ~ trainSet$spam)
-boxplot(trainSet$busi ~ trainSet$spam)
+boxplot(trainSet$meet ~ trainSet$spam)
 boxplot(trainSet$pleas ~ trainSet$spam)
-boxplot(trainSet$com ~ trainSet$spam)
+boxplot(trainSet$thank ~ trainSet$spam)
 ```
 
 
@@ -305,13 +319,25 @@ boxplot(trainSet$com ~ trainSet$spam)
 * Application de l'algo
 
 ```{r}
-model.logit <- glm(spam ~ ., trainSet, family = 'binomial')
+model.logit <- glm(spam ~ vinc + like + meet + pleas + thank, family = 'binomial', trainSet)
+summary(model.logit)
+```
+
+L'unité est le logit!
+
+$\sigma(t) = \frac{1}{1 + e^{-t}}$
+
+Testons un modèle avec plus de variables:
+```{r}
+model.logit <- glm(spam ~ ., family = 'binomial', trainSet)
+round(exp(coef(model.logit)), 2)
 ```
 
 * Interprétation du modèle
 
 ```{r}
 summary(model.logit)
+exp(coef(model.logit))
 ```
 
 * Évaluation du modèle (score, matrice de confusion)
@@ -366,7 +392,7 @@ summary(model.rpart)
 Interprétation:
 ```{r}
 prp(model.rpart)
-#prp(model.rpart, extra = 1)
+prp(model.rpart, extra = 1)
 ```
 
 Prédiction sur les données du trainSet:

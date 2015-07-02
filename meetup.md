@@ -66,8 +66,6 @@ Plusieurs versions sont disponibles dont une version *Open Source*.
 
 ## Les bases du langage
 
-*A METTRE A JOUR*
-
 R est une grosse calculatrice qui fournit une interface REPL (Read-Eval-Print-Loop).
 
 ### Opérations arithmétiques de base
@@ -145,11 +143,11 @@ Exo:
 ```
 
 ```r
-10 * (10 -1 ) / 2
+10 * (10 + 1 ) / 2
 ```
 
 ```
-## [1] 45
+## [1] 55
 ```
 
 ### Fonctions
@@ -352,51 +350,68 @@ Opérations entre vecteurs:
 ## [1]  1  4  9 16 25 36 49 64 81
 ```
 
-```r
-1:9 * 2:4
-```
+Exo:
 
-```
-## [1]  2  6 12  8 15 24 14 24 36
-```
+* Que se passe-t-il si vous exécutez le code `{r} 1:9 * 1:9` ?
+* Essayez `{r} 1:9 * 2:4`
 
-### Listes
-Les listes peuvent contenir des types différents:
+### Vecteurs - la fin
+
+Pour sélectionner des éléments:
 
 ```r
-list(1,2,'toto')
+prenoms[2]
 ```
 
 ```
-## [[1]]
-## [1] 1
-## 
-## [[2]]
-## [1] 2
-## 
-## [[3]]
-## [1] "toto"
+## [1] "Bob"
 ```
 
 ```r
-maListe <- list(1,2,'toto')
-maListe[2]
+prenoms[2:3]
 ```
 
 ```
-## [[1]]
-## [1] 2
+## [1] "Bob"    "Carole"
 ```
 
 ```r
-maListe[[2]]
+prenoms[c(FALSE, TRUE, TRUE)]
 ```
 
 ```
-## [1] 2
+## [1] "Bob"    "Carole"
+```
+
+Trouver les éléments répondant à une condition:
+
+```r
+entiers > 5
+```
+
+```
+##  [1] FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE
+```
+
+```r
+entiers[entiers > 5]
+```
+
+```
+## [1]  6  7  8  9 10
+```
+
+```r
+subset(entiers, entiers > 5)
+```
+
+```
+## [1]  6  7  8  9 10
 ```
 
 ### Data Frames
+
+*A METTRE A JOUR*
 
 Les Data Frames permettent de stocker des tableaux de données:
 
@@ -431,6 +446,18 @@ monDataFrame$prenoms
 ```
 ## [1] Alice  Bob    Carole
 ## Levels: Alice Bob Carole
+```
+
+```r
+monDataFrame$recu <- c(TRUE, FALSE, TRUE)
+table(monDataFrame$sexe, monDataFrame$recu)
+```
+
+```
+##    
+##     FALSE TRUE
+##   F     0    2
+##   M     1    0
 ```
 
 Aide-mémoire pour les indices des data.frames: [ROW, COL] -> ROW is COol
@@ -573,55 +600,55 @@ testSet$spam <- factor(testSet$spam, levels = c(0,1), labels = c('ham', 'spam'))
 Quelques histogrammes:
 
 ```r
-hist(trainSet$enron)
-```
-
-![](meetup_files/figure-html/unnamed-chunk-20-1.png) 
-
-```r
-hist(trainSet$like)
-```
-
-![](meetup_files/figure-html/unnamed-chunk-20-2.png) 
-
-```r
-hist(trainSet$busi)
-```
-
-![](meetup_files/figure-html/unnamed-chunk-20-3.png) 
-
-
-Une boxplot:
-
-```r
-boxplot(trainSet$enron ~ trainSet$spam)
+hist(trainSet$vinc)
 ```
 
 ![](meetup_files/figure-html/unnamed-chunk-21-1.png) 
 
 ```r
-boxplot(trainSet$like ~ trainSet$spam)
+hist(trainSet$like)
 ```
 
 ![](meetup_files/figure-html/unnamed-chunk-21-2.png) 
 
 ```r
-boxplot(trainSet$busi ~ trainSet$spam)
+hist(trainSet$busi)
 ```
 
 ![](meetup_files/figure-html/unnamed-chunk-21-3.png) 
+
+
+Une boxplot:
+
+```r
+boxplot(trainSet$vinc ~ trainSet$spam)
+```
+
+![](meetup_files/figure-html/unnamed-chunk-22-1.png) 
+
+```r
+boxplot(trainSet$like ~ trainSet$spam)
+```
+
+![](meetup_files/figure-html/unnamed-chunk-22-2.png) 
+
+```r
+boxplot(trainSet$meet ~ trainSet$spam)
+```
+
+![](meetup_files/figure-html/unnamed-chunk-22-3.png) 
 
 ```r
 boxplot(trainSet$pleas ~ trainSet$spam)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-21-4.png) 
+![](meetup_files/figure-html/unnamed-chunk-22-4.png) 
 
 ```r
-boxplot(trainSet$com ~ trainSet$spam)
+boxplot(trainSet$thank ~ trainSet$spam)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-21-5.png) 
+![](meetup_files/figure-html/unnamed-chunk-22-5.png) 
 
 
 ### Modélisation
@@ -635,7 +662,55 @@ boxplot(trainSet$com ~ trainSet$spam)
 
 
 ```r
-model.logit <- glm(spam ~ ., trainSet, family = 'binomial')
+model.logit <- glm(spam ~ vinc + like + meet + pleas + thank, family = 'binomial', trainSet)
+```
+
+```
+## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+```
+
+```r
+summary(model.logit)
+```
+
+```
+## 
+## Call:
+## glm(formula = spam ~ vinc + like + meet + pleas + thank, family = "binomial", 
+##     data = trainSet)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.6703  -0.3404   0.0000   0.0000   4.8082  
+## 
+## Coefficients:
+##              Estimate Std. Error z value Pr(>|z|)    
+## (Intercept)   0.51343    0.06257   8.206 2.28e-16 ***
+## vinc        -19.15666  344.57555  -0.056   0.9557    
+## like          0.14072    0.07168   1.963   0.0496 *  
+## meet         -0.89685    0.13045  -6.875 6.20e-12 ***
+## pleas        -0.38836    0.05433  -7.149 8.77e-13 ***
+## thank        -1.09416    0.10854 -10.080  < 2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 4409.5  on 4009  degrees of freedom
+## Residual deviance: 2469.0  on 4004  degrees of freedom
+## AIC: 2481
+## 
+## Number of Fisher Scoring iterations: 21
+```
+
+L'unité est le logit!
+
+$\sigma(t) = \frac{1}{1 + e^{-t}}$
+
+Testons un modèle avec plus de variables:
+
+```r
+model.logit <- glm(spam ~ ., family = 'binomial', trainSet)
 ```
 
 ```
@@ -701,6 +776,27 @@ summary(model.logit)
 ## AIC: 1355.3
 ## 
 ## Number of Fisher Scoring iterations: 24
+```
+
+```r
+exp(coef(model.logit))
+```
+
+```
+##  (Intercept)        enron          ect      subject         vinc 
+## 5.469428e-01 6.008690e-12 5.518292e-01 4.399423e+00 4.764216e-10 
+##         will          hou          com        pleas        X2000 
+## 8.949251e-01 1.810037e+00 1.357071e+00 7.445067e-01 9.079633e-02 
+##     kaminski          can        thank      forward         time 
+## 4.548247e-10 1.125355e+00 3.735390e-01 4.826005e-01 1.223395e+00 
+##        X2001     research       market         work       inform 
+## 1.760699e-01 1.629362e-01 9.624097e-01 9.466454e-01 1.511737e+00 
+##        price         meet         know        group        manag 
+## 7.355207e-01 3.720643e-01 1.060439e+00 5.687334e-01 1.005926e+00 
+##          may          get         like          use         need 
+## 1.363361e+00 1.845908e+00 1.199858e+00 1.168633e+00 8.823388e-01 
+##         busi 
+## 2.627492e+00
 ```
 
 * Évaluation du modèle (score, matrice de confusion)
@@ -1048,11 +1144,13 @@ Interprétation:
 prp(model.rpart)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-30-1.png) 
+![](meetup_files/figure-html/unnamed-chunk-32-1.png) 
 
 ```r
-#prp(model.rpart, extra = 1)
+prp(model.rpart, extra = 1)
 ```
+
+![](meetup_files/figure-html/unnamed-chunk-32-2.png) 
 
 Prédiction sur les données du trainSet:
 
@@ -1176,7 +1274,7 @@ ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
     ggtitle('Courbe ROC pour le modèle de régression logistique')
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-35-1.png) 
+![](meetup_files/figure-html/unnamed-chunk-37-1.png) 
 
 Maintenant pour le modèle de l'arbre de décision:
 
@@ -1193,7 +1291,7 @@ ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
     ggtitle('Courbe ROC pour le modèle d\'arbre de décision')
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-36-1.png) 
+![](meetup_files/figure-html/unnamed-chunk-38-1.png) 
 
 ## Bibliographie
 
