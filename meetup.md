@@ -655,7 +655,18 @@ boxplot(trainSet$thank ~ trainSet$spam)
 
 * Bref rappel des principes de machine learning
 
-*dessin ?*
+On utilise la fonction logit:
+
+$\sigma(t) = \frac{1}{1 + e^{-t}}$
+
+
+```r
+library(ggplot2)
+x <- seq(-6, 6, 0.01)
+qplot(x, 1 / (1 + exp(-x)), geom = 'line')
+```
+
+![](meetup_files/figure-html/unnamed-chunk-23-1.png) 
 
 * Problématique de la classification / présentation de la régression logistique
 * Application de l'algo
@@ -705,8 +716,6 @@ summary(model.logit)
 
 L'unité est le logit!
 
-$\sigma(t) = \frac{1}{1 + e^{-t}}$
-
 Testons un modèle avec plus de variables:
 
 ```r
@@ -715,6 +724,25 @@ model.logit <- glm(spam ~ ., family = 'binomial', trainSet)
 
 ```
 ## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
+```
+
+```r
+round(exp(coef(model.logit)), 2)
+```
+
+```
+## (Intercept)       enron         ect     subject        vinc        will 
+##        0.55        0.00        0.55        4.40        0.00        0.89 
+##         hou         com       pleas       X2000    kaminski         can 
+##        1.81        1.36        0.74        0.09        0.00        1.13 
+##       thank     forward        time       X2001    research      market 
+##        0.37        0.48        1.22        0.18        0.16        0.96 
+##        work      inform       price        meet        know       group 
+##        0.95        1.51        0.74        0.37        1.06        0.57 
+##       manag         may         get        like         use        need 
+##        1.01        1.36        1.85        1.20        1.17        0.88 
+##        busi 
+##        2.63
 ```
 
 * Interprétation du modèle
@@ -1144,13 +1172,13 @@ Interprétation:
 prp(model.rpart)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-32-1.png) 
+![](meetup_files/figure-html/unnamed-chunk-33-1.png) 
 
 ```r
 prp(model.rpart, extra = 1)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-32-2.png) 
+![](meetup_files/figure-html/unnamed-chunk-33-2.png) 
 
 Prédiction sur les données du trainSet:
 
@@ -1274,7 +1302,7 @@ ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
     ggtitle('Courbe ROC pour le modèle de régression logistique')
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-37-1.png) 
+![](meetup_files/figure-html/unnamed-chunk-38-1.png) 
 
 Maintenant pour le modèle de l'arbre de décision:
 
@@ -1291,7 +1319,7 @@ ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
     ggtitle('Courbe ROC pour le modèle d\'arbre de décision')
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-38-1.png) 
+![](meetup_files/figure-html/unnamed-chunk-39-1.png) 
 
 ## Bibliographie
 

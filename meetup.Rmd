@@ -313,7 +313,15 @@ boxplot(trainSet$thank ~ trainSet$spam)
 
 * Bref rappel des principes de machine learning
 
-*dessin ?*
+On utilise la fonction logit:
+
+$\sigma(t) = \frac{1}{1 + e^{-t}}$
+
+```{r}
+library(ggplot2)
+x <- seq(-6, 6, 0.01)
+qplot(x, 1 / (1 + exp(-x)), geom = 'line')
+```
 
 * Problématique de la classification / présentation de la régression logistique
 * Application de l'algo
@@ -324,8 +332,6 @@ summary(model.logit)
 ```
 
 L'unité est le logit!
-
-$\sigma(t) = \frac{1}{1 + e^{-t}}$
 
 Testons un modèle avec plus de variables:
 ```{r}
