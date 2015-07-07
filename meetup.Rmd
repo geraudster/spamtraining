@@ -112,6 +112,13 @@ sqrt(25)
 ?`+`
 ```
 
+Les paramètres de fonction:
+```{r}
+# log en base 10
+log(5, base = 10)
+```
+
+
 Exo:
 
 * Calculer la racine carrée de 2
@@ -223,11 +230,21 @@ entiers[entiers > 5]
 subset(entiers, entiers > 5)
 ```
 
+### Quelques valeurs spéciales
+
+Tester les opérations suivantes:
+
+```{r}
+1/0
+sqrt(-1)
+entiers[20]
+```
+
 ### Data Frames
 
-*A METTRE A JOUR*
+Les Data Frames permettent de stocker des tableaux de données, "à la Excel".
+**cf. slides**
 
-Les Data Frames permettent de stocker des tableaux de données:
 ```{r}
 prenoms <- c('Alice', 'Bob', 'Carole')
 sexe <- c('F', 'M', 'F')
@@ -237,18 +254,45 @@ monDataFrame
 
 monDataFrame[2, 'prenoms']
 monDataFrame$prenoms
+```
 
+Exo:
+
+* Créer le data frame monDF avec les données ci-dessus
+* Récupérer l'ensemble des couples (prenom, age)
+* Calculer la moyenne d'âge
+* Quelle personne est la plus âgée (on utilisera la fonction `which.max`)?
+
+```{r}
+monDataFrame[, c('prenoms', 'ages')]
+mean(monDataFrame$ages)
+monDataFrame[which.max(monDataFrame$ages),]
+```
+
+Table de contingence:
+```{r}
+table(monDataFrame$sexe)
+```
+
+
+Pour modifier le data.frame:
+```{r}
 monDataFrame$recu <- c(TRUE, FALSE, TRUE)
 table(monDataFrame$sexe, monDataFrame$recu)
 ```
 
 Aide-mémoire pour les indices des data.frames: [ROW, COL] -> ROW is COol
 
-
 ### Structures de contrôle (if, loop..)
 
+Voir 
+```{r}
+?Control
+```
 
 ## Cas d'utilisation spam filter
+
+**cf. slide**
 
 À partir d'un jeu de données contenant une liste de e-mails reconnus comme étant soit
 spam soit ham, nous allons entraîné plusieurs modèles afin de pouvoir déterminer automatiquement
@@ -271,8 +315,15 @@ testSet <- read.csv('emails_test.csv')
 dim(trainSet)
 colnames(trainSet)
 str(trainSet)
+summary(trainSet)
 #View(spambase) # ou clic sur spambase dans l'onglet Environment
+```
 
+Exo:
+
+* Afficher la répartition spam/ham pour chaque jeu de données (utiliser la fonction _table_)
+
+```{r}
 table(trainSet$spam)
 table(testSet$spam)
 ```
@@ -291,6 +342,8 @@ testSet$spam <- factor(testSet$spam, levels = c(0,1), labels = c('ham', 'spam'))
 
 ### Exploration
 
+Nous allons utiliser les fonctionnalités de base pour le dessin de graphiques.
+
 Quelques histogrammes:
 ```{r}
 hist(trainSet$vinc)
@@ -302,16 +355,20 @@ hist(trainSet$busi)
 Une boxplot:
 ```{r}
 boxplot(trainSet$vinc ~ trainSet$spam)
-boxplot(trainSet$like ~ trainSet$spam)
+title('trainSet$vinc')
+boxplot(trainSet$like ~ trainSet$spam, col = 'bisque')
 boxplot(trainSet$meet ~ trainSet$spam)
-boxplot(trainSet$pleas ~ trainSet$spam)
+boxplot(trainSet$pleas ~ trainSet$spam, col = c('bisque', 'blue'))
+title('Colored boxplot')
 boxplot(trainSet$thank ~ trainSet$spam)
 ```
 
+On voit que certaines variables semblent avoir plus ou moins d'influence sur la caractérisation
+de spam/ham. Nous allons voir comment déterminer automatiquement ces règles.
 
 ### Modélisation
 
-* Bref rappel des principes de machine learning
+* Bref rappel des principes de machine learning __cf. slides__
 
 On utilise la fonction logit:
 
@@ -324,14 +381,21 @@ qplot(x, 1 / (1 + exp(-x)), geom = 'line')
 ```
 
 * Problématique de la classification / présentation de la régression logistique
-* Application de l'algo
+
+### Application de l'algo
 
 ```{r}
 model.logit <- glm(spam ~ vinc + like + meet + pleas + thank, family = 'binomial', trainSet)
 summary(model.logit)
 ```
 
-L'unité est le logit!
+L'unité est le logit, pour l'interprétation:
+
+```{r}
+exp(coef(model.logit))
+round(exp(coef(model.logit)), 2)
+```
+
 
 Testons un modèle avec plus de variables:
 ```{r}
@@ -339,41 +403,66 @@ model.logit <- glm(spam ~ ., family = 'binomial', trainSet)
 round(exp(coef(model.logit)), 2)
 ```
 
-* Interprétation du modèle
+### Interprétation du modèle
 
 ```{r}
 summary(model.logit)
 exp(coef(model.logit))
 ```
 
-* Évaluation du modèle (score, matrice de confusion)
+### Évaluation du modèle (score, matrice de confusion) __slides__
 
 ```{r}
 train.predictions <- predict(model.logit, newdata = trainSet, type = 'response')
 train.confusionMat <- table(trainSet$spam, train.predictions >= 0.5)
 train.confusionMat
-sum(diag(train.confusionMat) / nrow(trainSet))
+(train.confusionMat[1,1] + train.confusionMat[2,2]) / nrow(trainSet)
+sum(diag(train.confusionMat)) / nrow(trainSet)
+```
 
+
+Exo:
+
+* Évaluer le modèle sur le jeu de test
+* Calculer la spécificité
+
+```{r}
 test.predictions <- predict(model.logit, newdata = testSet, type = 'response')
 test.confusionMat <- table(testSet$spam, test.predictions >= 0.5)
 test.confusionMat
-sum(diag(test.confusionMat) / nrow(testSet))
+sum(diag(test.confusionMat)) / nrow(testSet)
+
+# Spécificité
+test.confusionMat[2,2] / sum(test.confusionMat[2,])
 ```
 
-* Modification du seuil
+
+### Modification du seuil
+
+Exo:
+
+* Évaluer le modèle avec différentes valeurs de seuil (par ex: 0.8, 0.2)
 
 Avec une valeur de seuil plus pessimiste:
 ```{r}
 train.confusionMat <- table(trainSet$spam, train.predictions >= 0.8)
 train.confusionMat
-sum(diag(train.confusionMat) / nrow(trainSet))
+sum(diag(train.confusionMat)) / nrow(trainSet)
+
+test.confusionMat <- table(testSet$spam, test.predictions >= 0.8)
+test.confusionMat
+sum(diag(test.confusionMat)) / nrow(testSet)
 ```
 
 Avec une valeur de seuil plus optimiste:
 ```{r}
 train.confusionMat <- table(trainSet$spam, train.predictions >= 0.2)
 train.confusionMat
-sum(diag(train.confusionMat) / nrow(trainSet))
+sum(diag(train.confusionMat)) / nrow(trainSet)
+
+test.confusionMat <- table(testSet$spam, test.predictions >= 0.2)
+test.confusionMat
+sum(diag(test.confusionMat)) / nrow(testSet)
 ```
 
 ### Création d'un arbre de décision
@@ -395,6 +484,11 @@ model.rpart <- rpart(spam ~ ., trainSet)
 summary(model.rpart)
 ```
 
+Exo:
+
+* Entraîner le modèle sur les données du _trainSet_
+* Evaluer le modèle sur les données du _trainSet_ puis du _testSet_
+
 Interprétation:
 ```{r}
 prp(model.rpart)
@@ -406,21 +500,40 @@ Prédiction sur les données du trainSet:
 train.predictions2 <- predict(model.rpart, newdata = trainSet)
 train.confusionMat2 <- table(trainSet$spam, train.predictions2[,'spam'] >= 0.5)
 train.confusionMat2
-sum(diag(train.confusionMat2) / nrow(trainSet))
+sum(diag(train.confusionMat2)) / nrow(trainSet)
+
+test.predictions2 <- predict(model.rpart, newdata = testSet)
+test.confusionMat2 <- table(testSet$spam, test.predictions2[,'spam'] >= 0.5)
+test.confusionMat2
+sum(diag(test.confusionMat2)) / nrow(testSet)
 ```
+
+Exo:
+
+* Évaluer le modèle sur différentes valeurs de seuil (par ex: 0.8, 0.2)
 
 Avec une valeur de seuil plus pessimiste:
 ```{r}
 train.confusionMat2 <- table(trainSet$spam, train.predictions2[,'spam'] >= 0.8)
 train.confusionMat2
-sum(diag(train.confusionMat2) / nrow(trainSet))
+sum(diag(train.confusionMat2)) / nrow(trainSet)
+
+test.predictions2 <- predict(model.rpart, newdata = testSet)
+test.confusionMat2 <- table(testSet$spam, test.predictions2[,'spam'] >= 0.8)
+test.confusionMat2
+sum(diag(test.confusionMat2)) / nrow(testSet)
 ```
 
 Avec une valeur de seuil plus optimiste:
 ```{r}
 train.confusionMat2 <- table(trainSet$spam, train.predictions2[,'spam'] >= 0.2)
 train.confusionMat2
-sum(diag(train.confusionMat2) / nrow(trainSet))
+sum(diag(train.confusionMat2)) / nrow(trainSet)
+
+test.predictions2 <- predict(model.rpart, newdata = testSet)
+test.confusionMat2 <- table(testSet$spam, test.predictions2[,'spam'] >= 0.2)
+test.confusionMat2
+sum(diag(test.confusionMat2)) / nrow(testSet)
 ```
 
 
@@ -429,7 +542,7 @@ Validation du modèle:
 test.predictions2 <- predict(model.rpart, newdata = testSet)
 test.confusionMat2 <- table(testSet$spam, test.predictions2[,'spam'] >= 0.5)
 test.confusionMat2
-sum(diag(test.confusionMat2) / nrow(testSet))
+sum(diag(test.confusionMat2)) / nrow(testSet)
 ```
 
 ## Pour aller plus loin - les courbes de ROC
@@ -465,9 +578,9 @@ ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
 
 ## Bibliographie
 
+* Intro à R: https://github.com/juba/intro-r
 * http://www.cs.cmu.edu/~eugene/research/full/detect-scam.pdf
 * http://cran.r-project.org/web/views/MachineLearning.html
 * http://kooperberg.fhcrc.org/logic/documents/ingophd-logic.pdf
 * Lichman, M. (2013). UCI Machine Learning Repository [http://archive.ics.uci.edu/ml]. Irvine, CA: University of California, School of Information and Computer Science. 
 * Liste des modèles supportés par le package *caret*: http://topepo.github.io/caret/modelList.html
-* Intro à R: https://github.com/juba/intro-r

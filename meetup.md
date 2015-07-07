@@ -178,6 +178,18 @@ sqrt(25)
 ?`+`
 ```
 
+Les paramètres de fonction:
+
+```r
+# log en base 10
+log(5, base = 10)
+```
+
+```
+## [1] 0.69897
+```
+
+
 Exo:
 
 * Calculer la racine carrée de 2
@@ -409,11 +421,44 @@ subset(entiers, entiers > 5)
 ## [1]  6  7  8  9 10
 ```
 
+### Quelques valeurs spéciales
+
+Tester les opérations suivantes:
+
+
+```r
+1/0
+```
+
+```
+## [1] Inf
+```
+
+```r
+sqrt(-1)
+```
+
+```
+## Warning in sqrt(-1): NaNs produced
+```
+
+```
+## [1] NaN
+```
+
+```r
+entiers[20]
+```
+
+```
+## [1] NA
+```
+
 ### Data Frames
 
-*A METTRE A JOUR*
+Les Data Frames permettent de stocker des tableaux de données, "à la Excel".
+**cf. slides**
 
-Les Data Frames permettent de stocker des tableaux de données:
 
 ```r
 prenoms <- c('Alice', 'Bob', 'Carole')
@@ -448,6 +493,57 @@ monDataFrame$prenoms
 ## Levels: Alice Bob Carole
 ```
 
+Exo:
+
+* Créer le data frame monDF avec les données ci-dessus
+* Récupérer l'ensemble des couples (prenom, age)
+* Calculer la moyenne d'âge
+* Quelle personne est la plus âgée (on utilisera la fonction `which.max`)?
+
+
+```r
+monDataFrame[, c('prenoms', 'ages')]
+```
+
+```
+##   prenoms ages
+## 1   Alice   24
+## 2     Bob   30
+## 3  Carole   23
+```
+
+```r
+mean(monDataFrame$ages)
+```
+
+```
+## [1] 25.66667
+```
+
+```r
+monDataFrame[which.max(monDataFrame$ages),]
+```
+
+```
+##   prenoms sexe ages
+## 2     Bob    M   30
+```
+
+Table de contingence:
+
+```r
+table(monDataFrame$sexe)
+```
+
+```
+## 
+## F M 
+## 2 1
+```
+
+
+Pour modifier le data.frame:
+
 ```r
 monDataFrame$recu <- c(TRUE, FALSE, TRUE)
 table(monDataFrame$sexe, monDataFrame$recu)
@@ -462,11 +558,17 @@ table(monDataFrame$sexe, monDataFrame$recu)
 
 Aide-mémoire pour les indices des data.frames: [ROW, COL] -> ROW is COol
 
-
 ### Structures de contrôle (if, loop..)
 
+Voir 
+
+```r
+?Control
+```
 
 ## Cas d'utilisation spam filter
+
+**cf. slide**
 
 À partir d'un jeu de données contenant une liste de e-mails reconnus comme étant soit
 spam soit ham, nous allons entraîné plusieurs modèles afin de pouvoir déterminer automatiquement
@@ -547,8 +649,78 @@ str(trainSet)
 ```
 
 ```r
-#View(spambase) # ou clic sur spambase dans l'onglet Environment
+summary(trainSet)
+```
 
+```
+##      enron              ect             subject            vinc       
+##  Min.   :  0.000   Min.   :  0.000   Min.   : 1.000   Min.   : 0.000  
+##  1st Qu.:  0.000   1st Qu.:  0.000   1st Qu.: 1.000   1st Qu.: 0.000  
+##  Median :  0.000   Median :  0.000   Median : 1.000   Median : 0.000  
+##  Mean   :  2.326   Mean   :  2.048   Mean   : 1.786   Mean   : 1.488  
+##  3rd Qu.:  2.000   3rd Qu.:  1.000   3rd Qu.: 2.000   3rd Qu.: 2.000  
+##  Max.   :163.000   Max.   :172.000   Max.   :15.000   Max.   :40.000  
+##       will            hou                com              pleas      
+##  Min.   : 0.00   Min.   :  0.0000   Min.   : 0.0000   Min.   : 0.00  
+##  1st Qu.: 0.00   1st Qu.:  0.0000   1st Qu.: 0.0000   1st Qu.: 0.00  
+##  Median : 1.00   Median :  0.0000   Median : 0.0000   Median : 0.00  
+##  Mean   : 1.42   Mean   :  0.9893   Mean   : 0.9354   Mean   : 0.89  
+##  3rd Qu.: 2.00   3rd Qu.:  1.0000   3rd Qu.: 1.0000   3rd Qu.: 1.00  
+##  Max.   :39.00   Max.   :101.0000   Max.   :89.0000   Max.   :10.00  
+##      X2000            kaminski            can              thank        
+##  Min.   : 0.0000   Min.   : 0.0000   Min.   : 0.0000   Min.   : 0.0000  
+##  1st Qu.: 0.0000   1st Qu.: 0.0000   1st Qu.: 0.0000   1st Qu.: 0.0000  
+##  Median : 0.0000   Median : 0.0000   Median : 0.0000   Median : 0.0000  
+##  Mean   : 0.8905   Mean   : 0.8441   Mean   : 0.7451   Mean   : 0.6486  
+##  3rd Qu.: 1.0000   3rd Qu.: 1.0000   3rd Qu.: 1.0000   3rd Qu.: 1.0000  
+##  Max.   :27.0000   Max.   :28.0000   Max.   :17.0000   Max.   :10.0000  
+##     forward             time             X2001            research      
+##  Min.   : 0.0000   Min.   : 0.0000   Min.   : 0.0000   Min.   : 0.0000  
+##  1st Qu.: 0.0000   1st Qu.: 0.0000   1st Qu.: 0.0000   1st Qu.: 0.0000  
+##  Median : 0.0000   Median : 0.0000   Median : 0.0000   Median : 0.0000  
+##  Mean   : 0.5454   Mean   : 0.5374   Mean   : 0.5324   Mean   : 0.4731  
+##  3rd Qu.: 1.0000   3rd Qu.: 1.0000   3rd Qu.: 0.0000   3rd Qu.: 0.0000  
+##  Max.   :15.0000   Max.   :24.0000   Max.   :32.0000   Max.   :14.0000  
+##      market            work             inform            price        
+##  Min.   : 0.000   Min.   : 0.0000   Min.   : 0.0000   Min.   : 0.0000  
+##  1st Qu.: 0.000   1st Qu.: 0.0000   1st Qu.: 0.0000   1st Qu.: 0.0000  
+##  Median : 0.000   Median : 0.0000   Median : 0.0000   Median : 0.0000  
+##  Mean   : 0.488   Mean   : 0.4576   Mean   : 0.4706   Mean   : 0.4983  
+##  3rd Qu.: 0.000   3rd Qu.: 1.0000   3rd Qu.: 1.0000   3rd Qu.: 0.0000  
+##  Max.   :43.000   Max.   :30.0000   Max.   :15.0000   Max.   :43.0000  
+##       meet              know            group             manag        
+##  Min.   : 0.0000   Min.   :0.0000   Min.   : 0.0000   Min.   : 0.0000  
+##  1st Qu.: 0.0000   1st Qu.:0.0000   1st Qu.: 0.0000   1st Qu.: 0.0000  
+##  Median : 0.0000   Median :0.0000   Median : 0.0000   Median : 0.0000  
+##  Mean   : 0.4733   Mean   :0.4701   Mean   : 0.4386   Mean   : 0.4536  
+##  3rd Qu.: 0.0000   3rd Qu.:1.0000   3rd Qu.: 0.0000   3rd Qu.: 0.0000  
+##  Max.   :40.0000   Max.   :9.0000   Max.   :35.0000   Max.   :25.0000  
+##       may               get               like             use         
+##  Min.   : 0.0000   Min.   : 0.0000   Min.   : 0.000   Min.   : 0.0000  
+##  1st Qu.: 0.0000   1st Qu.: 0.0000   1st Qu.: 0.000   1st Qu.: 0.0000  
+##  Median : 0.0000   Median : 0.0000   Median : 0.000   Median : 0.0000  
+##  Mean   : 0.4309   Mean   : 0.4277   Mean   : 0.403   Mean   : 0.4162  
+##  3rd Qu.: 0.0000   3rd Qu.: 1.0000   3rd Qu.: 1.000   3rd Qu.: 0.0000  
+##  Max.   :43.0000   Max.   :26.0000   Max.   :11.000   Max.   :16.0000  
+##       need              busi              spam       
+##  Min.   : 0.0000   Min.   : 0.0000   Min.   :0.0000  
+##  1st Qu.: 0.0000   1st Qu.: 0.0000   1st Qu.:0.0000  
+##  Median : 0.0000   Median : 0.0000   Median :0.0000  
+##  Mean   : 0.3998   Mean   : 0.4125   Mean   :0.2389  
+##  3rd Qu.: 0.0000   3rd Qu.: 0.0000   3rd Qu.:0.0000  
+##  Max.   :10.0000   Max.   :57.0000   Max.   :1.0000
+```
+
+```r
+#View(spambase) # ou clic sur spambase dans l'onglet Environment
+```
+
+Exo:
+
+* Afficher la répartition spam/ham pour chaque jeu de données (utiliser la fonction _table_)
+
+
+```r
 table(trainSet$spam)
 ```
 
@@ -597,63 +769,69 @@ testSet$spam <- factor(testSet$spam, levels = c(0,1), labels = c('ham', 'spam'))
 
 ### Exploration
 
+Nous allons utiliser les fonctionnalités de base pour le dessin de graphiques.
+
 Quelques histogrammes:
 
 ```r
 hist(trainSet$vinc)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-21-1.png) 
+![](meetup_files/figure-html/unnamed-chunk-28-1.png) 
 
 ```r
 hist(trainSet$like)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-21-2.png) 
+![](meetup_files/figure-html/unnamed-chunk-28-2.png) 
 
 ```r
 hist(trainSet$busi)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-21-3.png) 
+![](meetup_files/figure-html/unnamed-chunk-28-3.png) 
 
 
 Une boxplot:
 
 ```r
 boxplot(trainSet$vinc ~ trainSet$spam)
+title('trainSet$vinc')
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-22-1.png) 
+![](meetup_files/figure-html/unnamed-chunk-29-1.png) 
 
 ```r
-boxplot(trainSet$like ~ trainSet$spam)
+boxplot(trainSet$like ~ trainSet$spam, col = 'bisque')
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-22-2.png) 
+![](meetup_files/figure-html/unnamed-chunk-29-2.png) 
 
 ```r
 boxplot(trainSet$meet ~ trainSet$spam)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-22-3.png) 
+![](meetup_files/figure-html/unnamed-chunk-29-3.png) 
 
 ```r
-boxplot(trainSet$pleas ~ trainSet$spam)
+boxplot(trainSet$pleas ~ trainSet$spam, col = c('bisque', 'blue'))
+title('Colored boxplot')
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-22-4.png) 
+![](meetup_files/figure-html/unnamed-chunk-29-4.png) 
 
 ```r
 boxplot(trainSet$thank ~ trainSet$spam)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-22-5.png) 
+![](meetup_files/figure-html/unnamed-chunk-29-5.png) 
 
+On voit que certaines variables semblent avoir plus ou moins d'influence sur la caractérisation
+de spam/ham. Nous allons voir comment déterminer automatiquement ces règles.
 
 ### Modélisation
 
-* Bref rappel des principes de machine learning
+* Bref rappel des principes de machine learning __cf. slides__
 
 On utilise la fonction logit:
 
@@ -666,10 +844,11 @@ x <- seq(-6, 6, 0.01)
 qplot(x, 1 / (1 + exp(-x)), geom = 'line')
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-23-1.png) 
+![](meetup_files/figure-html/unnamed-chunk-30-1.png) 
 
 * Problématique de la classification / présentation de la régression logistique
-* Application de l'algo
+
+### Application de l'algo
 
 
 ```r
@@ -714,7 +893,29 @@ summary(model.logit)
 ## Number of Fisher Scoring iterations: 21
 ```
 
-L'unité est le logit!
+L'unité est le logit, pour l'interprétation:
+
+
+```r
+exp(coef(model.logit))
+```
+
+```
+##  (Intercept)         vinc         like         meet        pleas 
+## 1.671014e+00 4.790348e-09 1.151099e+00 4.078521e-01 6.781710e-01 
+##        thank 
+## 3.348192e-01
+```
+
+```r
+round(exp(coef(model.logit)), 2)
+```
+
+```
+## (Intercept)        vinc        like        meet       pleas       thank 
+##        1.67        0.00        1.15        0.41        0.68        0.33
+```
+
 
 Testons un modèle avec plus de variables:
 
@@ -745,7 +946,7 @@ round(exp(coef(model.logit)), 2)
 ##        2.63
 ```
 
-* Interprétation du modèle
+### Interprétation du modèle
 
 
 ```r
@@ -827,7 +1028,7 @@ exp(coef(model.logit))
 ## 2.627492e+00
 ```
 
-* Évaluation du modèle (score, matrice de confusion)
+### Évaluation du modèle (score, matrice de confusion) __slides__
 
 
 ```r
@@ -844,12 +1045,27 @@ train.confusionMat
 ```
 
 ```r
-sum(diag(train.confusionMat) / nrow(trainSet))
+(train.confusionMat[1,1] + train.confusionMat[2,2]) / nrow(trainSet)
 ```
 
 ```
 ## [1] 0.9329177
 ```
+
+```r
+sum(diag(train.confusionMat)) / nrow(trainSet)
+```
+
+```
+## [1] 0.9329177
+```
+
+
+Exo:
+
+* Évaluer le modèle sur le jeu de test
+* Calculer la spécificité
+
 
 ```r
 test.predictions <- predict(model.logit, newdata = testSet, type = 'response')
@@ -865,14 +1081,28 @@ test.confusionMat
 ```
 
 ```r
-sum(diag(test.confusionMat) / nrow(testSet))
+sum(diag(test.confusionMat)) / nrow(testSet)
 ```
 
 ```
 ## [1] 0.9243306
 ```
 
-* Modification du seuil
+```r
+# Spécificité
+test.confusionMat[2,2] / sum(test.confusionMat[2,])
+```
+
+```
+## [1] 0.9365854
+```
+
+
+### Modification du seuil
+
+Exo:
+
+* Évaluer le modèle avec différentes valeurs de seuil (par ex: 0.8, 0.2)
 
 Avec une valeur de seuil plus pessimiste:
 
@@ -889,11 +1119,31 @@ train.confusionMat
 ```
 
 ```r
-sum(diag(train.confusionMat) / nrow(trainSet))
+sum(diag(train.confusionMat)) / nrow(trainSet)
 ```
 
 ```
 ## [1] 0.8613466
+```
+
+```r
+test.confusionMat <- table(testSet$spam, test.predictions >= 0.8)
+test.confusionMat
+```
+
+```
+##       
+##        FALSE TRUE
+##   ham   1290   18
+##   spam   215  195
+```
+
+```r
+sum(diag(test.confusionMat)) / nrow(testSet)
+```
+
+```
+## [1] 0.8643772
 ```
 
 Avec une valeur de seuil plus optimiste:
@@ -911,11 +1161,31 @@ train.confusionMat
 ```
 
 ```r
-sum(diag(train.confusionMat) / nrow(trainSet))
+sum(diag(train.confusionMat)) / nrow(trainSet)
 ```
 
 ```
 ## [1] 0.9119701
+```
+
+```r
+test.confusionMat <- table(testSet$spam, test.predictions >= 0.2)
+test.confusionMat
+```
+
+```
+##       
+##        FALSE TRUE
+##   ham   1150  158
+##   spam     9  401
+```
+
+```r
+sum(diag(test.confusionMat)) / nrow(testSet)
+```
+
+```
+## [1] 0.9027939
 ```
 
 ### Création d'un arbre de décision
@@ -948,13 +1218,13 @@ summary(model.rpart)
 ##           CP nsplit rel error    xerror       xstd
 ## 1 0.18841336      0 1.0000000 1.0000000 0.02818625
 ## 2 0.10647182      2 0.6231733 0.6231733 0.02352977
-## 3 0.08037578      3 0.5167015 0.5323591 0.02202325
+## 3 0.08037578      3 0.5167015 0.5292276 0.02196779
 ## 4 0.03549061      4 0.4363257 0.4363257 0.02019848
-## 5 0.03131524      5 0.4008351 0.4112735 0.01967545
-## 6 0.02609603      6 0.3695198 0.3914405 0.01924554
-## 7 0.01565762      7 0.3434238 0.3538622 0.01838884
-## 8 0.01252610      8 0.3277662 0.3382046 0.01801410
-## 9 0.01000000      9 0.3152401 0.3246347 0.01768010
+## 5 0.03131524      5 0.4008351 0.4196242 0.01985220
+## 6 0.02609603      6 0.3695198 0.4039666 0.01951875
+## 7 0.01565762      7 0.3434238 0.3455115 0.01819036
+## 8 0.01252610      8 0.3277662 0.3392484 0.01803943
+## 9 0.01000000      9 0.3152401 0.3225470 0.01762792
 ## 
 ## Variable importance
 ##    enron     vinc kaminski      ect      hou  subject    X2000    thank 
@@ -1166,19 +1436,24 @@ summary(model.rpart)
 ##    probabilities: 0.203 0.797
 ```
 
+Exo:
+
+* Entraîner le modèle sur les données du _trainSet_
+* Evaluer le modèle sur les données du _trainSet_ puis du _testSet_
+
 Interprétation:
 
 ```r
 prp(model.rpart)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-33-1.png) 
+![](meetup_files/figure-html/unnamed-chunk-42-1.png) 
 
 ```r
 prp(model.rpart, extra = 1)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-33-2.png) 
+![](meetup_files/figure-html/unnamed-chunk-42-2.png) 
 
 Prédiction sur les données du trainSet:
 
@@ -1196,12 +1471,37 @@ train.confusionMat2
 ```
 
 ```r
-sum(diag(train.confusionMat2) / nrow(trainSet))
+sum(diag(train.confusionMat2)) / nrow(trainSet)
 ```
 
 ```
 ## [1] 0.9246883
 ```
+
+```r
+test.predictions2 <- predict(model.rpart, newdata = testSet)
+test.confusionMat2 <- table(testSet$spam, test.predictions2[,'spam'] >= 0.5)
+test.confusionMat2
+```
+
+```
+##       
+##        FALSE TRUE
+##   ham   1197  111
+##   spam    40  370
+```
+
+```r
+sum(diag(test.confusionMat2)) / nrow(testSet)
+```
+
+```
+## [1] 0.9121071
+```
+
+Exo:
+
+* Évaluer le modèle sur différentes valeurs de seuil (par ex: 0.8, 0.2)
 
 Avec une valeur de seuil plus pessimiste:
 
@@ -1218,11 +1518,32 @@ train.confusionMat2
 ```
 
 ```r
-sum(diag(train.confusionMat2) / nrow(trainSet))
+sum(diag(train.confusionMat2)) / nrow(trainSet)
 ```
 
 ```
 ## [1] 0.7648379
+```
+
+```r
+test.predictions2 <- predict(model.rpart, newdata = testSet)
+test.confusionMat2 <- table(testSet$spam, test.predictions2[,'spam'] >= 0.8)
+test.confusionMat2
+```
+
+```
+##       
+##        FALSE TRUE
+##   ham   1307    1
+##   spam   406    4
+```
+
+```r
+sum(diag(test.confusionMat2)) / nrow(testSet)
+```
+
+```
+## [1] 0.7630966
 ```
 
 Avec une valeur de seuil plus optimiste:
@@ -1240,11 +1561,32 @@ train.confusionMat2
 ```
 
 ```r
-sum(diag(train.confusionMat2) / nrow(trainSet))
+sum(diag(train.confusionMat2)) / nrow(trainSet)
 ```
 
 ```
 ## [1] 0.898005
+```
+
+```r
+test.predictions2 <- predict(model.rpart, newdata = testSet)
+test.confusionMat2 <- table(testSet$spam, test.predictions2[,'spam'] >= 0.2)
+test.confusionMat2
+```
+
+```
+##       
+##        FALSE TRUE
+##   ham   1129  179
+##   spam    15  395
+```
+
+```r
+sum(diag(test.confusionMat2)) / nrow(testSet)
+```
+
+```
+## [1] 0.887078
 ```
 
 
@@ -1264,7 +1606,7 @@ test.confusionMat2
 ```
 
 ```r
-sum(diag(test.confusionMat2) / nrow(testSet))
+sum(diag(test.confusionMat2)) / nrow(testSet)
 ```
 
 ```
@@ -1302,7 +1644,7 @@ ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
     ggtitle('Courbe ROC pour le modèle de régression logistique')
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-38-1.png) 
+![](meetup_files/figure-html/unnamed-chunk-47-1.png) 
 
 Maintenant pour le modèle de l'arbre de décision:
 
@@ -1319,13 +1661,13 @@ ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
     ggtitle('Courbe ROC pour le modèle d\'arbre de décision')
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-39-1.png) 
+![](meetup_files/figure-html/unnamed-chunk-48-1.png) 
 
 ## Bibliographie
 
+* Intro à R: https://github.com/juba/intro-r
 * http://www.cs.cmu.edu/~eugene/research/full/detect-scam.pdf
 * http://cran.r-project.org/web/views/MachineLearning.html
 * http://kooperberg.fhcrc.org/logic/documents/ingophd-logic.pdf
 * Lichman, M. (2013). UCI Machine Learning Repository [http://archive.ics.uci.edu/ml]. Irvine, CA: University of California, School of Information and Computer Science. 
 * Liste des modèles supportés par le package *caret*: http://topepo.github.io/caret/modelList.html
-* Intro à R: https://github.com/juba/intro-r
