@@ -667,11 +667,18 @@ test.confusionMat</code></pre>
 ##        FALSE TRUE
 ##   ham   1204  104
 ##   spam    26  384</code></pre>
-<pre class="r"><code>sum(diag(test.confusionMat)) / nrow(testSet)</code></pre>
+<pre class="r"><code>sum(diag(test.confusionMat)) / sum(test.confusionMat)</code></pre>
 <pre><code>## [1] 0.9243306</code></pre>
 <pre class="r"><code># Spécificité
 test.confusionMat[2,2] / sum(test.confusionMat[2,])</code></pre>
 <pre><code>## [1] 0.9365854</code></pre>
+<p>Définition d’une fonction pour calculer l’accuracy:</p>
+<pre class="r"><code>accuracy &lt;- function(confusionMatrix) {
+  sum(diag(confusionMatrix)) / sum(confusionMatrix)
+}
+
+accuracy(test.confusionMat)</code></pre>
+<pre><code>## [1] 0.9243306</code></pre>
 </div>
 <div id="modification-du-seuil" class="section level3">
 <h3>Modification du seuil</h3>
@@ -731,13 +738,13 @@ summary(model.rpart)</code></pre>
 ##           CP nsplit rel error    xerror       xstd
 ## 1 0.18841336      0 1.0000000 1.0000000 0.02818625
 ## 2 0.10647182      2 0.6231733 0.6231733 0.02352977
-## 3 0.08037578      3 0.5167015 0.5250522 0.02189345
+## 3 0.08037578      3 0.5167015 0.5271399 0.02193068
 ## 4 0.03549061      4 0.4363257 0.4363257 0.02019848
 ## 5 0.03131524      5 0.4008351 0.4144050 0.01974202
-## 6 0.02609603      6 0.3695198 0.3872651 0.01915315
+## 6 0.02609603      6 0.3695198 0.3997912 0.01942833
 ## 7 0.01565762      7 0.3434238 0.3434238 0.01814025
-## 8 0.01252610      8 0.3277662 0.3371608 0.01798871
-## 9 0.01000000      9 0.3152401 0.3319415 0.01786104
+## 8 0.01252610      8 0.3277662 0.3382046 0.01801410
+## 9 0.01000000      9 0.3152401 0.3204593 0.01757553
 ## 
 ## Variable importance
 ##    enron     vinc kaminski      ect      hou  subject    X2000    thank 

@@ -439,10 +439,19 @@ Exo:
 test.predictions <- predict(model.logit, newdata = testSet, type = 'response')
 test.confusionMat <- table(testSet$spam, test.predictions >= 0.5)
 test.confusionMat
-sum(diag(test.confusionMat)) / nrow(testSet)
+sum(diag(test.confusionMat)) / sum(test.confusionMat)
 
 # Spécificité
 test.confusionMat[2,2] / sum(test.confusionMat[2,])
+```
+
+Définition d'une fonction pour calculer l'accuracy:
+```{r}
+accuracy <- function(confusionMatrix) {
+  sum(diag(confusionMatrix)) / sum(confusionMatrix)
+}
+
+accuracy(test.confusionMat)
 ```
 
 
