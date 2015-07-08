@@ -230,6 +230,15 @@ entiers[entiers > 5]
 subset(entiers, entiers > 5)
 ```
 
+Exo:
+
+* Trouver les entiers pairs (utiliser %% pour le modulo)
+
+```{r}
+positionPairs <- (entiers %% 2) == 0
+entiers[positionPairs]
+```
+
 ### Quelques valeurs spéciales
 
 Tester les opérations suivantes:

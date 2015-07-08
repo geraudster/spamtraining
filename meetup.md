@@ -421,6 +421,20 @@ subset(entiers, entiers > 5)
 ## [1]  6  7  8  9 10
 ```
 
+Exo:
+
+* Trouver les entiers pairs (utiliser %% pour le modulo)
+
+
+```r
+positionPairs <- (entiers %% 2) == 0
+entiers[positionPairs]
+```
+
+```
+## [1]  2  4  6  8 10
+```
+
 ### Quelques valeurs spéciales
 
 Tester les opérations suivantes:
@@ -777,19 +791,19 @@ Quelques histogrammes:
 hist(trainSet$vinc)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-28-1.png) 
+![](meetup_files/figure-html/unnamed-chunk-29-1.png) 
 
 ```r
 hist(trainSet$like)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-28-2.png) 
+![](meetup_files/figure-html/unnamed-chunk-29-2.png) 
 
 ```r
 hist(trainSet$busi)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-28-3.png) 
+![](meetup_files/figure-html/unnamed-chunk-29-3.png) 
 
 
 Une boxplot:
@@ -799,32 +813,32 @@ boxplot(trainSet$vinc ~ trainSet$spam)
 title('trainSet$vinc')
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-29-1.png) 
+![](meetup_files/figure-html/unnamed-chunk-30-1.png) 
 
 ```r
 boxplot(trainSet$like ~ trainSet$spam, col = 'bisque')
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-29-2.png) 
+![](meetup_files/figure-html/unnamed-chunk-30-2.png) 
 
 ```r
 boxplot(trainSet$meet ~ trainSet$spam)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-29-3.png) 
+![](meetup_files/figure-html/unnamed-chunk-30-3.png) 
 
 ```r
 boxplot(trainSet$pleas ~ trainSet$spam, col = c('bisque', 'blue'))
 title('Colored boxplot')
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-29-4.png) 
+![](meetup_files/figure-html/unnamed-chunk-30-4.png) 
 
 ```r
 boxplot(trainSet$thank ~ trainSet$spam)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-29-5.png) 
+![](meetup_files/figure-html/unnamed-chunk-30-5.png) 
 
 On voit que certaines variables semblent avoir plus ou moins d'influence sur la caractérisation
 de spam/ham. Nous allons voir comment déterminer automatiquement ces règles.
@@ -844,7 +858,7 @@ x <- seq(-6, 6, 0.01)
 qplot(x, 1 / (1 + exp(-x)), geom = 'line')
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-30-1.png) 
+![](meetup_files/figure-html/unnamed-chunk-31-1.png) 
 
 * Problématique de la classification / présentation de la régression logistique
 
@@ -1218,13 +1232,13 @@ summary(model.rpart)
 ##           CP nsplit rel error    xerror       xstd
 ## 1 0.18841336      0 1.0000000 1.0000000 0.02818625
 ## 2 0.10647182      2 0.6231733 0.6231733 0.02352977
-## 3 0.08037578      3 0.5167015 0.5292276 0.02196779
+## 3 0.08037578      3 0.5167015 0.5250522 0.02189345
 ## 4 0.03549061      4 0.4363257 0.4363257 0.02019848
-## 5 0.03131524      5 0.4008351 0.4196242 0.01985220
-## 6 0.02609603      6 0.3695198 0.4039666 0.01951875
-## 7 0.01565762      7 0.3434238 0.3455115 0.01819036
-## 8 0.01252610      8 0.3277662 0.3392484 0.01803943
-## 9 0.01000000      9 0.3152401 0.3225470 0.01762792
+## 5 0.03131524      5 0.4008351 0.4144050 0.01974202
+## 6 0.02609603      6 0.3695198 0.3872651 0.01915315
+## 7 0.01565762      7 0.3434238 0.3434238 0.01814025
+## 8 0.01252610      8 0.3277662 0.3371608 0.01798871
+## 9 0.01000000      9 0.3152401 0.3319415 0.01786104
 ## 
 ## Variable importance
 ##    enron     vinc kaminski      ect      hou  subject    X2000    thank 
@@ -1447,13 +1461,13 @@ Interprétation:
 prp(model.rpart)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-42-1.png) 
+![](meetup_files/figure-html/unnamed-chunk-43-1.png) 
 
 ```r
 prp(model.rpart, extra = 1)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-42-2.png) 
+![](meetup_files/figure-html/unnamed-chunk-43-2.png) 
 
 Prédiction sur les données du trainSet:
 
@@ -1644,7 +1658,7 @@ ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
     ggtitle('Courbe ROC pour le modèle de régression logistique')
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-47-1.png) 
+![](meetup_files/figure-html/unnamed-chunk-48-1.png) 
 
 Maintenant pour le modèle de l'arbre de décision:
 
@@ -1661,7 +1675,7 @@ ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
     ggtitle('Courbe ROC pour le modèle d\'arbre de décision')
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-48-1.png) 
+![](meetup_files/figure-html/unnamed-chunk-49-1.png) 
 
 ## Bibliographie
 
