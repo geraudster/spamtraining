@@ -1,33 +1,6 @@
 # Sujet Meetup TDS NoBlaBla
 Géraud  
 
-- [Programme](#programme)
-    - [Pré-requis](#pr%C3%A9-requis)
-- [Intro R](#intro-r)
-    - [R c'est quoi?](#r-cest-quoi)
-    - [RStudio](#rstudio)
-- [Les bases du langage](#les-bases-du-langage)
-    - [Opérations arithmétiques de base](#op%C3%A9rations-arithm%C3%A9tiques-de-base)
-    - [Fonctions](#fonctions)
-    - [Variables](#variables)
-    - [Vecteurs](#vecteurs)
-    - [Vecteurs - la suite](#vecteurs---la-suite)
-    - [Vecteurs - la fin](#vecteurs---la-fin)
-    - [Quelques valeurs spéciales](#quelques-valeurs-sp%C3%A9ciales)
-    - [Data Frames](#data-frames)
-    - [Structures de contrôle (if, loop..)](#structures-de-contr%C3%B4le-if-loop)
-- [Cas d'utilisation spam filter](#cas-dutilisation-spam-filter)
-    - [Récupération et exploration des données](#r%C3%A9cup%C3%A9ration-et-exploration-des-donn%C3%A9es)
-    - [Exploration](#exploration)
-    - [Modélisation](#mod%C3%A9lisation)
-    - [Application de l'algo](#application-de-lalgo)
-    - [Interprétation du modèle](#interpr%C3%A9tation-du-mod%C3%A8le)
-    - [Évaluation du modèle (score, matrice de confusion) __slides__](#%C3%A9valuation-du-mod%C3%A8le-score-matrice-de-confusion-__slides__)
-    - [Modification du seuil](#modification-du-seuil)
-    - [Création d'un arbre de décision](#cr%C3%A9ation-dun-arbre-de-d%C3%A9cision)
-- [Pour aller plus loin - les courbes de ROC](#pour-aller-plus-loin---les-courbes-de-roc)
-- [Bibliographie](#bibliographie)
-
 ## Programme
 
 ![R](images/Rlogo.png)
