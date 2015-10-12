@@ -221,16 +221,13 @@ sum(diag(train.confusionMat)) / nrow(trainSet)
 Exo:
 
 * Évaluer le modèle sur le jeu de test
-* Calculer la spécificité
+* Calculer l'accuracy, la spécificité et la sensitivite
 
 ```{r}
 test.predictions <- predict(model.logit, newdata = testSet, type = 'response')
 test.confusionMat <- table(testSet$spam, test.predictions >= 0.5)
 test.confusionMat
 sum(diag(test.confusionMat)) / sum(test.confusionMat)
-
-# Spécificité
-test.confusionMat[2,2] / sum(test.confusionMat[2,])
 ```
 
 Définition d'une fonction pour calculer l'accuracy:
@@ -240,6 +237,26 @@ accuracy <- function(confusionMatrix) {
 }
 
 accuracy(test.confusionMat)
+```
+
+
+```{r}
+# Spécificité
+test.confusionMat[2,2] / sum(test.confusionMat[2,])
+
+specificity <- function(confusionMatrix) {
+  confusionMatrix[2,2] / sum(confusionMatrix[2,])
+}
+```
+
+Définition de la fonction pour le calcul de la sensitivity
+```{r}
+# Sensitivity
+test.confusionMat[1,1] / sum(test.confusionMat[1,])
+
+sensitivity <- function(confusionMatrix) {
+  confusionMatrix[1,1] / sum(confusionMatrix[1,])
+}
 ```
 
 
@@ -253,22 +270,26 @@ Avec une valeur de seuil plus pessimiste:
 ```{r}
 train.confusionMat <- table(trainSet$spam, train.predictions >= 0.8)
 train.confusionMat
-sum(diag(train.confusionMat)) / nrow(trainSet)
+accuracy(train.confusionMat)
 
 test.confusionMat <- table(testSet$spam, test.predictions >= 0.8)
 test.confusionMat
-sum(diag(test.confusionMat)) / nrow(testSet)
+accuracy(test.confusionMat)
+sensitivity(test.confusionMat)
+specificity(test.confusionMat)
 ```
 
 Avec une valeur de seuil plus optimiste:
 ```{r}
 train.confusionMat <- table(trainSet$spam, train.predictions >= 0.2)
 train.confusionMat
-sum(diag(train.confusionMat)) / nrow(trainSet)
+accuracy(train.confusionMat)
 
 test.confusionMat <- table(testSet$spam, test.predictions >= 0.2)
 test.confusionMat
-sum(diag(test.confusionMat)) / nrow(testSet)
+accuracy(test.confusionMat)
+sensitivity(test.confusionMat)
+specificity(test.confusionMat)
 ```
 
 ### Création d'un arbre de décision
@@ -306,12 +327,14 @@ Prédiction sur les données du trainSet:
 train.predictions2 <- predict(model.rpart, newdata = trainSet)
 train.confusionMat2 <- table(trainSet$spam, train.predictions2[,'spam'] >= 0.5)
 train.confusionMat2
-sum(diag(train.confusionMat2)) / nrow(trainSet)
+accuracy(train.confusionMat2)
 
 test.predictions2 <- predict(model.rpart, newdata = testSet)
 test.confusionMat2 <- table(testSet$spam, test.predictions2[,'spam'] >= 0.5)
 test.confusionMat2
-sum(diag(test.confusionMat2)) / nrow(testSet)
+accuracy(test.confusionMat2)
+specificity(test.confusionMat2)
+sensitivity(test.confusionMat2)
 ```
 
 Exo:
@@ -322,24 +345,28 @@ Avec une valeur de seuil plus pessimiste:
 ```{r}
 train.confusionMat2 <- table(trainSet$spam, train.predictions2[,'spam'] >= 0.8)
 train.confusionMat2
-sum(diag(train.confusionMat2)) / nrow(trainSet)
+accuracy(train.confusionMat2)
 
 test.predictions2 <- predict(model.rpart, newdata = testSet)
 test.confusionMat2 <- table(testSet$spam, test.predictions2[,'spam'] >= 0.8)
 test.confusionMat2
-sum(diag(test.confusionMat2)) / nrow(testSet)
+accuracy(test.confusionMat2)
+specificity(test.confusionMat2)
+sensitivity(test.confusionMat2)
 ```
 
 Avec une valeur de seuil plus optimiste:
 ```{r}
 train.confusionMat2 <- table(trainSet$spam, train.predictions2[,'spam'] >= 0.2)
 train.confusionMat2
-sum(diag(train.confusionMat2)) / nrow(trainSet)
+accuracy(train.confusionMat2)
 
 test.predictions2 <- predict(model.rpart, newdata = testSet)
 test.confusionMat2 <- table(testSet$spam, test.predictions2[,'spam'] >= 0.2)
 test.confusionMat2
-sum(diag(test.confusionMat2)) / nrow(testSet)
+accuracy(test.confusionMat2)
+specificity(test.confusionMat2)
+sensitivity(test.confusionMat2)
 ```
 
 
@@ -348,7 +375,7 @@ Validation du modèle:
 test.predictions2 <- predict(model.rpart, newdata = testSet)
 test.confusionMat2 <- table(testSet$spam, test.predictions2[,'spam'] >= 0.5)
 test.confusionMat2
-sum(diag(test.confusionMat2)) / nrow(testSet)
+accuracy(test.confusionMat2)
 ```
 
 ## Pour aller plus loin - les courbes de ROC

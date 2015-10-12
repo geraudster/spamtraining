@@ -483,7 +483,7 @@ img {
 <p>Exo:</p>
 <ul>
 <li>Évaluer le modèle sur le jeu de test</li>
-<li>Calculer la spécificité</li>
+<li>Calculer l’accuracy, la spécificité et la sensitivite</li>
 </ul>
 <pre class="r"><code>&gt; test.predictions &lt;- predict(model.logit, newdata = testSet, type = 'response')
 &gt; test.confusionMat &lt;- table(testSet$spam, test.predictions &gt;= 0.5)
@@ -494,9 +494,6 @@ img {
 ##   spam    26  384</code></pre>
 <pre class="r"><code>&gt; sum(diag(test.confusionMat)) / sum(test.confusionMat)</code></pre>
 <pre><code>## [1] 0.9243306</code></pre>
-<pre class="r"><code>&gt; # Spécificité
-&gt; test.confusionMat[2,2] / sum(test.confusionMat[2,])</code></pre>
-<pre><code>## [1] 0.9365854</code></pre>
 <p>Définition d’une fonction pour calculer l’accuracy:</p>
 <pre class="r"><code>&gt; accuracy &lt;- function(confusionMatrix) {
 +   sum(diag(confusionMatrix)) / sum(confusionMatrix)
@@ -504,6 +501,19 @@ img {
 &gt; 
 &gt; accuracy(test.confusionMat)</code></pre>
 <pre><code>## [1] 0.9243306</code></pre>
+<pre class="r"><code>&gt; # Spécificité
+&gt; test.confusionMat[2,2] / sum(test.confusionMat[2,])</code></pre>
+<pre><code>## [1] 0.9365854</code></pre>
+<pre class="r"><code>&gt; specificity &lt;- function(confusionMatrix) {
++   confusionMatrix[2,2] / sum(confusionMatrix[2,])
++ }</code></pre>
+<p>Définition de la fonction pour le calcul de la sensitivity</p>
+<pre class="r"><code>&gt; # Sensitivity
+&gt; test.confusionMat[1,1] / sum(test.confusionMat[1,])</code></pre>
+<pre><code>## [1] 0.9204893</code></pre>
+<pre class="r"><code>&gt; sensitivity &lt;- function(confusionMatrix) {
++   confusionMatrix[1,1] / sum(confusionMatrix[1,])
++ }</code></pre>
 </div>
 <div id="modification-du-seuil" class="section level3">
 <h3>Modification du seuil</h3>
@@ -518,7 +528,7 @@ img {
 ##        FALSE TRUE
 ##   ham   3013   39
 ##   spam   517  441</code></pre>
-<pre class="r"><code>&gt; sum(diag(train.confusionMat)) / nrow(trainSet)</code></pre>
+<pre class="r"><code>&gt; accuracy(train.confusionMat)</code></pre>
 <pre><code>## [1] 0.8613466</code></pre>
 <pre class="r"><code>&gt; test.confusionMat &lt;- table(testSet$spam, test.predictions &gt;= 0.8)
 &gt; test.confusionMat</code></pre>
@@ -526,8 +536,12 @@ img {
 ##        FALSE TRUE
 ##   ham   1290   18
 ##   spam   215  195</code></pre>
-<pre class="r"><code>&gt; sum(diag(test.confusionMat)) / nrow(testSet)</code></pre>
+<pre class="r"><code>&gt; accuracy(test.confusionMat)</code></pre>
 <pre><code>## [1] 0.8643772</code></pre>
+<pre class="r"><code>&gt; sensitivity(test.confusionMat)</code></pre>
+<pre><code>## [1] 0.9862385</code></pre>
+<pre class="r"><code>&gt; specificity(test.confusionMat)</code></pre>
+<pre><code>## [1] 0.4756098</code></pre>
 <p>Avec une valeur de seuil plus optimiste:</p>
 <pre class="r"><code>&gt; train.confusionMat &lt;- table(trainSet$spam, train.predictions &gt;= 0.2)
 &gt; train.confusionMat</code></pre>
@@ -535,7 +549,7 @@ img {
 ##        FALSE TRUE
 ##   ham   2716  336
 ##   spam    17  941</code></pre>
-<pre class="r"><code>&gt; sum(diag(train.confusionMat)) / nrow(trainSet)</code></pre>
+<pre class="r"><code>&gt; accuracy(train.confusionMat)</code></pre>
 <pre><code>## [1] 0.9119701</code></pre>
 <pre class="r"><code>&gt; test.confusionMat &lt;- table(testSet$spam, test.predictions &gt;= 0.2)
 &gt; test.confusionMat</code></pre>
@@ -543,8 +557,12 @@ img {
 ##        FALSE TRUE
 ##   ham   1150  158
 ##   spam     9  401</code></pre>
-<pre class="r"><code>&gt; sum(diag(test.confusionMat)) / nrow(testSet)</code></pre>
+<pre class="r"><code>&gt; accuracy(test.confusionMat)</code></pre>
 <pre><code>## [1] 0.9027939</code></pre>
+<pre class="r"><code>&gt; sensitivity(test.confusionMat)</code></pre>
+<pre><code>## [1] 0.8792049</code></pre>
+<pre class="r"><code>&gt; specificity(test.confusionMat)</code></pre>
+<pre><code>## [1] 0.9780488</code></pre>
 </div>
 <div id="creation-dun-arbre-de-decision" class="section level3">
 <h3>Création d’un arbre de décision</h3>
@@ -563,13 +581,13 @@ img {
 ##           CP nsplit rel error    xerror       xstd
 ## 1 0.18841336      0 1.0000000 1.0000000 0.02818625
 ## 2 0.10647182      2 0.6231733 0.6231733 0.02352977
-## 3 0.08037578      3 0.5167015 0.5313152 0.02200479
-## 4 0.03549061      4 0.4363257 0.4478079 0.02043116
-## 5 0.03131524      5 0.4008351 0.4311065 0.02009128
-## 6 0.02609603      6 0.3695198 0.4008351 0.01945099
-## 7 0.01565762      7 0.3434238 0.3486430 0.01826515
-## 8 0.01252610      8 0.3277662 0.3444676 0.01816533
-## 9 0.01000000      9 0.3152401 0.3350731 0.01793780
+## 3 0.08037578      3 0.5167015 0.5344468 0.02206009
+## 4 0.03549061      4 0.4363257 0.4363257 0.02019848
+## 5 0.03131524      5 0.4008351 0.4237996 0.01993966
+## 6 0.02609603      6 0.3695198 0.3977035 0.01938288
+## 7 0.01565762      7 0.3434238 0.3549061 0.01841343
+## 8 0.01252610      8 0.3277662 0.3361169 0.01796328
+## 9 0.01000000      9 0.3152401 0.3246347 0.01768010
 ## 
 ## Variable importance
 ##    enron     vinc kaminski      ect      hou  subject    X2000    thank 
@@ -797,7 +815,7 @@ img {
 ##        FALSE TRUE
 ##   ham   2826  226
 ##   spam    76  882</code></pre>
-<pre class="r"><code>&gt; sum(diag(train.confusionMat2)) / nrow(trainSet)</code></pre>
+<pre class="r"><code>&gt; accuracy(train.confusionMat2)</code></pre>
 <pre><code>## [1] 0.9246883</code></pre>
 <pre class="r"><code>&gt; test.predictions2 &lt;- predict(model.rpart, newdata = testSet)
 &gt; test.confusionMat2 &lt;- table(testSet$spam, test.predictions2[,'spam'] &gt;= 0.5)
@@ -806,8 +824,12 @@ img {
 ##        FALSE TRUE
 ##   ham   1197  111
 ##   spam    40  370</code></pre>
-<pre class="r"><code>&gt; sum(diag(test.confusionMat2)) / nrow(testSet)</code></pre>
+<pre class="r"><code>&gt; accuracy(test.confusionMat2)</code></pre>
 <pre><code>## [1] 0.9121071</code></pre>
+<pre class="r"><code>&gt; specificity(test.confusionMat2)</code></pre>
+<pre><code>## [1] 0.902439</code></pre>
+<pre class="r"><code>&gt; sensitivity(test.confusionMat2)</code></pre>
+<pre><code>## [1] 0.9151376</code></pre>
 <p>Exo:</p>
 <ul>
 <li>Évaluer le modèle sur différentes valeurs de seuil (par ex: 0.8, 0.2)</li>
@@ -819,7 +841,7 @@ img {
 ##        FALSE TRUE
 ##   ham   3052    0
 ##   spam   943   15</code></pre>
-<pre class="r"><code>&gt; sum(diag(train.confusionMat2)) / nrow(trainSet)</code></pre>
+<pre class="r"><code>&gt; accuracy(train.confusionMat2)</code></pre>
 <pre><code>## [1] 0.7648379</code></pre>
 <pre class="r"><code>&gt; test.predictions2 &lt;- predict(model.rpart, newdata = testSet)
 &gt; test.confusionMat2 &lt;- table(testSet$spam, test.predictions2[,'spam'] &gt;= 0.8)
@@ -828,8 +850,12 @@ img {
 ##        FALSE TRUE
 ##   ham   1307    1
 ##   spam   406    4</code></pre>
-<pre class="r"><code>&gt; sum(diag(test.confusionMat2)) / nrow(testSet)</code></pre>
+<pre class="r"><code>&gt; accuracy(test.confusionMat2)</code></pre>
 <pre><code>## [1] 0.7630966</code></pre>
+<pre class="r"><code>&gt; specificity(test.confusionMat2)</code></pre>
+<pre><code>## [1] 0.009756098</code></pre>
+<pre class="r"><code>&gt; sensitivity(test.confusionMat2)</code></pre>
+<pre><code>## [1] 0.9992355</code></pre>
 <p>Avec une valeur de seuil plus optimiste:</p>
 <pre class="r"><code>&gt; train.confusionMat2 &lt;- table(trainSet$spam, train.predictions2[,'spam'] &gt;= 0.2)
 &gt; train.confusionMat2</code></pre>
@@ -837,7 +863,7 @@ img {
 ##        FALSE TRUE
 ##   ham   2682  370
 ##   spam    39  919</code></pre>
-<pre class="r"><code>&gt; sum(diag(train.confusionMat2)) / nrow(trainSet)</code></pre>
+<pre class="r"><code>&gt; accuracy(train.confusionMat2)</code></pre>
 <pre><code>## [1] 0.898005</code></pre>
 <pre class="r"><code>&gt; test.predictions2 &lt;- predict(model.rpart, newdata = testSet)
 &gt; test.confusionMat2 &lt;- table(testSet$spam, test.predictions2[,'spam'] &gt;= 0.2)
@@ -846,8 +872,12 @@ img {
 ##        FALSE TRUE
 ##   ham   1129  179
 ##   spam    15  395</code></pre>
-<pre class="r"><code>&gt; sum(diag(test.confusionMat2)) / nrow(testSet)</code></pre>
+<pre class="r"><code>&gt; accuracy(test.confusionMat2)</code></pre>
 <pre><code>## [1] 0.887078</code></pre>
+<pre class="r"><code>&gt; specificity(test.confusionMat2)</code></pre>
+<pre><code>## [1] 0.9634146</code></pre>
+<pre class="r"><code>&gt; sensitivity(test.confusionMat2)</code></pre>
+<pre><code>## [1] 0.8631498</code></pre>
 <p>Validation du modèle:</p>
 <pre class="r"><code>&gt; test.predictions2 &lt;- predict(model.rpart, newdata = testSet)
 &gt; test.confusionMat2 &lt;- table(testSet$spam, test.predictions2[,'spam'] &gt;= 0.5)
@@ -856,7 +886,7 @@ img {
 ##        FALSE TRUE
 ##   ham   1197  111
 ##   spam    40  370</code></pre>
-<pre class="r"><code>&gt; sum(diag(test.confusionMat2)) / nrow(testSet)</code></pre>
+<pre class="r"><code>&gt; accuracy(test.confusionMat2)</code></pre>
 <pre><code>## [1] 0.9121071</code></pre>
 </div>
 </div>

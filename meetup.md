@@ -635,7 +635,7 @@ Testons un modèle avec plus de variables:
 Exo:
 
 * Évaluer le modèle sur le jeu de test
-* Calculer la spécificité
+* Calculer l'accuracy, la spécificité et la sensitivite
 
 
 ```r
@@ -659,15 +659,6 @@ Exo:
 ## [1] 0.9243306
 ```
 
-```r
-> # Spécificité
-> test.confusionMat[2,2] / sum(test.confusionMat[2,])
-```
-
-```
-## [1] 0.9365854
-```
-
 Définition d'une fonction pour calculer l'accuracy:
 
 ```r
@@ -680,6 +671,40 @@ Définition d'une fonction pour calculer l'accuracy:
 
 ```
 ## [1] 0.9243306
+```
+
+
+
+```r
+> # Spécificité
+> test.confusionMat[2,2] / sum(test.confusionMat[2,])
+```
+
+```
+## [1] 0.9365854
+```
+
+```r
+> specificity <- function(confusionMatrix) {
++   confusionMatrix[2,2] / sum(confusionMatrix[2,])
++ }
+```
+
+Définition de la fonction pour le calcul de la sensitivity
+
+```r
+> # Sensitivity
+> test.confusionMat[1,1] / sum(test.confusionMat[1,])
+```
+
+```
+## [1] 0.9204893
+```
+
+```r
+> sensitivity <- function(confusionMatrix) {
++   confusionMatrix[1,1] / sum(confusionMatrix[1,])
++ }
 ```
 
 
@@ -704,7 +729,7 @@ Avec une valeur de seuil plus pessimiste:
 ```
 
 ```r
-> sum(diag(train.confusionMat)) / nrow(trainSet)
+> accuracy(train.confusionMat)
 ```
 
 ```
@@ -724,11 +749,27 @@ Avec une valeur de seuil plus pessimiste:
 ```
 
 ```r
-> sum(diag(test.confusionMat)) / nrow(testSet)
+> accuracy(test.confusionMat)
 ```
 
 ```
 ## [1] 0.8643772
+```
+
+```r
+> sensitivity(test.confusionMat)
+```
+
+```
+## [1] 0.9862385
+```
+
+```r
+> specificity(test.confusionMat)
+```
+
+```
+## [1] 0.4756098
 ```
 
 Avec une valeur de seuil plus optimiste:
@@ -746,7 +787,7 @@ Avec une valeur de seuil plus optimiste:
 ```
 
 ```r
-> sum(diag(train.confusionMat)) / nrow(trainSet)
+> accuracy(train.confusionMat)
 ```
 
 ```
@@ -766,11 +807,27 @@ Avec une valeur de seuil plus optimiste:
 ```
 
 ```r
-> sum(diag(test.confusionMat)) / nrow(testSet)
+> accuracy(test.confusionMat)
 ```
 
 ```
 ## [1] 0.9027939
+```
+
+```r
+> sensitivity(test.confusionMat)
+```
+
+```
+## [1] 0.8792049
+```
+
+```r
+> specificity(test.confusionMat)
+```
+
+```
+## [1] 0.9780488
 ```
 
 ### Création d'un arbre de décision
@@ -803,13 +860,13 @@ Création du modèle:
 ##           CP nsplit rel error    xerror       xstd
 ## 1 0.18841336      0 1.0000000 1.0000000 0.02818625
 ## 2 0.10647182      2 0.6231733 0.6231733 0.02352977
-## 3 0.08037578      3 0.5167015 0.5313152 0.02200479
-## 4 0.03549061      4 0.4363257 0.4478079 0.02043116
-## 5 0.03131524      5 0.4008351 0.4311065 0.02009128
-## 6 0.02609603      6 0.3695198 0.4008351 0.01945099
-## 7 0.01565762      7 0.3434238 0.3486430 0.01826515
-## 8 0.01252610      8 0.3277662 0.3444676 0.01816533
-## 9 0.01000000      9 0.3152401 0.3350731 0.01793780
+## 3 0.08037578      3 0.5167015 0.5344468 0.02206009
+## 4 0.03549061      4 0.4363257 0.4363257 0.02019848
+## 5 0.03131524      5 0.4008351 0.4237996 0.01993966
+## 6 0.02609603      6 0.3695198 0.3977035 0.01938288
+## 7 0.01565762      7 0.3434238 0.3549061 0.01841343
+## 8 0.01252610      8 0.3277662 0.3361169 0.01796328
+## 9 0.01000000      9 0.3152401 0.3246347 0.01768010
 ## 
 ## Variable importance
 ##    enron     vinc kaminski      ect      hou  subject    X2000    thank 
@@ -1032,13 +1089,13 @@ Interprétation:
 > prp(model.rpart)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-28-1.png) 
+![](meetup_files/figure-html/unnamed-chunk-30-1.png) 
 
 ```r
 > prp(model.rpart, extra = 1)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-28-2.png) 
+![](meetup_files/figure-html/unnamed-chunk-30-2.png) 
 
 Prédiction sur les données du trainSet:
 
@@ -1056,7 +1113,7 @@ Prédiction sur les données du trainSet:
 ```
 
 ```r
-> sum(diag(train.confusionMat2)) / nrow(trainSet)
+> accuracy(train.confusionMat2)
 ```
 
 ```
@@ -1077,11 +1134,27 @@ Prédiction sur les données du trainSet:
 ```
 
 ```r
-> sum(diag(test.confusionMat2)) / nrow(testSet)
+> accuracy(test.confusionMat2)
 ```
 
 ```
 ## [1] 0.9121071
+```
+
+```r
+> specificity(test.confusionMat2)
+```
+
+```
+## [1] 0.902439
+```
+
+```r
+> sensitivity(test.confusionMat2)
+```
+
+```
+## [1] 0.9151376
 ```
 
 Exo:
@@ -1103,7 +1176,7 @@ Avec une valeur de seuil plus pessimiste:
 ```
 
 ```r
-> sum(diag(train.confusionMat2)) / nrow(trainSet)
+> accuracy(train.confusionMat2)
 ```
 
 ```
@@ -1124,11 +1197,27 @@ Avec une valeur de seuil plus pessimiste:
 ```
 
 ```r
-> sum(diag(test.confusionMat2)) / nrow(testSet)
+> accuracy(test.confusionMat2)
 ```
 
 ```
 ## [1] 0.7630966
+```
+
+```r
+> specificity(test.confusionMat2)
+```
+
+```
+## [1] 0.009756098
+```
+
+```r
+> sensitivity(test.confusionMat2)
+```
+
+```
+## [1] 0.9992355
 ```
 
 Avec une valeur de seuil plus optimiste:
@@ -1146,7 +1235,7 @@ Avec une valeur de seuil plus optimiste:
 ```
 
 ```r
-> sum(diag(train.confusionMat2)) / nrow(trainSet)
+> accuracy(train.confusionMat2)
 ```
 
 ```
@@ -1167,11 +1256,27 @@ Avec une valeur de seuil plus optimiste:
 ```
 
 ```r
-> sum(diag(test.confusionMat2)) / nrow(testSet)
+> accuracy(test.confusionMat2)
 ```
 
 ```
 ## [1] 0.887078
+```
+
+```r
+> specificity(test.confusionMat2)
+```
+
+```
+## [1] 0.9634146
+```
+
+```r
+> sensitivity(test.confusionMat2)
+```
+
+```
+## [1] 0.8631498
 ```
 
 
@@ -1191,7 +1296,7 @@ Validation du modèle:
 ```
 
 ```r
-> sum(diag(test.confusionMat2)) / nrow(testSet)
+> accuracy(test.confusionMat2)
 ```
 
 ```
@@ -1216,7 +1321,7 @@ Dessinons la courbe ROC pour le modèle de régression logistique:
 +     ggtitle('Courbe ROC pour le modèle de régression logistique')
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-33-1.png) 
+![](meetup_files/figure-html/unnamed-chunk-35-1.png) 
 
 Maintenant pour le modèle de l'arbre de décision:
 
@@ -1233,7 +1338,7 @@ Maintenant pour le modèle de l'arbre de décision:
 +     ggtitle('Courbe ROC pour le modèle d\'arbre de décision')
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-34-1.png) 
+![](meetup_files/figure-html/unnamed-chunk-36-1.png) 
 
 ## Bibliographie
 
