@@ -13,6 +13,30 @@ knitr::opts_chunk$set(warning=FALSE, message=FALSE, prompt=TRUE)
 
 ## Bases du langage
 
+### Manipulation des vecteurs
+
+Créer 3 vecteurs:
+
+* prenoms: contenant les prénoms Alice, Bob, Carole
+* ages: contenant les âges
+* sexes: contenant _M_ ou _F_
+
+```{r}
+prenoms <- c('Alice', 'Bob', 'Carole')
+sexe <- c('F', 'M', 'F')
+ages <- c(24, 30, 23)
+```
+
+Afficher l'âge moyen (utiliser la fonction _mean_):
+```{r}
+mean(ages)
+```
+
+Calculer le nombre de femmes:
+```{r}
+sum(sexe == 'F')
+```
+
 ### Data Frames
 
 Les Data Frames permettent de stocker des tableaux de données, "à la Excel".

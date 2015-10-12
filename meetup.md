@@ -4,6 +4,41 @@ Géraud
 
 ## Bases du langage
 
+### Manipulation des vecteurs
+
+Créer 3 vecteurs:
+
+* prenoms: contenant les prénoms Alice, Bob, Carole
+* ages: contenant les âges
+* sexes: contenant _M_ ou _F_
+
+
+```r
+> prenoms <- c('Alice', 'Bob', 'Carole')
+> sexe <- c('F', 'M', 'F')
+> ages <- c(24, 30, 23)
+```
+
+Afficher l'âge moyen (utiliser la fonction _mean_):
+
+```r
+> mean(ages)
+```
+
+```
+## [1] 25.66667
+```
+
+Calculer le nombre de femmes:
+
+```r
+> sum(sexe == 'F')
+```
+
+```
+## [1] 2
+```
+
 ### Data Frames
 
 Les Data Frames permettent de stocker des tableaux de données, "à la Excel".
@@ -327,19 +362,19 @@ Quelques histogrammes:
 > hist(trainSet$vinc)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-10-1.png) 
+![](meetup_files/figure-html/unnamed-chunk-13-1.png) 
 
 ```r
 > hist(trainSet$like)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-10-2.png) 
+![](meetup_files/figure-html/unnamed-chunk-13-2.png) 
 
 ```r
 > hist(trainSet$busi)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-10-3.png) 
+![](meetup_files/figure-html/unnamed-chunk-13-3.png) 
 
 
 Une boxplot:
@@ -349,32 +384,32 @@ Une boxplot:
 > title('trainSet$vinc')
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-11-1.png) 
+![](meetup_files/figure-html/unnamed-chunk-14-1.png) 
 
 ```r
 > boxplot(trainSet$like ~ trainSet$spam, col = 'bisque')
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-11-2.png) 
+![](meetup_files/figure-html/unnamed-chunk-14-2.png) 
 
 ```r
 > boxplot(trainSet$meet ~ trainSet$spam)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-11-3.png) 
+![](meetup_files/figure-html/unnamed-chunk-14-3.png) 
 
 ```r
 > boxplot(trainSet$pleas ~ trainSet$spam, col = c('bisque', 'blue'))
 > title('Colored boxplot')
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-11-4.png) 
+![](meetup_files/figure-html/unnamed-chunk-14-4.png) 
 
 ```r
 > boxplot(trainSet$thank ~ trainSet$spam)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-11-5.png) 
+![](meetup_files/figure-html/unnamed-chunk-14-5.png) 
 
 On voit que certaines variables semblent avoir plus ou moins d'influence sur la caractérisation
 de spam/ham. Nous allons voir comment déterminer automatiquement ces règles.
@@ -394,7 +429,7 @@ $\sigma(t) = \frac{1}{1 + e^{-t}}$
 > qplot(x, 1 / (1 + exp(-x)), geom = 'line')
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-12-1.png) 
+![](meetup_files/figure-html/unnamed-chunk-15-1.png) 
 
 * Problématique de la classification / présentation de la régression logistique
 
@@ -768,13 +803,13 @@ Création du modèle:
 ##           CP nsplit rel error    xerror       xstd
 ## 1 0.18841336      0 1.0000000 1.0000000 0.02818625
 ## 2 0.10647182      2 0.6231733 0.6231733 0.02352977
-## 3 0.08037578      3 0.5167015 0.5396660 0.02215169
-## 4 0.03549061      4 0.4363257 0.4509395 0.02049389
-## 5 0.03131524      5 0.4008351 0.4227557 0.01991785
-## 6 0.02609603      6 0.3695198 0.4029228 0.01949620
-## 7 0.01565762      7 0.3434238 0.3444676 0.01816533
-## 8 0.01252610      8 0.3277662 0.3361169 0.01796328
-## 9 0.01000000      9 0.3152401 0.3194154 0.01754925
+## 3 0.08037578      3 0.5167015 0.5313152 0.02200479
+## 4 0.03549061      4 0.4363257 0.4478079 0.02043116
+## 5 0.03131524      5 0.4008351 0.4311065 0.02009128
+## 6 0.02609603      6 0.3695198 0.4008351 0.01945099
+## 7 0.01565762      7 0.3434238 0.3486430 0.01826515
+## 8 0.01252610      8 0.3277662 0.3444676 0.01816533
+## 9 0.01000000      9 0.3152401 0.3350731 0.01793780
 ## 
 ## Variable importance
 ##    enron     vinc kaminski      ect      hou  subject    X2000    thank 
@@ -997,13 +1032,13 @@ Interprétation:
 > prp(model.rpart)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-25-1.png) 
+![](meetup_files/figure-html/unnamed-chunk-28-1.png) 
 
 ```r
 > prp(model.rpart, extra = 1)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-25-2.png) 
+![](meetup_files/figure-html/unnamed-chunk-28-2.png) 
 
 Prédiction sur les données du trainSet:
 
@@ -1181,7 +1216,7 @@ Dessinons la courbe ROC pour le modèle de régression logistique:
 +     ggtitle('Courbe ROC pour le modèle de régression logistique')
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-30-1.png) 
+![](meetup_files/figure-html/unnamed-chunk-33-1.png) 
 
 Maintenant pour le modèle de l'arbre de décision:
 
@@ -1198,7 +1233,7 @@ Maintenant pour le modèle de l'arbre de décision:
 +     ggtitle('Courbe ROC pour le modèle d\'arbre de décision')
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-31-1.png) 
+![](meetup_files/figure-html/unnamed-chunk-34-1.png) 
 
 ## Bibliographie
 

@@ -68,6 +68,7 @@ img {
 <div id="TOC">
 <ul>
 <li><a href="#bases-du-langage">Bases du langage</a><ul>
+<li><a href="#manipulation-des-vecteurs">Manipulation des vecteurs</a></li>
 <li><a href="#data-frames">Data Frames</a></li>
 <li><a href="#structures-de-controle-if-loop..">Structures de contrôle (if, loop..)</a></li>
 </ul></li>
@@ -88,6 +89,24 @@ img {
 
 <div id="bases-du-langage" class="section level2">
 <h2>Bases du langage</h2>
+<div id="manipulation-des-vecteurs" class="section level3">
+<h3>Manipulation des vecteurs</h3>
+<p>Créer 3 vecteurs:</p>
+<ul>
+<li>prenoms: contenant les prénoms Alice, Bob, Carole</li>
+<li>ages: contenant les âges</li>
+<li>sexes: contenant <em>M</em> ou <em>F</em></li>
+</ul>
+<pre class="r"><code>&gt; prenoms &lt;- c('Alice', 'Bob', 'Carole')
+&gt; sexe &lt;- c('F', 'M', 'F')
+&gt; ages &lt;- c(24, 30, 23)</code></pre>
+<p>Afficher l’âge moyen (utiliser la fonction <em>mean</em>):</p>
+<pre class="r"><code>&gt; mean(ages)</code></pre>
+<pre><code>## [1] 25.66667</code></pre>
+<p>Calculer le nombre de femmes:</p>
+<pre class="r"><code>&gt; sum(sexe == 'F')</code></pre>
+<pre><code>## [1] 2</code></pre>
+</div>
 <div id="data-frames" class="section level3">
 <h3>Data Frames</h3>
 <p>Les Data Frames permettent de stocker des tableaux de données, “à la Excel”. <strong>cf. slides</strong></p>
@@ -544,13 +563,13 @@ img {
 ##           CP nsplit rel error    xerror       xstd
 ## 1 0.18841336      0 1.0000000 1.0000000 0.02818625
 ## 2 0.10647182      2 0.6231733 0.6231733 0.02352977
-## 3 0.08037578      3 0.5167015 0.5396660 0.02215169
-## 4 0.03549061      4 0.4363257 0.4509395 0.02049389
-## 5 0.03131524      5 0.4008351 0.4227557 0.01991785
-## 6 0.02609603      6 0.3695198 0.4029228 0.01949620
-## 7 0.01565762      7 0.3434238 0.3444676 0.01816533
-## 8 0.01252610      8 0.3277662 0.3361169 0.01796328
-## 9 0.01000000      9 0.3152401 0.3194154 0.01754925
+## 3 0.08037578      3 0.5167015 0.5313152 0.02200479
+## 4 0.03549061      4 0.4363257 0.4478079 0.02043116
+## 5 0.03131524      5 0.4008351 0.4311065 0.02009128
+## 6 0.02609603      6 0.3695198 0.4008351 0.01945099
+## 7 0.01565762      7 0.3434238 0.3486430 0.01826515
+## 8 0.01252610      8 0.3277662 0.3444676 0.01816533
+## 9 0.01000000      9 0.3152401 0.3350731 0.01793780
 ## 
 ## Variable importance
 ##    enron     vinc kaminski      ect      hou  subject    X2000    thank 
