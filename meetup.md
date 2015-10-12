@@ -2,468 +2,7 @@
 Géraud  
 
 
-## Programme
-
-![R](images/Rlogo.png)
-
-R est un langage de programmation et outil d'analyse statistique dont la popularité ne cesse
-de croître parmi la communauté des data heroes. 
-Au cours de cet atelier, nous allons travailler autour du sujet de la détection de spam
-et ainsi:
-
-* découvrir les bases du langages R
-* apprendre à charger et manipuler des jeux de données
-* appliquer des algorithmes de Machine Learning pour la détection de spam
-* interpréter et évaluer les modèles générés
-
-### Pré-requis
-
-Vous devez avoir installé les outils suivants:
-
-* R 3.2:
-    * [Windows](http://cran.rstudio.com/bin/windows/base/)
-    * [MacOS](http://cran.rstudio.com/bin/macosx/)
-    * [Linux](http://cran.rstudio.com/bin/linux/)
-* RStudio Desktop: http://www.rstudio.com/products/rstudio/download/
-
-Les packages suivants doivent être installés (lancer Rstudio puis menu Tools -> Install packages...):
-
-* rpart
-* rpart.plot
-
-![Installation package](images/rstudio-package.png)
-
-Les jeux de données doivent être téléchargés depuis les urls suivantes:
-
-* [Données d'entraînement](https://raw.githubusercontent.com/geraudster/spamdata/master/emails_train.csv)
-* [Données de test](https://raw.githubusercontent.com/geraudster/spamdata/master/emails_test.csv)
-
-## Intro R
-
-* R c'est quoi? les origines...
-* Présentation RStudio
-
-### R c'est quoi?
-
-**R** est un dialecte de **S**.
-
-S c'est quoi? C'est un environnement pour l'analyse statistique développé en Fortran 
-par les laboratoires Bell dès 1976.
-Il a été réécrit en C en 1988. 
-En 1991, début de l'implémentation de R par l'université d'Aukland, pour pallier au fait que la version de S-PLUS
-était propriétaire.
-
-Jusqu'en 2008 S-PLUS devient la propriété de TIBCO.
-
-2015: R en version 3.2
-
-La philosophie de S / R: fournir un environnement interactif pour l'analyse statistique.
-
-### RStudio
-
-[Rstudio](http://www.rstudio.com/) est une société qui publie l'environnement de développement Rstudio (et d'autres services comme ShinyApps, Rpubs...)
-
-Plusieurs versions sont disponibles dont une version *Open Source*.
-
-## Les bases du langage
-
-R est une grosse calculatrice qui fournit une interface REPL (Read-Eval-Print-Loop).
-
-### Opérations arithmétiques de base
-
-
-```r
-> 1 + 2
-```
-
-```
-## [1] 3
-```
-
-```r
-> 6 * 7
-```
-
-```
-## [1] 42
-```
-
-```r
-> 12 - 30
-```
-
-```
-## [1] -18
-```
-
-```r
-> 5 / 13
-```
-
-```
-## [1] 0.3846154
-```
-
-```r
-> 10 * (5 + 3)
-```
-
-```
-## [1] 80
-```
-
-Exo:
-
-* Calculer le carré de 5
-* Calculer la somme des entiers de 1 à 10
-
-```r
-> # Carré de 5
-> 5 * 5
-```
-
-```
-## [1] 25
-```
-
-```r
-> 5 ^ 2
-```
-
-```
-## [1] 25
-```
-
-```r
-> # Somme des 10 premiers entiers
-> 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10
-```
-
-```
-## [1] 55
-```
-
-```r
-> 10 * (10 + 1 ) / 2
-```
-
-```
-## [1] 55
-```
-
-### Fonctions
-
-
-```r
-> log(5)
-```
-
-```
-## [1] 1.609438
-```
-
-```r
-> sqrt(25)
-```
-
-```
-## [1] 5
-```
-
-À tout moment, il est possible d'accéder à l'aide en ligne:
-
-
-```r
-> ?log
-> ?sqrt
-> ?`+`
-```
-
-Les paramètres de fonction:
-
-```r
-> # log en base 10
-> log(5, base = 10)
-```
-
-```
-## [1] 0.69897
-```
-
-
-Exo:
-
-* Calculer la racine carrée de 2
-* Calculer la norme d'un vecteur de coordonnées (3,5):
-$||\vec{u}|| = \sqrt{x^2 + y^2}$
-
-
-```r
-> # Racine carrée de 2
-> sqrt(2)
-```
-
-```
-## [1] 1.414214
-```
-
-```r
-> # Norme du vecteur
-> sqrt(3^2 + 5^2)
-```
-
-```
-## [1] 5.830952
-```
-
-### Variables
-
-Affecter un résultat à une variable:
-
-```r
-> resultat <- 1 + 2
-> resultat
-```
-
-```
-## [1] 3
-```
-
-```r
-> resultat * 2
-```
-
-```
-## [1] 6
-```
-
-### Vecteurs
-
-Manipuler des vecteurs:
-
-
-```r
-> c(42,123)
-```
-
-```
-## [1]  42 123
-```
-
-```r
-> chiffres <- c(1,2,3,4,5,6,7,8,9)
-> chiffres
-```
-
-```
-## [1] 1 2 3 4 5 6 7 8 9
-```
-
-```r
-> chiffres <- 1:9
-> chiffres
-```
-
-```
-## [1] 1 2 3 4 5 6 7 8 9
-```
-
-Fonctions arithmétiques:
-
-```r
-> length
-> mean
-> sum
-```
-
-Exo:
-
-* Créer un vecteur contenant les 10 premiers entiers
-* Calculer la somme des 10 premiers entiers
-* Calculer la moyenne des 10 premiers entiers
-
-
-```r
-> # Création du vecteur
-> entiers <- 1:10
-> 
-> # Calcul de la somme
-> sum(entiers)
-```
-
-```
-## [1] 55
-```
-
-```r
-> # Calcul de la moyenne
-> mean(entiers)
-```
-
-```
-## [1] 5.5
-```
-
-On peut aussi utiliser des chaînes de caractères:
-
-```r
-> prenoms <- c('Alice', 'Bob', 'Carole')
-```
-
-Exo:
-
-* Créer un vecteur contenant les éléments 42 et "Hello"
-
-
-```r
-> c(42, 'Hello')
-```
-
-```
-## [1] "42"    "Hello"
-```
-
-Les vecteurs ne contiennent que des données du même type:
-
-```r
-> c(1,2,'toto')
-```
-
-```
-## [1] "1"    "2"    "toto"
-```
-
-### Vecteurs - la suite
-
-Opérations entre scalaires et vecteurs:
-
-```r
-> 1:9 + 2
-```
-
-```
-## [1]  3  4  5  6  7  8  9 10 11
-```
-
-```r
-> 1:9 * 3
-```
-
-```
-## [1]  3  6  9 12 15 18 21 24 27
-```
-
-Opérations entre vecteurs:
-
-```r
-> 1:9 * 1:9
-```
-
-```
-## [1]  1  4  9 16 25 36 49 64 81
-```
-
-Exo:
-
-* Que se passe-t-il si vous exécutez le code `{r} 1:9 * 1:9` ?
-* Essayez `{r} 1:9 * 2:4`
-
-### Vecteurs - la fin
-
-Pour sélectionner des éléments:
-
-```r
-> prenoms[2]
-```
-
-```
-## [1] "Bob"
-```
-
-```r
-> prenoms[2:3]
-```
-
-```
-## [1] "Bob"    "Carole"
-```
-
-```r
-> prenoms[c(FALSE, TRUE, TRUE)]
-```
-
-```
-## [1] "Bob"    "Carole"
-```
-
-Trouver les éléments répondant à une condition:
-
-```r
-> entiers > 5
-```
-
-```
-##  [1] FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE
-```
-
-```r
-> entiers[entiers > 5]
-```
-
-```
-## [1]  6  7  8  9 10
-```
-
-```r
-> subset(entiers, entiers > 5)
-```
-
-```
-## [1]  6  7  8  9 10
-```
-
-Exo:
-
-* Trouver les entiers pairs (utiliser %% pour le modulo)
-
-
-```r
-> positionPairs <- (entiers %% 2) == 0
-> entiers[positionPairs]
-```
-
-```
-## [1]  2  4  6  8 10
-```
-
-### Quelques valeurs spéciales
-
-Tester les opérations suivantes:
-
-
-```r
-> 1/0
-```
-
-```
-## [1] Inf
-```
-
-```r
-> sqrt(-1)
-```
-
-```
-## [1] NaN
-```
-
-```r
-> entiers[20]
-```
-
-```
-## [1] NA
-```
+## Bases du langage
 
 ### Data Frames
 
@@ -788,19 +327,19 @@ Quelques histogrammes:
 > hist(trainSet$vinc)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-29-1.png) 
+![](meetup_files/figure-html/unnamed-chunk-10-1.png) 
 
 ```r
 > hist(trainSet$like)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-29-2.png) 
+![](meetup_files/figure-html/unnamed-chunk-10-2.png) 
 
 ```r
 > hist(trainSet$busi)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-29-3.png) 
+![](meetup_files/figure-html/unnamed-chunk-10-3.png) 
 
 
 Une boxplot:
@@ -810,32 +349,32 @@ Une boxplot:
 > title('trainSet$vinc')
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-30-1.png) 
+![](meetup_files/figure-html/unnamed-chunk-11-1.png) 
 
 ```r
 > boxplot(trainSet$like ~ trainSet$spam, col = 'bisque')
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-30-2.png) 
+![](meetup_files/figure-html/unnamed-chunk-11-2.png) 
 
 ```r
 > boxplot(trainSet$meet ~ trainSet$spam)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-30-3.png) 
+![](meetup_files/figure-html/unnamed-chunk-11-3.png) 
 
 ```r
 > boxplot(trainSet$pleas ~ trainSet$spam, col = c('bisque', 'blue'))
 > title('Colored boxplot')
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-30-4.png) 
+![](meetup_files/figure-html/unnamed-chunk-11-4.png) 
 
 ```r
 > boxplot(trainSet$thank ~ trainSet$spam)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-30-5.png) 
+![](meetup_files/figure-html/unnamed-chunk-11-5.png) 
 
 On voit que certaines variables semblent avoir plus ou moins d'influence sur la caractérisation
 de spam/ham. Nous allons voir comment déterminer automatiquement ces règles.
@@ -855,7 +394,7 @@ $\sigma(t) = \frac{1}{1 + e^{-t}}$
 > qplot(x, 1 / (1 + exp(-x)), geom = 'line')
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-31-1.png) 
+![](meetup_files/figure-html/unnamed-chunk-12-1.png) 
 
 * Problématique de la classification / présentation de la régression logistique
 
@@ -1229,13 +768,13 @@ Création du modèle:
 ##           CP nsplit rel error    xerror       xstd
 ## 1 0.18841336      0 1.0000000 1.0000000 0.02818625
 ## 2 0.10647182      2 0.6231733 0.6231733 0.02352977
-## 3 0.08037578      3 0.5167015 0.5375783 0.02211513
-## 4 0.03549061      4 0.4363257 0.4436326 0.02034705
-## 5 0.03131524      5 0.4008351 0.4196242 0.01985220
-## 6 0.02609603      6 0.3695198 0.4008351 0.01945099
+## 3 0.08037578      3 0.5167015 0.5396660 0.02215169
+## 4 0.03549061      4 0.4363257 0.4509395 0.02049389
+## 5 0.03131524      5 0.4008351 0.4227557 0.01991785
+## 6 0.02609603      6 0.3695198 0.4029228 0.01949620
 ## 7 0.01565762      7 0.3434238 0.3444676 0.01816533
-## 8 0.01252610      8 0.3277662 0.3392484 0.01803943
-## 9 0.01000000      9 0.3152401 0.3350731 0.01793780
+## 8 0.01252610      8 0.3277662 0.3361169 0.01796328
+## 9 0.01000000      9 0.3152401 0.3194154 0.01754925
 ## 
 ## Variable importance
 ##    enron     vinc kaminski      ect      hou  subject    X2000    thank 
@@ -1458,13 +997,13 @@ Interprétation:
 > prp(model.rpart)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-44-1.png) 
+![](meetup_files/figure-html/unnamed-chunk-25-1.png) 
 
 ```r
 > prp(model.rpart, extra = 1)
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-44-2.png) 
+![](meetup_files/figure-html/unnamed-chunk-25-2.png) 
 
 Prédiction sur les données du trainSet:
 
@@ -1642,7 +1181,7 @@ Dessinons la courbe ROC pour le modèle de régression logistique:
 +     ggtitle('Courbe ROC pour le modèle de régression logistique')
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-49-1.png) 
+![](meetup_files/figure-html/unnamed-chunk-30-1.png) 
 
 Maintenant pour le modèle de l'arbre de décision:
 
@@ -1659,7 +1198,7 @@ Maintenant pour le modèle de l'arbre de décision:
 +     ggtitle('Courbe ROC pour le modèle d\'arbre de décision')
 ```
 
-![](meetup_files/figure-html/unnamed-chunk-50-1.png) 
+![](meetup_files/figure-html/unnamed-chunk-31-1.png) 
 
 ## Bibliographie
 
