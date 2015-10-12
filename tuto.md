@@ -270,9 +270,9 @@ Manipuler des vecteurs:
 Fonctions arithmétiques:
 
 ```r
-length
-mean
-sum
+> length
+> mean
+> sum
 ```
 
 Exo:
@@ -450,10 +450,6 @@ Tester les opérations suivantes:
 
 ```r
 > sqrt(-1)
-```
-
-```
-## Warning in sqrt(-1): NaNs produced
 ```
 
 ```

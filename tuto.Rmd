@@ -7,7 +7,9 @@ output:
     theme: spacelab
     toc: yes
 ---
-
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(warning=FALSE, message=FALSE, prompt=TRUE)
+```
 ## Programme
 
 ![R](images/Rlogo.png)
@@ -77,7 +79,7 @@ R est une grosse calculatrice qui fournit une interface REPL (Read-Eval-Print-Lo
 
 ### Opérations arithmétiques de base
 
-```{r, prompt=TRUE}
+```{r}
 1 + 2
 6 * 7
 12 - 30
@@ -89,7 +91,7 @@ Exo:
 
 * Calculer le carré de 5
 * Calculer la somme des entiers de 1 à 10
-```{r, prompt=TRUE}
+```{r}
 # Carré de 5
 5 * 5
 5 ^ 2
@@ -101,21 +103,21 @@ Exo:
 
 ### Fonctions
 
-```{r, prompt=TRUE}
+```{r}
 log(5)
 sqrt(25)
 ```
 
 À tout moment, il est possible d'accéder à l'aide en ligne:
 
-```{r, prompt=TRUE}
+```{r}
 ?log
 ?sqrt
 ?`+`
 ```
 
 Les paramètres de fonction:
-```{r, prompt=TRUE}
+```{r}
 # log en base 10
 log(5, base = 10)
 ```
@@ -127,7 +129,7 @@ Exo:
 * Calculer la norme d'un vecteur de coordonnées (3,5):
 $||\vec{u}|| = \sqrt{x^2 + y^2}$
 
-```{r, prompt=TRUE}
+```{r}
 # Racine carrée de 2
 sqrt(2)
 
@@ -138,7 +140,7 @@ sqrt(3^2 + 5^2)
 ### Variables
 
 Affecter un résultat à une variable:
-```{r, prompt=TRUE}
+```{r}
 resultat <- 1 + 2
 resultat
 resultat * 2
@@ -148,7 +150,7 @@ resultat * 2
 
 Manipuler des vecteurs:
 
-```{r, prompt=TRUE}
+```{r}
 c(42,123)
 chiffres <- c(1,2,3,4,5,6,7,8,9)
 chiffres
@@ -169,7 +171,7 @@ Exo:
 * Calculer la somme des 10 premiers entiers
 * Calculer la moyenne des 10 premiers entiers
 
-```{r, prompt=TRUE}
+```{r}
 # Création du vecteur
 entiers <- 1:10
 
@@ -181,7 +183,7 @@ mean(entiers)
 ```
 
 On peut aussi utiliser des chaînes de caractères:
-```{r, prompt=TRUE}
+```{r}
 prenoms <- c('Alice', 'Bob', 'Carole')
 ```
 
@@ -189,25 +191,25 @@ Exo:
 
 * Créer un vecteur contenant les éléments 42 et "Hello"
 
-```{r, prompt=TRUE}
+```{r}
 c(42, 'Hello')
 ```
 
 Les vecteurs ne contiennent que des données du même type:
-```{r, prompt=TRUE}
+```{r}
 c(1,2,'toto')
 ```
 
 ### Vecteurs - la suite
 
 Opérations entre scalaires et vecteurs:
-```{r, prompt=TRUE}
+```{r}
 1:9 + 2
 1:9 * 3
 ```
 
 Opérations entre vecteurs:
-```{r, prompt=TRUE}
+```{r}
 1:9 * 1:9
 ```
 
@@ -219,14 +221,14 @@ Exo:
 ### Vecteurs - la fin
 
 Pour sélectionner des éléments:
-```{r, prompt=TRUE}
+```{r}
 prenoms[2]
 prenoms[2:3]
 prenoms[c(FALSE, TRUE, TRUE)]
 ```
 
 Trouver les éléments répondant à une condition:
-```{r, prompt=TRUE}
+```{r}
 entiers > 5
 entiers[entiers > 5]
 subset(entiers, entiers > 5)
@@ -236,7 +238,7 @@ Exo:
 
 * Trouver les entiers pairs (utiliser %% pour le modulo)
 
-```{r, prompt=TRUE}
+```{r}
 positionPairs <- (entiers %% 2) == 0
 entiers[positionPairs]
 ```
@@ -245,7 +247,7 @@ entiers[positionPairs]
 
 Tester les opérations suivantes:
 
-```{r, prompt=TRUE}
+```{r}
 1/0
 sqrt(-1)
 entiers[20]
@@ -256,7 +258,7 @@ entiers[20]
 Les Data Frames permettent de stocker des tableaux de données, "à la Excel".
 **cf. slides**
 
-```{r, prompt=TRUE}
+```{r}
 prenoms <- c('Alice', 'Bob', 'Carole')
 sexe <- c('F', 'M', 'F')
 ages <- c(24, 30, 23)
@@ -274,20 +276,20 @@ Exo:
 * Calculer la moyenne d'âge
 * Quelle personne est la plus âgée (on utilisera la fonction `which.max`)?
 
-```{r, prompt=TRUE}
+```{r}
 monDataFrame[, c('prenoms', 'ages')]
 mean(monDataFrame$ages)
 monDataFrame[which.max(monDataFrame$ages),]
 ```
 
 Table de contingence:
-```{r, prompt=TRUE}
+```{r}
 table(monDataFrame$sexe)
 ```
 
 
 Pour modifier le data.frame:
-```{r, prompt=TRUE}
+```{r}
 monDataFrame$recu <- c(TRUE, FALSE, TRUE)
 table(monDataFrame$sexe, monDataFrame$recu)
 ```
@@ -297,7 +299,7 @@ Moyen mnémotechnique pour les indices des data.frames: [ROW, COL] -> ROW is COo
 ### Structures de contrôle (if, loop..)
 
 Voir 
-```{r, prompt=TRUE}
+```{r}
 ?Control
 ```
 

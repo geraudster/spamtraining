@@ -1,6 +1,7 @@
 # Sujet Meetup TDS NoBlaBla
 Géraud  
 
+
 ## Programme
 
 ![R](images/Rlogo.png)
@@ -72,7 +73,7 @@ R est une grosse calculatrice qui fournit une interface REPL (Read-Eval-Print-Lo
 
 
 ```r
-1 + 2
+> 1 + 2
 ```
 
 ```
@@ -80,7 +81,7 @@ R est une grosse calculatrice qui fournit une interface REPL (Read-Eval-Print-Lo
 ```
 
 ```r
-6 * 7
+> 6 * 7
 ```
 
 ```
@@ -88,7 +89,7 @@ R est une grosse calculatrice qui fournit une interface REPL (Read-Eval-Print-Lo
 ```
 
 ```r
-12 - 30
+> 12 - 30
 ```
 
 ```
@@ -96,7 +97,7 @@ R est une grosse calculatrice qui fournit une interface REPL (Read-Eval-Print-Lo
 ```
 
 ```r
-5 / 13
+> 5 / 13
 ```
 
 ```
@@ -104,7 +105,7 @@ R est une grosse calculatrice qui fournit une interface REPL (Read-Eval-Print-Lo
 ```
 
 ```r
-10 * (5 + 3)
+> 10 * (5 + 3)
 ```
 
 ```
@@ -117,8 +118,8 @@ Exo:
 * Calculer la somme des entiers de 1 à 10
 
 ```r
-# Carré de 5
-5 * 5
+> # Carré de 5
+> 5 * 5
 ```
 
 ```
@@ -126,7 +127,7 @@ Exo:
 ```
 
 ```r
-5 ^ 2
+> 5 ^ 2
 ```
 
 ```
@@ -134,8 +135,8 @@ Exo:
 ```
 
 ```r
-# Somme des 10 premiers entiers
-1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10
+> # Somme des 10 premiers entiers
+> 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10
 ```
 
 ```
@@ -143,7 +144,7 @@ Exo:
 ```
 
 ```r
-10 * (10 + 1 ) / 2
+> 10 * (10 + 1 ) / 2
 ```
 
 ```
@@ -154,7 +155,7 @@ Exo:
 
 
 ```r
-log(5)
+> log(5)
 ```
 
 ```
@@ -162,7 +163,7 @@ log(5)
 ```
 
 ```r
-sqrt(25)
+> sqrt(25)
 ```
 
 ```
@@ -173,16 +174,16 @@ sqrt(25)
 
 
 ```r
-?log
-?sqrt
-?`+`
+> ?log
+> ?sqrt
+> ?`+`
 ```
 
 Les paramètres de fonction:
 
 ```r
-# log en base 10
-log(5, base = 10)
+> # log en base 10
+> log(5, base = 10)
 ```
 
 ```
@@ -198,8 +199,8 @@ $||\vec{u}|| = \sqrt{x^2 + y^2}$
 
 
 ```r
-# Racine carrée de 2
-sqrt(2)
+> # Racine carrée de 2
+> sqrt(2)
 ```
 
 ```
@@ -207,8 +208,8 @@ sqrt(2)
 ```
 
 ```r
-# Norme du vecteur
-sqrt(3^2 + 5^2)
+> # Norme du vecteur
+> sqrt(3^2 + 5^2)
 ```
 
 ```
@@ -220,8 +221,8 @@ sqrt(3^2 + 5^2)
 Affecter un résultat à une variable:
 
 ```r
-resultat <- 1 + 2
-resultat
+> resultat <- 1 + 2
+> resultat
 ```
 
 ```
@@ -229,7 +230,7 @@ resultat
 ```
 
 ```r
-resultat * 2
+> resultat * 2
 ```
 
 ```
@@ -242,7 +243,7 @@ Manipuler des vecteurs:
 
 
 ```r
-c(42,123)
+> c(42,123)
 ```
 
 ```
@@ -250,8 +251,8 @@ c(42,123)
 ```
 
 ```r
-chiffres <- c(1,2,3,4,5,6,7,8,9)
-chiffres
+> chiffres <- c(1,2,3,4,5,6,7,8,9)
+> chiffres
 ```
 
 ```
@@ -259,8 +260,8 @@ chiffres
 ```
 
 ```r
-chiffres <- 1:9
-chiffres
+> chiffres <- 1:9
+> chiffres
 ```
 
 ```
@@ -270,9 +271,9 @@ chiffres
 Fonctions arithmétiques:
 
 ```r
-length
-mean
-sum
+> length
+> mean
+> sum
 ```
 
 Exo:
@@ -283,11 +284,11 @@ Exo:
 
 
 ```r
-# Création du vecteur
-entiers <- 1:10
-
-# Calcul de la somme
-sum(entiers)
+> # Création du vecteur
+> entiers <- 1:10
+> 
+> # Calcul de la somme
+> sum(entiers)
 ```
 
 ```
@@ -295,8 +296,8 @@ sum(entiers)
 ```
 
 ```r
-# Calcul de la moyenne
-mean(entiers)
+> # Calcul de la moyenne
+> mean(entiers)
 ```
 
 ```
@@ -306,7 +307,7 @@ mean(entiers)
 On peut aussi utiliser des chaînes de caractères:
 
 ```r
-prenoms <- c('Alice', 'Bob', 'Carole')
+> prenoms <- c('Alice', 'Bob', 'Carole')
 ```
 
 Exo:
@@ -315,7 +316,7 @@ Exo:
 
 
 ```r
-c(42, 'Hello')
+> c(42, 'Hello')
 ```
 
 ```
@@ -325,7 +326,7 @@ c(42, 'Hello')
 Les vecteurs ne contiennent que des données du même type:
 
 ```r
-c(1,2,'toto')
+> c(1,2,'toto')
 ```
 
 ```
@@ -337,7 +338,7 @@ c(1,2,'toto')
 Opérations entre scalaires et vecteurs:
 
 ```r
-1:9 + 2
+> 1:9 + 2
 ```
 
 ```
@@ -345,7 +346,7 @@ Opérations entre scalaires et vecteurs:
 ```
 
 ```r
-1:9 * 3
+> 1:9 * 3
 ```
 
 ```
@@ -355,7 +356,7 @@ Opérations entre scalaires et vecteurs:
 Opérations entre vecteurs:
 
 ```r
-1:9 * 1:9
+> 1:9 * 1:9
 ```
 
 ```
@@ -372,7 +373,7 @@ Exo:
 Pour sélectionner des éléments:
 
 ```r
-prenoms[2]
+> prenoms[2]
 ```
 
 ```
@@ -380,7 +381,7 @@ prenoms[2]
 ```
 
 ```r
-prenoms[2:3]
+> prenoms[2:3]
 ```
 
 ```
@@ -388,7 +389,7 @@ prenoms[2:3]
 ```
 
 ```r
-prenoms[c(FALSE, TRUE, TRUE)]
+> prenoms[c(FALSE, TRUE, TRUE)]
 ```
 
 ```
@@ -398,7 +399,7 @@ prenoms[c(FALSE, TRUE, TRUE)]
 Trouver les éléments répondant à une condition:
 
 ```r
-entiers > 5
+> entiers > 5
 ```
 
 ```
@@ -406,7 +407,7 @@ entiers > 5
 ```
 
 ```r
-entiers[entiers > 5]
+> entiers[entiers > 5]
 ```
 
 ```
@@ -414,7 +415,7 @@ entiers[entiers > 5]
 ```
 
 ```r
-subset(entiers, entiers > 5)
+> subset(entiers, entiers > 5)
 ```
 
 ```
@@ -427,8 +428,8 @@ Exo:
 
 
 ```r
-positionPairs <- (entiers %% 2) == 0
-entiers[positionPairs]
+> positionPairs <- (entiers %% 2) == 0
+> entiers[positionPairs]
 ```
 
 ```
@@ -441,7 +442,7 @@ Tester les opérations suivantes:
 
 
 ```r
-1/0
+> 1/0
 ```
 
 ```
@@ -449,11 +450,7 @@ Tester les opérations suivantes:
 ```
 
 ```r
-sqrt(-1)
-```
-
-```
-## Warning in sqrt(-1): NaNs produced
+> sqrt(-1)
 ```
 
 ```
@@ -461,7 +458,7 @@ sqrt(-1)
 ```
 
 ```r
-entiers[20]
+> entiers[20]
 ```
 
 ```
@@ -475,11 +472,11 @@ Les Data Frames permettent de stocker des tableaux de données, "à la Excel".
 
 
 ```r
-prenoms <- c('Alice', 'Bob', 'Carole')
-sexe <- c('F', 'M', 'F')
-ages <- c(24, 30, 23)
-monDataFrame <- data.frame(prenoms, sexe, ages)
-monDataFrame
+> prenoms <- c('Alice', 'Bob', 'Carole')
+> sexe <- c('F', 'M', 'F')
+> ages <- c(24, 30, 23)
+> monDataFrame <- data.frame(prenoms, sexe, ages)
+> monDataFrame
 ```
 
 ```
@@ -490,7 +487,7 @@ monDataFrame
 ```
 
 ```r
-monDataFrame[2, 'prenoms']
+> monDataFrame[2, 'prenoms']
 ```
 
 ```
@@ -499,7 +496,7 @@ monDataFrame[2, 'prenoms']
 ```
 
 ```r
-monDataFrame$prenoms
+> monDataFrame$prenoms
 ```
 
 ```
@@ -516,7 +513,7 @@ Exo:
 
 
 ```r
-monDataFrame[, c('prenoms', 'ages')]
+> monDataFrame[, c('prenoms', 'ages')]
 ```
 
 ```
@@ -527,7 +524,7 @@ monDataFrame[, c('prenoms', 'ages')]
 ```
 
 ```r
-mean(monDataFrame$ages)
+> mean(monDataFrame$ages)
 ```
 
 ```
@@ -535,7 +532,7 @@ mean(monDataFrame$ages)
 ```
 
 ```r
-monDataFrame[which.max(monDataFrame$ages),]
+> monDataFrame[which.max(monDataFrame$ages),]
 ```
 
 ```
@@ -546,7 +543,7 @@ monDataFrame[which.max(monDataFrame$ages),]
 Table de contingence:
 
 ```r
-table(monDataFrame$sexe)
+> table(monDataFrame$sexe)
 ```
 
 ```
@@ -559,8 +556,8 @@ table(monDataFrame$sexe)
 Pour modifier le data.frame:
 
 ```r
-monDataFrame$recu <- c(TRUE, FALSE, TRUE)
-table(monDataFrame$sexe, monDataFrame$recu)
+> monDataFrame$recu <- c(TRUE, FALSE, TRUE)
+> table(monDataFrame$sexe, monDataFrame$recu)
 ```
 
 ```
@@ -577,7 +574,7 @@ Aide-mémoire pour les indices des data.frames: [ROW, COL] -> ROW is COol
 Voir 
 
 ```r
-?Control
+> ?Control
 ```
 
 ## Cas d'utilisation spam filter
@@ -600,10 +597,10 @@ Récupérer les 2 jeux de données depuis les urls suivantes:
 Chargement des données (par l'IHM) ou directement en R:
 
 ```r
-trainSet <- read.csv('emails_train.csv')
-testSet <- read.csv('emails_test.csv')
-
-dim(trainSet)
+> trainSet <- read.csv('emails_train.csv')
+> testSet <- read.csv('emails_test.csv')
+> 
+> dim(trainSet)
 ```
 
 ```
@@ -611,7 +608,7 @@ dim(trainSet)
 ```
 
 ```r
-colnames(trainSet)
+> colnames(trainSet)
 ```
 
 ```
@@ -624,7 +621,7 @@ colnames(trainSet)
 ```
 
 ```r
-str(trainSet)
+> str(trainSet)
 ```
 
 ```
@@ -663,7 +660,7 @@ str(trainSet)
 ```
 
 ```r
-summary(trainSet)
+> summary(trainSet)
 ```
 
 ```
@@ -726,7 +723,7 @@ summary(trainSet)
 ```
 
 ```r
-#View(spambase) # ou clic sur spambase dans l'onglet Environment
+> #View(spambase) # ou clic sur spambase dans l'onglet Environment
 ```
 
 Exo:
@@ -735,7 +732,7 @@ Exo:
 
 
 ```r
-table(trainSet$spam)
+> table(trainSet$spam)
 ```
 
 ```
@@ -745,7 +742,7 @@ table(trainSet$spam)
 ```
 
 ```r
-table(testSet$spam)
+> table(testSet$spam)
 ```
 
 ```
@@ -757,8 +754,8 @@ table(testSet$spam)
 Gestion du label de spam:
 
 ```r
-trainSet$spam <- factor(trainSet$spam, levels = c(0,1), labels = c('ham', 'spam'))
-str(trainSet$spam)
+> trainSet$spam <- factor(trainSet$spam, levels = c(0,1), labels = c('ham', 'spam'))
+> str(trainSet$spam)
 ```
 
 ```
@@ -766,7 +763,7 @@ str(trainSet$spam)
 ```
 
 ```r
-table(trainSet$spam)
+> table(trainSet$spam)
 ```
 
 ```
@@ -778,7 +775,7 @@ table(trainSet$spam)
 On fait pareil pour le jeu de test:
 
 ```r
-testSet$spam <- factor(testSet$spam, levels = c(0,1), labels = c('ham', 'spam'))
+> testSet$spam <- factor(testSet$spam, levels = c(0,1), labels = c('ham', 'spam'))
 ```
 
 ### Exploration
@@ -788,19 +785,19 @@ Nous allons utiliser les fonctionnalités de base pour le dessin de graphiques.
 Quelques histogrammes:
 
 ```r
-hist(trainSet$vinc)
+> hist(trainSet$vinc)
 ```
 
 ![](meetup_files/figure-html/unnamed-chunk-29-1.png) 
 
 ```r
-hist(trainSet$like)
+> hist(trainSet$like)
 ```
 
 ![](meetup_files/figure-html/unnamed-chunk-29-2.png) 
 
 ```r
-hist(trainSet$busi)
+> hist(trainSet$busi)
 ```
 
 ![](meetup_files/figure-html/unnamed-chunk-29-3.png) 
@@ -809,33 +806,33 @@ hist(trainSet$busi)
 Une boxplot:
 
 ```r
-boxplot(trainSet$vinc ~ trainSet$spam)
-title('trainSet$vinc')
+> boxplot(trainSet$vinc ~ trainSet$spam)
+> title('trainSet$vinc')
 ```
 
 ![](meetup_files/figure-html/unnamed-chunk-30-1.png) 
 
 ```r
-boxplot(trainSet$like ~ trainSet$spam, col = 'bisque')
+> boxplot(trainSet$like ~ trainSet$spam, col = 'bisque')
 ```
 
 ![](meetup_files/figure-html/unnamed-chunk-30-2.png) 
 
 ```r
-boxplot(trainSet$meet ~ trainSet$spam)
+> boxplot(trainSet$meet ~ trainSet$spam)
 ```
 
 ![](meetup_files/figure-html/unnamed-chunk-30-3.png) 
 
 ```r
-boxplot(trainSet$pleas ~ trainSet$spam, col = c('bisque', 'blue'))
-title('Colored boxplot')
+> boxplot(trainSet$pleas ~ trainSet$spam, col = c('bisque', 'blue'))
+> title('Colored boxplot')
 ```
 
 ![](meetup_files/figure-html/unnamed-chunk-30-4.png) 
 
 ```r
-boxplot(trainSet$thank ~ trainSet$spam)
+> boxplot(trainSet$thank ~ trainSet$spam)
 ```
 
 ![](meetup_files/figure-html/unnamed-chunk-30-5.png) 
@@ -853,9 +850,9 @@ $\sigma(t) = \frac{1}{1 + e^{-t}}$
 
 
 ```r
-library(ggplot2)
-x <- seq(-6, 6, 0.01)
-qplot(x, 1 / (1 + exp(-x)), geom = 'line')
+> library(ggplot2)
+> x <- seq(-6, 6, 0.01)
+> qplot(x, 1 / (1 + exp(-x)), geom = 'line')
 ```
 
 ![](meetup_files/figure-html/unnamed-chunk-31-1.png) 
@@ -866,15 +863,8 @@ qplot(x, 1 / (1 + exp(-x)), geom = 'line')
 
 
 ```r
-model.logit <- glm(spam ~ vinc + like + meet + pleas + thank, family = 'binomial', trainSet)
-```
-
-```
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-```
-
-```r
-summary(model.logit)
+> model.logit <- glm(spam ~ vinc + like + meet + pleas + thank, family = 'binomial', trainSet)
+> summary(model.logit)
 ```
 
 ```
@@ -911,7 +901,7 @@ L'unité est le logit, pour l'interprétation:
 
 
 ```r
-exp(coef(model.logit))
+> exp(coef(model.logit))
 ```
 
 ```
@@ -922,7 +912,7 @@ exp(coef(model.logit))
 ```
 
 ```r
-round(exp(coef(model.logit)), 2)
+> round(exp(coef(model.logit)), 2)
 ```
 
 ```
@@ -934,15 +924,8 @@ round(exp(coef(model.logit)), 2)
 Testons un modèle avec plus de variables:
 
 ```r
-model.logit <- glm(spam ~ ., family = 'binomial', trainSet)
-```
-
-```
-## Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred
-```
-
-```r
-round(exp(coef(model.logit)), 2)
+> model.logit <- glm(spam ~ ., family = 'binomial', trainSet)
+> round(exp(coef(model.logit)), 2)
 ```
 
 ```
@@ -964,7 +947,7 @@ round(exp(coef(model.logit)), 2)
 
 
 ```r
-summary(model.logit)
+> summary(model.logit)
 ```
 
 ```
@@ -1022,7 +1005,7 @@ summary(model.logit)
 ```
 
 ```r
-exp(coef(model.logit))
+> exp(coef(model.logit))
 ```
 
 ```
@@ -1046,9 +1029,9 @@ exp(coef(model.logit))
 
 
 ```r
-train.predictions <- predict(model.logit, newdata = trainSet, type = 'response')
-train.confusionMat <- table(trainSet$spam, train.predictions >= 0.5)
-train.confusionMat
+> train.predictions <- predict(model.logit, newdata = trainSet, type = 'response')
+> train.confusionMat <- table(trainSet$spam, train.predictions >= 0.5)
+> train.confusionMat
 ```
 
 ```
@@ -1059,7 +1042,7 @@ train.confusionMat
 ```
 
 ```r
-(train.confusionMat[1,1] + train.confusionMat[2,2]) / nrow(trainSet)
+> (train.confusionMat[1,1] + train.confusionMat[2,2]) / nrow(trainSet)
 ```
 
 ```
@@ -1067,7 +1050,7 @@ train.confusionMat
 ```
 
 ```r
-sum(diag(train.confusionMat)) / nrow(trainSet)
+> sum(diag(train.confusionMat)) / nrow(trainSet)
 ```
 
 ```
@@ -1082,9 +1065,9 @@ Exo:
 
 
 ```r
-test.predictions <- predict(model.logit, newdata = testSet, type = 'response')
-test.confusionMat <- table(testSet$spam, test.predictions >= 0.5)
-test.confusionMat
+> test.predictions <- predict(model.logit, newdata = testSet, type = 'response')
+> test.confusionMat <- table(testSet$spam, test.predictions >= 0.5)
+> test.confusionMat
 ```
 
 ```
@@ -1095,7 +1078,7 @@ test.confusionMat
 ```
 
 ```r
-sum(diag(test.confusionMat)) / sum(test.confusionMat)
+> sum(diag(test.confusionMat)) / sum(test.confusionMat)
 ```
 
 ```
@@ -1103,8 +1086,8 @@ sum(diag(test.confusionMat)) / sum(test.confusionMat)
 ```
 
 ```r
-# Spécificité
-test.confusionMat[2,2] / sum(test.confusionMat[2,])
+> # Spécificité
+> test.confusionMat[2,2] / sum(test.confusionMat[2,])
 ```
 
 ```
@@ -1114,11 +1097,11 @@ test.confusionMat[2,2] / sum(test.confusionMat[2,])
 Définition d'une fonction pour calculer l'accuracy:
 
 ```r
-accuracy <- function(confusionMatrix) {
-  sum(diag(confusionMatrix)) / sum(confusionMatrix)
-}
-
-accuracy(test.confusionMat)
+> accuracy <- function(confusionMatrix) {
++   sum(diag(confusionMatrix)) / sum(confusionMatrix)
++ }
+> 
+> accuracy(test.confusionMat)
 ```
 
 ```
@@ -1135,8 +1118,8 @@ Exo:
 Avec une valeur de seuil plus pessimiste:
 
 ```r
-train.confusionMat <- table(trainSet$spam, train.predictions >= 0.8)
-train.confusionMat
+> train.confusionMat <- table(trainSet$spam, train.predictions >= 0.8)
+> train.confusionMat
 ```
 
 ```
@@ -1147,7 +1130,7 @@ train.confusionMat
 ```
 
 ```r
-sum(diag(train.confusionMat)) / nrow(trainSet)
+> sum(diag(train.confusionMat)) / nrow(trainSet)
 ```
 
 ```
@@ -1155,8 +1138,8 @@ sum(diag(train.confusionMat)) / nrow(trainSet)
 ```
 
 ```r
-test.confusionMat <- table(testSet$spam, test.predictions >= 0.8)
-test.confusionMat
+> test.confusionMat <- table(testSet$spam, test.predictions >= 0.8)
+> test.confusionMat
 ```
 
 ```
@@ -1167,7 +1150,7 @@ test.confusionMat
 ```
 
 ```r
-sum(diag(test.confusionMat)) / nrow(testSet)
+> sum(diag(test.confusionMat)) / nrow(testSet)
 ```
 
 ```
@@ -1177,8 +1160,8 @@ sum(diag(test.confusionMat)) / nrow(testSet)
 Avec une valeur de seuil plus optimiste:
 
 ```r
-train.confusionMat <- table(trainSet$spam, train.predictions >= 0.2)
-train.confusionMat
+> train.confusionMat <- table(trainSet$spam, train.predictions >= 0.2)
+> train.confusionMat
 ```
 
 ```
@@ -1189,7 +1172,7 @@ train.confusionMat
 ```
 
 ```r
-sum(diag(train.confusionMat)) / nrow(trainSet)
+> sum(diag(train.confusionMat)) / nrow(trainSet)
 ```
 
 ```
@@ -1197,8 +1180,8 @@ sum(diag(train.confusionMat)) / nrow(trainSet)
 ```
 
 ```r
-test.confusionMat <- table(testSet$spam, test.predictions >= 0.2)
-test.confusionMat
+> test.confusionMat <- table(testSet$spam, test.predictions >= 0.2)
+> test.confusionMat
 ```
 
 ```
@@ -1209,7 +1192,7 @@ test.confusionMat
 ```
 
 ```r
-sum(diag(test.confusionMat)) / nrow(testSet)
+> sum(diag(test.confusionMat)) / nrow(testSet)
 ```
 
 ```
@@ -1221,21 +1204,21 @@ sum(diag(test.confusionMat)) / nrow(testSet)
 Installation des packages par RStudio ou directement en R:
 
 ```r
-#install.packages('rpart')
-#install.packages('rpart.plot')
+> #install.packages('rpart')
+> #install.packages('rpart.plot')
 ```
 
 
 ```r
-library(rpart)
-library(rpart.plot)
+> library(rpart)
+> library(rpart.plot)
 ```
 
 Création du modèle:
 
 ```r
-model.rpart <- rpart(spam ~ ., trainSet)
-summary(model.rpart)
+> model.rpart <- rpart(spam ~ ., trainSet)
+> summary(model.rpart)
 ```
 
 ```
@@ -1246,13 +1229,13 @@ summary(model.rpart)
 ##           CP nsplit rel error    xerror       xstd
 ## 1 0.18841336      0 1.0000000 1.0000000 0.02818625
 ## 2 0.10647182      2 0.6231733 0.6231733 0.02352977
-## 3 0.08037578      3 0.5167015 0.5271399 0.02193068
-## 4 0.03549061      4 0.4363257 0.4363257 0.02019848
-## 5 0.03131524      5 0.4008351 0.4144050 0.01974202
-## 6 0.02609603      6 0.3695198 0.3997912 0.01942833
-## 7 0.01565762      7 0.3434238 0.3434238 0.01814025
-## 8 0.01252610      8 0.3277662 0.3382046 0.01801410
-## 9 0.01000000      9 0.3152401 0.3204593 0.01757553
+## 3 0.08037578      3 0.5167015 0.5375783 0.02211513
+## 4 0.03549061      4 0.4363257 0.4436326 0.02034705
+## 5 0.03131524      5 0.4008351 0.4196242 0.01985220
+## 6 0.02609603      6 0.3695198 0.4008351 0.01945099
+## 7 0.01565762      7 0.3434238 0.3444676 0.01816533
+## 8 0.01252610      8 0.3277662 0.3392484 0.01803943
+## 9 0.01000000      9 0.3152401 0.3350731 0.01793780
 ## 
 ## Variable importance
 ##    enron     vinc kaminski      ect      hou  subject    X2000    thank 
@@ -1472,13 +1455,13 @@ Exo:
 Interprétation:
 
 ```r
-prp(model.rpart)
+> prp(model.rpart)
 ```
 
 ![](meetup_files/figure-html/unnamed-chunk-44-1.png) 
 
 ```r
-prp(model.rpart, extra = 1)
+> prp(model.rpart, extra = 1)
 ```
 
 ![](meetup_files/figure-html/unnamed-chunk-44-2.png) 
@@ -1486,9 +1469,9 @@ prp(model.rpart, extra = 1)
 Prédiction sur les données du trainSet:
 
 ```r
-train.predictions2 <- predict(model.rpart, newdata = trainSet)
-train.confusionMat2 <- table(trainSet$spam, train.predictions2[,'spam'] >= 0.5)
-train.confusionMat2
+> train.predictions2 <- predict(model.rpart, newdata = trainSet)
+> train.confusionMat2 <- table(trainSet$spam, train.predictions2[,'spam'] >= 0.5)
+> train.confusionMat2
 ```
 
 ```
@@ -1499,7 +1482,7 @@ train.confusionMat2
 ```
 
 ```r
-sum(diag(train.confusionMat2)) / nrow(trainSet)
+> sum(diag(train.confusionMat2)) / nrow(trainSet)
 ```
 
 ```
@@ -1507,9 +1490,9 @@ sum(diag(train.confusionMat2)) / nrow(trainSet)
 ```
 
 ```r
-test.predictions2 <- predict(model.rpart, newdata = testSet)
-test.confusionMat2 <- table(testSet$spam, test.predictions2[,'spam'] >= 0.5)
-test.confusionMat2
+> test.predictions2 <- predict(model.rpart, newdata = testSet)
+> test.confusionMat2 <- table(testSet$spam, test.predictions2[,'spam'] >= 0.5)
+> test.confusionMat2
 ```
 
 ```
@@ -1520,7 +1503,7 @@ test.confusionMat2
 ```
 
 ```r
-sum(diag(test.confusionMat2)) / nrow(testSet)
+> sum(diag(test.confusionMat2)) / nrow(testSet)
 ```
 
 ```
@@ -1534,8 +1517,8 @@ Exo:
 Avec une valeur de seuil plus pessimiste:
 
 ```r
-train.confusionMat2 <- table(trainSet$spam, train.predictions2[,'spam'] >= 0.8)
-train.confusionMat2
+> train.confusionMat2 <- table(trainSet$spam, train.predictions2[,'spam'] >= 0.8)
+> train.confusionMat2
 ```
 
 ```
@@ -1546,7 +1529,7 @@ train.confusionMat2
 ```
 
 ```r
-sum(diag(train.confusionMat2)) / nrow(trainSet)
+> sum(diag(train.confusionMat2)) / nrow(trainSet)
 ```
 
 ```
@@ -1554,9 +1537,9 @@ sum(diag(train.confusionMat2)) / nrow(trainSet)
 ```
 
 ```r
-test.predictions2 <- predict(model.rpart, newdata = testSet)
-test.confusionMat2 <- table(testSet$spam, test.predictions2[,'spam'] >= 0.8)
-test.confusionMat2
+> test.predictions2 <- predict(model.rpart, newdata = testSet)
+> test.confusionMat2 <- table(testSet$spam, test.predictions2[,'spam'] >= 0.8)
+> test.confusionMat2
 ```
 
 ```
@@ -1567,7 +1550,7 @@ test.confusionMat2
 ```
 
 ```r
-sum(diag(test.confusionMat2)) / nrow(testSet)
+> sum(diag(test.confusionMat2)) / nrow(testSet)
 ```
 
 ```
@@ -1577,8 +1560,8 @@ sum(diag(test.confusionMat2)) / nrow(testSet)
 Avec une valeur de seuil plus optimiste:
 
 ```r
-train.confusionMat2 <- table(trainSet$spam, train.predictions2[,'spam'] >= 0.2)
-train.confusionMat2
+> train.confusionMat2 <- table(trainSet$spam, train.predictions2[,'spam'] >= 0.2)
+> train.confusionMat2
 ```
 
 ```
@@ -1589,7 +1572,7 @@ train.confusionMat2
 ```
 
 ```r
-sum(diag(train.confusionMat2)) / nrow(trainSet)
+> sum(diag(train.confusionMat2)) / nrow(trainSet)
 ```
 
 ```
@@ -1597,9 +1580,9 @@ sum(diag(train.confusionMat2)) / nrow(trainSet)
 ```
 
 ```r
-test.predictions2 <- predict(model.rpart, newdata = testSet)
-test.confusionMat2 <- table(testSet$spam, test.predictions2[,'spam'] >= 0.2)
-test.confusionMat2
+> test.predictions2 <- predict(model.rpart, newdata = testSet)
+> test.confusionMat2 <- table(testSet$spam, test.predictions2[,'spam'] >= 0.2)
+> test.confusionMat2
 ```
 
 ```
@@ -1610,7 +1593,7 @@ test.confusionMat2
 ```
 
 ```r
-sum(diag(test.confusionMat2)) / nrow(testSet)
+> sum(diag(test.confusionMat2)) / nrow(testSet)
 ```
 
 ```
@@ -1621,9 +1604,9 @@ sum(diag(test.confusionMat2)) / nrow(testSet)
 Validation du modèle:
 
 ```r
-test.predictions2 <- predict(model.rpart, newdata = testSet)
-test.confusionMat2 <- table(testSet$spam, test.predictions2[,'spam'] >= 0.5)
-test.confusionMat2
+> test.predictions2 <- predict(model.rpart, newdata = testSet)
+> test.confusionMat2 <- table(testSet$spam, test.predictions2[,'spam'] >= 0.5)
+> test.confusionMat2
 ```
 
 ```
@@ -1634,7 +1617,7 @@ test.confusionMat2
 ```
 
 ```r
-sum(diag(test.confusionMat2)) / nrow(testSet)
+> sum(diag(test.confusionMat2)) / nrow(testSet)
 ```
 
 ```
@@ -1646,30 +1629,17 @@ sum(diag(test.confusionMat2)) / nrow(testSet)
 Dessinons la courbe ROC pour le modèle de régression logistique: 
 
 ```r
-library(ggplot2)
-library(ROCR)
-```
-
-```
-## Loading required package: gplots
-## 
-## Attaching package: 'gplots'
-## 
-## The following object is masked from 'package:stats':
-## 
-##     lowess
-```
-
-```r
-predictions.logit <- prediction(test.predictions, testSet$spam)
-perf.logit <- performance(predictions.logit, measure = 'tpr', x.measure = 'fpr')
-roc.data <- data.frame(fpr=unlist(perf.logit@x.values),
-                       tpr=unlist(perf.logit@y.values),
-                       model="GLM")
-ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
-    geom_ribbon(alpha=0.2) +
-    geom_line(aes(y=tpr)) +
-    ggtitle('Courbe ROC pour le modèle de régression logistique')
+> library(ggplot2)
+> library(ROCR)
+> predictions.logit <- prediction(test.predictions, testSet$spam)
+> perf.logit <- performance(predictions.logit, measure = 'tpr', x.measure = 'fpr')
+> roc.data <- data.frame(fpr=unlist(perf.logit@x.values),
++                        tpr=unlist(perf.logit@y.values),
++                        model="GLM")
+> ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
++     geom_ribbon(alpha=0.2) +
++     geom_line(aes(y=tpr)) +
++     ggtitle('Courbe ROC pour le modèle de régression logistique')
 ```
 
 ![](meetup_files/figure-html/unnamed-chunk-49-1.png) 
@@ -1678,15 +1648,15 @@ Maintenant pour le modèle de l'arbre de décision:
 
 
 ```r
-predictions.rpart <- prediction(test.predictions2[,'spam'], testSet$spam)
-perf.rpart <- performance(predictions.rpart, measure = 'tpr', x.measure = 'fpr')
-roc.data <- data.frame(fpr=unlist(perf.rpart@x.values),
-                       tpr=unlist(perf.rpart@y.values),
-                       model="GLM")
-ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
-    geom_ribbon(alpha=0.2) +
-    geom_line(aes(y=tpr)) +
-    ggtitle('Courbe ROC pour le modèle d\'arbre de décision')
+> predictions.rpart <- prediction(test.predictions2[,'spam'], testSet$spam)
+> perf.rpart <- performance(predictions.rpart, measure = 'tpr', x.measure = 'fpr')
+> roc.data <- data.frame(fpr=unlist(perf.rpart@x.values),
++                        tpr=unlist(perf.rpart@y.values),
++                        model="GLM")
+> ggplot(roc.data, aes(x=fpr, ymin=0, ymax=tpr)) +
++     geom_ribbon(alpha=0.2) +
++     geom_line(aes(y=tpr)) +
++     ggtitle('Courbe ROC pour le modèle d\'arbre de décision')
 ```
 
 ![](meetup_files/figure-html/unnamed-chunk-50-1.png) 
