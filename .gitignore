@@ -9,3 +9,7 @@ building_dataset_cache
 emails_test.csv
 emails_train.csv
 spams_and_hams
+building_dataset.html
+meetup.html
+tuto.html
+meetup_files

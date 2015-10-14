@@ -1,7 +1,13 @@
 ---
+title: "Data NoBlaBla TDS - Préparation des données"
+author: "Géraud Dugé de Bernonville"
 output:
   html_document:
-    keep_md: yes
+    theme: spacelab
+    toc: yes
+    includes:
+          before_body: include/ribbon.html
+          after_body: include/license.html
 ---
 ## Préparation des datasets
 

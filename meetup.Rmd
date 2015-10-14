@@ -1,11 +1,13 @@
 ---
-title: "Sujet Meetup TDS NoBlaBla"
-author: "Géraud"
+title: "Data NoBlaBla TDS - Atelier R + Filtre Anti-Spam"
+author: "Géraud Dugé de Bernonville"
 output:
   html_document:
-    keep_md: yes
     theme: spacelab
     toc: yes
+    includes:
+          before_body: include/ribbon.html
+          after_body: include/license.html
 ---
 ```{r global_options, include=FALSE}
 knitr::opts_chunk$set(warning=FALSE, message=FALSE, prompt=TRUE)
