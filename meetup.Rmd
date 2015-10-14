@@ -1,6 +1,6 @@
 ---
 title: "Data NoBlaBla TDS - Atelier R + Filtre Anti-Spam"
-author: "Géraud Dugé de Bernonville"
+#author: "Géraud Dugé de Bernonville"
 output:
   html_document:
     theme: spacelab
