@@ -9,7 +9,8 @@ shinyUI(
                       sidebarLayout(
                         sidebarPanel(
                           # TODO
-                          uiOutput('variableChoice')
+                          uiOutput('variableChoice'),
+                          width = 3
                         ),
                         mainPanel(
                           # TODO
@@ -30,14 +31,14 @@ shinyUI(
                                         'Arbre de décision' = 'rpart')),
                           sliderInput('seuil', 'Seuil',
                                       min = 0, max = 1,
-                                      value = 0.5, step = 0.05)
-                          
+                                      value = 0.5, step = 0.05),
+                          width = 3
                         ),
                         mainPanel(
                           p('Positif = spam'),
                           p('Négatif = ham'),
                           # TODO
-                          imageOutput('modelResult'),
+                          imageOutput('modelResult', width = '500', height = '400'),
                           tableOutput('modelMetrics')
                         )
                       )),
