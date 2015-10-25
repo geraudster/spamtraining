@@ -28,25 +28,28 @@ shinyUI(
                           selectInput('modelType', 'Choix de l\'algo',
                                       c('Régression logistique' = 'glm',
                                         'Arbre de décision' = 'rpart')),
-                          actionButton("goButton", "Go!")
+                          sliderInput('seuil', 'Seuil',
+                                      min = 0, max = 1,
+                                      value = 0.5, step = 0.05)
+                          
                         ),
                         mainPanel(
+                          p('Positif = spam'),
+                          p('Négatif = ham'),
                           # TODO
-                          imageOutput('modelResult')
+                          imageOutput('modelResult'),
+                          tableOutput('modelMetrics')
                         )
                       )),
-             tabPanel('Prédiction',
-                      sidebarLayout(
-                        sidebarPanel(
-                          # TODO
-                        ),
-                        mainPanel( 
-                          # TODO
-                          ))),
-             header = wellPanel(
-               # TODO
-             ),
+#              tabPanel('Prédiction',
+#                       sidebarLayout(
+#                         sidebarPanel(
+#                           # TODO
+#                         ),
+#                         mainPanel( 
+#                           # TODO
+#                           ))),
              footer = p(br(), wellPanel(
-               # TODO
+               includeHTML('license.html')
              )))
 )
