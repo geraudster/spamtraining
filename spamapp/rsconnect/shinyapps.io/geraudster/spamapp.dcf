@@ -1,0 +1,8 @@
+name: spamapp
+account: geraudster
+server: shinyapps.io
+bundleId: 318929
+url: https://geraudster.shinyapps.io/spamapp
+when: 1448468398.21278
+asMultiple: FALSE
+asStatic: FALSE

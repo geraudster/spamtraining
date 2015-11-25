@@ -5,7 +5,7 @@ shinyUI(
                  'Data NoBlaBla'),
              tabPanel('About',
                       includeMarkdown('about.md')),
-             tabPanel('Explorer',
+             tabPanel('Explorer les données',
                       sidebarLayout(
                         sidebarPanel(
                           # TODO
@@ -14,6 +14,9 @@ shinyUI(
                         ),
                         mainPanel(
                           # TODO
+                          wellPanel(includeMarkdown('data_exploration.md')),
+                          h2('Boxplot'),
+                          imageOutput('termBoxplot'),
                           h2('Répartition'),
                           h3('Données d\'entrainement'),
                           tableOutput('contingencyTable'),
@@ -35,8 +38,7 @@ shinyUI(
                           width = 3
                         ),
                         mainPanel(
-                          p('Positif = spam'),
-                          p('Négatif = ham'),
+                          wellPanel(includeMarkdown('model_evaluation.md')),
                           # TODO
                           imageOutput('modelResult', width = '500', height = '400'),
                           tableOutput('modelMetrics')

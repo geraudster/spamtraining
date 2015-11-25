@@ -16,10 +16,9 @@ testSet$spam <- toSpamFactor(testSet$spam)
 
 shinyServer(
   function(input, output) {
-    # TODO
     output$variableChoice <-  renderUI(selectInput('variable', 'Choisir un terme', 
-                                                   choices = colnames(trainSet[, -31]),
-                                                   selected = 'Solar.R'))
+                                                   choices = colnames(trainSet[, -31])))
+    output$termBoxplot <- renderPlot({boxplot(get(input$variable) ~ spam, data = trainSet)})
     
     output$trainDataTable <- renderTable(head(trainSet, 20))
     output$contingencyTable <- renderTable(rbind(table(trainSet$spam), sprintf('%.02f %%', 100 * prop.table(table(trainSet$spam)))))
@@ -72,7 +71,9 @@ plotConfusionMatrix <- function(mat) {
         geom = 'tile',
         main = 'Matrice de confusion') +
     geom_text(aes(label = Freq)) +
-    scale_fill_manual(values = c('red' = '#ffdddd', 'green' = '#ccffcc'))
+    scale_fill_manual(name = 'Prédiction',
+                      values = c('red' = '#ffdddd', 'green' = '#ccffcc'),
+                      labels = c('green' = 'correcte', 'red' = 'erreur'))
 }
 
 metricsConfusionMatrix <- function(mat) {
