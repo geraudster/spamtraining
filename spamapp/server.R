@@ -70,6 +70,8 @@ plotConfusionMatrix <- function(mat) {
         fill = color,
         geom = 'tile',
         main = 'Matrice de confusion') +
+    xlab('Prédiction') +
+    ylab('Observé') +
     geom_text(aes(label = Freq)) +
     scale_fill_manual(name = 'Prédiction',
                       values = c('red' = '#ffdddd', 'green' = '#ccffcc'),

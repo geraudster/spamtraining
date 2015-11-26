@@ -16,7 +16,7 @@ shinyUI(
                           # TODO
                           wellPanel(includeMarkdown('data_exploration.md')),
                           h2('Boxplot'),
-                          imageOutput('termBoxplot'),
+                          imageOutput('termBoxplot', width = '500', height = '400'),
                           h2('Répartition'),
                           h3('Données d\'entrainement'),
                           tableOutput('contingencyTable'),
